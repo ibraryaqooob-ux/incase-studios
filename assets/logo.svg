@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="incaseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181b" />
+      <stop offset="100%" stop-color="#09090b" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded frame -->
+  <rect x="4" y="4" width="112" height="112" rx="28" fill="url(#incaseGrad)" stroke="#27272a" stroke-width="3" />
+  
+  <!-- Subtle inner architectural frame line -->
+  <rect x="14" y="14" width="92" height="92" rx="18" fill="none" stroke="#3f3f46" stroke-width="1.5" stroke-dasharray="4 2" opacity="0.6" />
+
+  <!-- Monogram "I S" -->
+  <text x="60" y="74" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" 
+        font-weight="900" 
+        font-size="44" 
+        fill="#f4f4f5" 
+        letter-spacing="-2"
+        text-anchor="middle">
+    IS
+  </text>
+
+  <!-- Gold studio accent dot -->
+  <circle cx="86" cy="44" r="5" fill="url(#goldGrad)" />
+</svg>

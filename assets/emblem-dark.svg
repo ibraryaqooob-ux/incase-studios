@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" width="240" height="70">
+  <defs>
+    <linearGradient id="starShineDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181b" />
+      <stop offset="60%" stop-color="#27272a" />
+      <stop offset="100%" stop-color="#52525b" />
+    </linearGradient>
+  </defs>
+
+  <!-- 5-Star Arch (Centered at x=120) -->
+  <g fill="url(#starShineDark)">
+    <!-- Star 1 (Leftmost) -->
+    <path transform="translate(68, 16) scale(0.75)" d="M 0 -8 L 2.4 -2.5 L 8.3 -2.5 L 3.5 1.2 L 5.3 6.9 L 0 3.4 L -5.3 6.9 L -3.5 1.2 L -8.3 -2.5 L -2.4 -2.5 Z" />
+    <!-- Star 2 -->
+    <path transform="translate(92, 10) scale(0.9)" d="M 0 -8 L 2.4 -2.5 L 8.3 -2.5 L 3.5 1.2 L 5.3 6.9 L 0 3.4 L -5.3 6.9 L -3.5 1.2 L -8.3 -2.5 L -2.4 -2.5 Z" />
+    <!-- Star 3 (Center Apex, Largest) -->
+    <path transform="translate(120, 7) scale(1.15)" d="M 0 -8 L 2.4 -2.5 L 8.3 -2.5 L 3.5 1.2 L 5.3 6.9 L 0 3.4 L -5.3 6.9 L -3.5 1.2 L -8.3 -2.5 L -2.4 -2.5 Z" />
+    <!-- Star 4 -->
+    <path transform="translate(148, 10) scale(0.9)" d="M 0 -8 L 2.4 -2.5 L 8.3 -2.5 L 3.5 1.2 L 5.3 6.9 L 0 3.4 L -5.3 6.9 L -3.5 1.2 L -8.3 -2.5 L -2.4 -2.5 Z" />
+    <!-- Star 5 (Rightmost) -->
+    <path transform="translate(172, 16) scale(0.75)" d="M 0 -8 L 2.4 -2.5 L 8.3 -2.5 L 3.5 1.2 L 5.3 6.9 L 0 3.4 L -5.3 6.9 L -3.5 1.2 L -8.3 -2.5 L -2.4 -2.5 Z" />
+  </g>
+
+  <!-- Brand Typography: Completely uncropped with ample margin on both sides -->
+  <text x="120" y="42" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Cinzel', 'Georgia', serif" 
+        font-weight="900" 
+        font-size="15" 
+        fill="#09090b" 
+        letter-spacing="2.6"
+        text-anchor="middle">
+    INCASE STUDIOS
+  </text>
+
+  <!-- Horizontal Rules and EST. 2026 -->
+  <line x1="45" y1="56" x2="88" y2="56" stroke="#52525b" stroke-width="1.2" />
+  <text x="120" y="59" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" 
+        font-weight="700" 
+        font-size="7.5" 
+        fill="#52525b" 
+        letter-spacing="2"
+        text-anchor="middle">
+    EST. 2026
+  </text>
+  <line x1="152" y1="56" x2="195" y2="56" stroke="#52525b" stroke-width="1.2" />
+</svg>

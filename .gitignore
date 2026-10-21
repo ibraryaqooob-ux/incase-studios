@@ -1,0 +1,18 @@
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Node / Vercel
+node_modules/
+.vercel/

@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="100%" height="100%" preserveAspectRatio="xMidYMax meet">
+  <defs>
+    <filter id="deskShadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#000" flood-opacity="0.65" />
+    </filter>
+    <linearGradient id="monitorScreen1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#121824" />
+      <stop offset="50%" stop-color="#1b2536" />
+      <stop offset="100%" stop-color="#0f141f" />
+    </linearGradient>
+    <linearGradient id="monitorScreen2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18131d" />
+      <stop offset="50%" stop-color="#241b2c" />
+      <stop offset="100%" stop-color="#110d14" />
+    </linearGradient>
+    <linearGradient id="deskWood" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#24252a" />
+      <stop offset="100%" stop-color="#141518" />
+    </linearGradient>
+    <radialGradient id="screenGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(120, 170, 255, 0.18)" />
+      <stop offset="100%" stop-color="rgba(120, 170, 255, 0)" />
+    </radialGradient>
+  </defs>
+
+  <!-- Ambient Floor Shadow -->
+  <ellipse cx="600" cy="305" rx="460" ry="14" fill="#000" opacity="0.6" filter="blur(7px)" />
+
+  <!-- Ambient Wall Glow Behind Displays -->
+  <ellipse cx="600" cy="140" rx="320" ry="100" fill="url(#screenGlow)" />
+
+  <g id="studioWorkstation" filter="url(#deskShadow)">
+    <!-- Sleek Steel Trestle Desk Legs -->
+    <rect x="230" y="200" width="14" height="105" fill="#0d0e10" />
+    <rect x="250" y="200" width="14" height="105" fill="#0d0e10" />
+    <line x1="220" y1="305" x2="275" y2="305" stroke="#1c1d22" stroke-width="4" stroke-linecap="round" />
+
+    <rect x="936" y="200" width="14" height="105" fill="#0d0e10" />
+    <rect x="956" y="200" width="14" height="105" fill="#0d0e10" />
+    <line x1="925" y1="305" x2="980" y2="305" stroke="#1c1d22" stroke-width="4" stroke-linecap="round" />
+
+    <!-- Studio Desk Surface (Top at y=185, height 20px) -->
+    <rect x="180" y="185" width="840" height="20" rx="2" fill="url(#deskWood)" stroke="#383b44" stroke-width="1.5" />
+    <line x1="180" y1="186" x2="1020" y2="186" stroke="#4f5360" stroke-width="1" />
+
+    <!-- Left Studio Monitor Speaker (Yamaha HS Style) -->
+    <g id="speakerLeft" transform="translate(240, 110)">
+      <rect x="0" y="0" width="60" height="75" rx="3" fill="#121316" stroke="#25262c" stroke-width="1.5" />
+      <circle cx="30" cy="22" r="8" fill="#1b1c20" stroke="#0a0a0c" stroke-width="1" />
+      <circle cx="30" cy="50" r="16" fill="#f0ede6" stroke="#121316" stroke-width="2" />
+    </g>
+
+    <!-- Right Studio Monitor Speaker (Yamaha HS Style) -->
+    <g id="speakerRight" transform="translate(900, 110)">
+      <rect x="0" y="0" width="60" height="75" rx="3" fill="#121316" stroke="#25262c" stroke-width="1.5" />
+      <circle cx="30" cy="22" r="8" fill="#1b1c20" stroke="#0a0a0c" stroke-width="1" />
+      <circle cx="30" cy="50" r="16" fill="#f0ede6" stroke="#121316" stroke-width="2" />
+    </g>
+
+    <!-- Dual Ultra-Thin Bezel Displays (Centered, top at y=95) -->
+    <!-- Monitor Stand Mounts -->
+    <rect x="475" y="165" width="16" height="20" fill="#0a0a0c" />
+    <rect x="709" y="165" width="16" height="20" fill="#0a0a0c" />
+
+    <!-- Display Left (Telemetry & CAD) -->
+    <g id="screenLeft" transform="translate(340, 95)">
+      <rect x="0" y="0" width="250" height="85" rx="2" fill="#08090a" stroke="#2a2c33" stroke-width="2" />
+      <rect x="3" y="3" width="244" height="79" fill="url(#monitorScreen1)" />
+      <!-- Subtle UI Graphics on Screen -->
+      <line x1="12" y1="16" x2="60" y2="16" stroke="#456598" stroke-width="2" />
+      <rect x="12" y="24" width="70" height="42" fill="#151d2d" stroke="#2c3c58" stroke-width="0.8" />
+      <polyline points="18,52 35,38 52,44 70,30" fill="none" stroke="#38bdf8" stroke-width="1.5" />
+    </g>
+
+    <!-- Display Right (Design & Specs) -->
+    <g id="screenRight" transform="translate(610, 95)">
+      <rect x="0" y="0" width="250" height="85" rx="2" fill="#08090a" stroke="#2a2c33" stroke-width="2" />
+      <rect x="3" y="3" width="244" height="79" fill="url(#monitorScreen2)" />
+      <!-- Subtle UI Graphics on Screen -->
+      <line x1="12" y1="16" x2="50" y2="16" stroke="#9333ea" stroke-width="2" />
+      <rect x="12" y="24" width="110" height="42" fill="#201529" stroke="#442a58" stroke-width="0.8" />
+      <circle cx="67" cy="45" r="14" fill="none" stroke="#f43f5e" stroke-width="1.5" />
+    </g>
+
+    <!-- Centered Desk Mat -->
+    <rect x="420" y="187" width="360" height="8" rx="1" fill="#18191d" stroke="#24262d" stroke-width="0.8" />
+    <!-- Compact Keyboard -->
+    <rect x="520" y="185" width="120" height="6" rx="1" fill="#2d2f38" stroke="#474b57" stroke-width="0.8" />
+    <!-- Wireless Mouse -->
+    <rect x="680" y="185" width="20" height="5" rx="2.5" fill="#2d2f38" />
+
+    <!-- Minimal Ergonomic Chair Back (Visible strictly in center bottom) -->
+    <path d="M 530 205 C 530 180, 670 180, 670 205 L 680 315 L 520 315 Z" fill="#141518" stroke="#2b2d35" stroke-width="1.5" opacity="0.9" />
+    <path d="M 545 210 Q 600 205, 655 210" stroke="#4a4e5d" stroke-width="2" fill="none" />
+  </g>
+</svg>
