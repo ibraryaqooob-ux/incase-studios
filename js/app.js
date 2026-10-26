@@ -1076,7 +1076,7 @@ function getCategoryBadge(cat) {
     case "audi": return "Audi RS";
     case "porsche": return "Porsche";
     case "amg": return "Mercedes-AMG";
-    case "exotic": return "Ferrari & Lamborghini";
+    case "exotic": return "Supercars & Exotics";
     case "custom-car": return "Custom Your Car";
     case "football": return "Football & Stadiums";
     case "cartoon-cars": return "Through The Years";
@@ -1085,6 +1085,8 @@ function getCategoryBadge(cat) {
     case "music": return "Music Album";
     case "custom-music": return "Custom Music Poster";
     case "custom-design": return "Custom Design";
+    case "travel": return "Travel & Architecture";
+    case "animals": return "Wildlife & Animals";
     default: return "Studio Print";
   }
 }
