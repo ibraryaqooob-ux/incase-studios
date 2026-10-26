@@ -351,7 +351,7 @@ function renderMarqueeCarousel() {
   ];
 
   track.innerHTML = fullTrackList.map((poster, idx) => {
-    const baseP = typeof poster.basePrice === "number" ? poster.basePrice : 5.39;
+    const baseP = typeof poster.basePrice === "number" ? poster.basePrice : 7.00;
     return `
       <div 
         class="marquee-item flex flex-col cursor-pointer flex-shrink-0 group"
@@ -750,8 +750,8 @@ function renderCatalog() {
       ? poster.triptychImages
       : ["assets/islamic-panel-1.jpg", "assets/islamic-panel-2.jpg", "assets/islamic-panel-3.jpg"];
 
-    const baseP = typeof poster.basePrice === "number" ? poster.basePrice : 5.39;
-    const wasPrice = Number(poster.wasPrice || (baseP * 1.3));
+    const baseP = typeof poster.basePrice === "number" ? poster.basePrice : 7.00;
+    const wasPrice = Number(poster.wasPrice || baseP);
 
     return `
       <div 
@@ -833,9 +833,9 @@ function renderCatalog() {
             <div class="flex items-baseline gap-1.5">
               <span class="text-[10px] font-bold uppercase text-zinc-500">From</span>
               <span class="text-sm sm:text-base font-black text-zinc-950">£${baseP.toFixed(2)}</span>
-              <span class="text-[10px] text-zinc-400 line-through font-semibold">£${wasPrice.toFixed(2)}</span>
+              ${wasPrice > baseP ? `<span class="text-[10px] text-zinc-400 line-through font-semibold">£${wasPrice.toFixed(2)}</span>` : ''}
             </div>
-            <span class="px-1.5 py-0.5 bg-red-600 text-white text-[8px] font-black uppercase tracking-wider">23% OFF</span>
+            ${wasPrice > baseP ? `<span class="px-1.5 py-0.5 bg-red-600 text-white text-[8px] font-black uppercase tracking-wider">23% OFF</span>` : ''}
           </div>
 
           <button 
@@ -3125,7 +3125,7 @@ function handleFilesSelected(files) {
         title: cleanedTitle,
         subtitle: isIslamic ? "Exclusive 3-Piece Gallery Set (3 Vertical Prints)" : "Premium 200gsm Heavyweight Glossy Photo Paper",
         category: defaultCategory,
-        basePrice: isIslamic ? 14.63 : (isCustomCar ? 7.69 : 5.39),
+        basePrice: isIslamic ? 14.63 : (isCustomCar ? 7.69 : 7.00),
         wasPrice: isIslamic ? 19.00 : (isCustomCar ? 9.99 : 7.00),
         image: e.target.result, // Base64 data string: persists in IndexedDB without broken images
         triptychImages: isIslamic ? [e.target.result, e.target.result, e.target.result] : null,
@@ -3156,7 +3156,7 @@ function updateStagedCategory(idx, newCategory) {
     item.wasPrice = 9.99;
     item.triptychImages = null;
   } else {
-    item.basePrice = 5.39;
+    item.basePrice = 7.00;
     item.wasPrice = 7.00;
     item.triptychImages = null;
   }

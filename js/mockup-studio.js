@@ -762,39 +762,39 @@ class MockupStudio {
     }
 
     // 1. Calculate prices for A4 and A3 across all 3 frames
-    let pricesA4 = { unframed: 5.39, plastic: 11.55, aluminium: 17.48 };
-    let pricesA3 = { unframed: 9.24, plastic: 19.25, aluminium: 26.72 };
+    let pricesA4 = { unframed: 7.00, plastic: 19.20, aluminium: 22.70 };
+    let pricesA3 = { unframed: 10.99, plastic: 22.45, aluminium: 25.95 };
 
     if (this.currentPoster && this.currentPoster.category === "custom-car") {
       const customPrices = (typeof EXACT_CUSTOM_CAR_PRICES !== 'undefined' ? EXACT_CUSTOM_CAR_PRICES : {});
       if (customPrices.a4) {
         pricesA4 = {
-          unframed: customPrices.a4.unframed?.price || 5.39,
-          plastic: customPrices.a4.plastic?.price || 11.55,
-          aluminium: customPrices.a4.aluminium?.price || 17.48
+          unframed: customPrices.a4.unframed?.price || 7.69,
+          plastic: customPrices.a4.plastic?.price || 13.85,
+          aluminium: customPrices.a4.aluminium?.price || 19.99
         };
       }
       if (customPrices.a3) {
         pricesA3 = {
-          unframed: customPrices.a3.unframed?.price || 9.24,
-          plastic: customPrices.a3.plastic?.price || 19.25,
-          aluminium: customPrices.a3.aluminium?.price || 26.72
+          unframed: customPrices.a3.unframed?.price || 11.54,
+          plastic: customPrices.a3.plastic?.price || 21.55,
+          aluminium: customPrices.a3.aluminium?.price || 29.99
         };
       }
     } else {
       const table = this.isTriptych ? EXACT_SET_PRICES : EXACT_SINGLE_PRICES;
       if (table.a4) {
         pricesA4 = {
-          unframed: table.a4.unframed?.price || 5.39,
-          plastic: table.a4.plastic?.price || 11.55,
-          aluminium: table.a4.aluminium?.price || 17.48
+          unframed: table.a4.unframed?.price || 7.00,
+          plastic: table.a4.plastic?.price || 19.20,
+          aluminium: table.a4.aluminium?.price || 22.70
         };
       }
       if (table.a3) {
         pricesA3 = {
-          unframed: table.a3.unframed?.price || 9.24,
-          plastic: table.a3.plastic?.price || 19.25,
-          aluminium: table.a3.aluminium?.price || 26.72
+          unframed: table.a3.unframed?.price || 10.99,
+          plastic: table.a3.plastic?.price || 22.45,
+          aluminium: table.a3.aluminium?.price || 25.95
         };
       }
     }

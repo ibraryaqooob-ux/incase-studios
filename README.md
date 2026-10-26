@@ -26,9 +26,9 @@ Every price across the site, cards, modal, and bag is strictly in GBP (£):
 
 | Format | A4 (`210 × 297 mm`) | A3 (`297 × 420 mm`) |
 | :--- | :--- | :--- |
-| **Unframed (Hardback Envelope)** | **£5.39** *(was £7.00)* | **£9.24** *(was £12.00)* |
-| **Black Plastic Frame** | **£11.55** *(was £15.00)* | **£19.25** *(was £25.00)* |
-| **Black Aluminium Frame** | **£17.48** *(was £22.70)* | **£26.72** *(was £34.70)* |
+| **Unframed (Hardback Envelope)** | **£7.00** | **£10.99** |
+| **Black Plastic Frame** | **£19.20** | **£22.45** |
+| **Black Aluminium Frame** | **£22.70** | **£25.95** |
 
 * **Announcement Bar**: `"23% OFF EVERYTHING + FREE UK DELIVERY ON ORDERS OVER £20"`
 * **Delivery**: Free UK delivery on orders £20 and over (otherwise £2.99).

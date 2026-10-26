@@ -61,7 +61,7 @@ class handler(BaseHTTPRequestHandler):
 
         for i, item in enumerate(items):
             title = item.get("title", "INCASE STUDIOS Print")
-            price_pence = item.get("price", 539)
+            price_pence = item.get("price", 700)
             qty = item.get("quantity", 1)
 
             data_dict[f"line_items[{i}][price_data][currency]"] = "gbp"
