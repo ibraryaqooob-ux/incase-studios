@@ -351,7 +351,10 @@ function renderMarqueeCarousel() {
   ];
 
   track.innerHTML = fullTrackList.map((poster, idx) => {
-    const baseP = typeof poster.basePrice === "number" ? poster.basePrice : 7.00;
+    const rawP = typeof poster.basePrice === "number" ? poster.basePrice : 7.00;
+    const isIslamic = poster.category === "islamic";
+    const isCustom = (poster.category === "custom-car" || poster.category === "custom-music");
+    const baseP = isIslamic ? 14.63 : (isCustom ? 7.69 : Math.round(rawP * 0.77 * 100) / 100);
     return `
       <div 
         class="marquee-item flex flex-col cursor-pointer flex-shrink-0 group"
@@ -745,13 +748,24 @@ function renderCatalog() {
 
   grid.innerHTML = filtered.map((poster, index) => {
     const isIslamic = poster.category === "islamic";
+    const isCustom = (poster.category === "custom-car" || poster.category === "custom-music");
     const categoryLabel = getCategoryBadge(poster.category);
     const panels = (poster.triptychImages && poster.triptychImages.length === 3)
       ? poster.triptychImages
       : ["assets/islamic-panel-1.jpg", "assets/islamic-panel-2.jpg", "assets/islamic-panel-3.jpg"];
 
-    const baseP = typeof poster.basePrice === "number" ? poster.basePrice : 7.00;
-    const wasPrice = Number(poster.wasPrice || baseP);
+    const rawBase = typeof poster.basePrice === "number" ? poster.basePrice : 7.00;
+    let baseP, wasPrice;
+    if (isIslamic) {
+      baseP = 14.63;
+      wasPrice = 19.00;
+    } else if (isCustom) {
+      baseP = 7.69;
+      wasPrice = 9.99;
+    } else {
+      wasPrice = rawBase;
+      baseP = Math.round(rawBase * 0.77 * 100) / 100;
+    }
 
     return `
       <div 
@@ -2674,26 +2688,68 @@ function updateOptionPricesInUI() {
   const currentPrices = getPricingTable()[selectedSize];
   if (!currentPrices) return;
 
+  const isSingle = (getPricingTable() === EXACT_SINGLE_PRICES);
+
+  const getOptPrice = (entry) => {
+    if (!entry) return { price: 0, wasPrice: 0 };
+    if (isSingle) {
+      const base = Number(entry.price);
+      return {
+        price: Math.round(base * 0.77 * 100) / 100,
+        wasPrice: base
+      };
+    }
+    return {
+      price: Number(entry.price),
+      wasPrice: Number(entry.wasPrice || entry.price)
+    };
+  };
+
+  const unframed = getOptPrice(currentPrices.unframed);
+  const plastic = getOptPrice(currentPrices.plastic);
+  const alum = getOptPrice(currentPrices.aluminium);
+
   const unframedPriceEl = document.getElementById("optPriceUnframed");
   const unframedWasEl = document.getElementById("optWasUnframed");
-  if (unframedPriceEl) unframedPriceEl.textContent = `£${currentPrices.unframed.price.toFixed(2)}`;
-  if (unframedWasEl) unframedWasEl.textContent = `£${currentPrices.unframed.wasPrice.toFixed(2)}`;
+  if (unframedPriceEl) unframedPriceEl.textContent = `£${unframed.price.toFixed(2)}`;
+  if (unframedWasEl) {
+    unframedWasEl.textContent = `£${unframed.wasPrice.toFixed(2)}`;
+    unframedWasEl.style.display = (unframed.wasPrice > unframed.price) ? "inline" : "none";
+  }
 
   const plasticPriceEl = document.getElementById("optPricePlastic");
   const plasticWasEl = document.getElementById("optWasPlastic");
-  if (plasticPriceEl) plasticPriceEl.textContent = `£${currentPrices.plastic.price.toFixed(2)}`;
-  if (plasticWasEl) plasticWasEl.textContent = `£${currentPrices.plastic.wasPrice.toFixed(2)}`;
+  if (plasticPriceEl) plasticPriceEl.textContent = `£${plastic.price.toFixed(2)}`;
+  if (plasticWasEl) {
+    plasticWasEl.textContent = `£${plastic.wasPrice.toFixed(2)}`;
+    plasticWasEl.style.display = (plastic.wasPrice > plastic.price) ? "inline" : "none";
+  }
 
   const alumPriceEl = document.getElementById("optPriceAlum");
   const alumWasEl = document.getElementById("optWasAlum");
-  if (alumPriceEl) alumPriceEl.textContent = `£${currentPrices.aluminium.price.toFixed(2)}`;
-  if (alumWasEl) alumWasEl.textContent = `£${currentPrices.aluminium.wasPrice.toFixed(2)}`;
+  if (alumPriceEl) alumPriceEl.textContent = `£${alum.price.toFixed(2)}`;
+  if (alumWasEl) {
+    alumWasEl.textContent = `£${alum.wasPrice.toFixed(2)}`;
+    alumWasEl.style.display = (alum.wasPrice > alum.price) ? "inline" : "none";
+  }
 }
 
 function getSelectedPricing() {
   const table = getPricingTable();
   const sizePrices = table[selectedSize] || table["a4"];
-  return sizePrices[selectedFrame] || sizePrices["unframed"];
+  const rawPricing = sizePrices[selectedFrame] || sizePrices["unframed"];
+  
+  if (table === EXACT_SINGLE_PRICES && rawPricing) {
+    const base = Number(rawPricing.price);
+    const discounted = Math.round(base * 0.77 * 100) / 100;
+    return {
+      price: discounted,
+      wasPrice: base,
+      label: rawPricing.label
+    };
+  }
+  
+  return rawPricing;
 }
 
 function updateModalPrice() {
@@ -2704,9 +2760,15 @@ function updateModalPrice() {
   const stickyWasPrice = document.getElementById("modalStickyWasPrice");
 
   if (priceEl) priceEl.textContent = `£${pricing.price.toFixed(2)}`;
-  if (wasPriceEl) wasPriceEl.textContent = `£${pricing.wasPrice.toFixed(2)}`;
+  if (wasPriceEl) {
+    wasPriceEl.textContent = `£${pricing.wasPrice.toFixed(2)}`;
+    wasPriceEl.style.display = (pricing.wasPrice > pricing.price) ? "inline" : "none";
+  }
   if (stickyPrice) stickyPrice.textContent = `£${pricing.price.toFixed(2)}`;
-  if (stickyWasPrice) stickyWasPrice.textContent = `£${pricing.wasPrice.toFixed(2)}`;
+  if (stickyWasPrice) {
+    stickyWasPrice.textContent = `£${pricing.wasPrice.toFixed(2)}`;
+    stickyWasPrice.style.display = (pricing.wasPrice > pricing.price) ? "inline" : "none";
+  }
 }
 
 // Quick Room Preview from catalog card

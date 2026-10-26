@@ -547,7 +547,17 @@ class MockupStudio {
     }
     const table = this.isTriptych ? EXACT_SET_PRICES : EXACT_SINGLE_PRICES;
     const sizePrices = table[this.currentSize] || table["a4"];
-    return sizePrices[this.currentFrame] || sizePrices["unframed"];
+    const rawPricing = sizePrices[this.currentFrame] || sizePrices["unframed"];
+
+    if (table === EXACT_SINGLE_PRICES && rawPricing) {
+      const base = Number(rawPricing.price);
+      return {
+        price: Math.round(base * 0.77 * 100) / 100,
+        wasPrice: base,
+        label: rawPricing.label
+      };
+    }
+    return rawPricing;
   }
 
   renderPrismHtml(posterImg, posterTitle, frameType, size, isGlazingVisible = true, panelSliceIndex = null, includeStageId = true) {
@@ -784,17 +794,25 @@ class MockupStudio {
     } else {
       const table = this.isTriptych ? EXACT_SET_PRICES : EXACT_SINGLE_PRICES;
       if (table.a4) {
+        const u = table.a4.unframed?.price || 7.00;
+        const p = table.a4.plastic?.price || 19.20;
+        const a = table.a4.aluminium?.price || 22.70;
+        const isSingle = (table === EXACT_SINGLE_PRICES);
         pricesA4 = {
-          unframed: table.a4.unframed?.price || 7.00,
-          plastic: table.a4.plastic?.price || 19.20,
-          aluminium: table.a4.aluminium?.price || 22.70
+          unframed: isSingle ? Math.round(u * 0.77 * 100) / 100 : u,
+          plastic: isSingle ? Math.round(p * 0.77 * 100) / 100 : p,
+          aluminium: isSingle ? Math.round(a * 0.77 * 100) / 100 : a
         };
       }
       if (table.a3) {
+        const u = table.a3.unframed?.price || 10.99;
+        const p = table.a3.plastic?.price || 22.45;
+        const a = table.a3.aluminium?.price || 25.95;
+        const isSingle = (table === EXACT_SINGLE_PRICES);
         pricesA3 = {
-          unframed: table.a3.unframed?.price || 10.99,
-          plastic: table.a3.plastic?.price || 22.45,
-          aluminium: table.a3.aluminium?.price || 25.95
+          unframed: isSingle ? Math.round(u * 0.77 * 100) / 100 : u,
+          plastic: isSingle ? Math.round(p * 0.77 * 100) / 100 : p,
+          aluminium: isSingle ? Math.round(a * 0.77 * 100) / 100 : a
         };
       }
     }
