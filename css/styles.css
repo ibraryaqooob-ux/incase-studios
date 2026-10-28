@@ -951,6 +951,19 @@ button[onclick*="openProductModal"] {
   transition: none !important;
 }
 
+/* Zero 3D Compositing Penalty in Clean Front View */
+.prism-3d-stage.stage-front-flat {
+  transform: none !important;
+  transform-style: flat !important;
+}
+.prism-3d-stage.stage-front-flat .prism-face-front,
+.prism-3d-stage.stage-front-flat .prism-face-paper-front {
+  transform: none !important;
+  transform-style: flat !important;
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+}
+
 /* Front Face (0deg): 9mm Slim Bezel Moulding + Full-Bleed Artwork + Acrylic Reflection */
 .prism-face-front {
   position: absolute !important;
@@ -960,8 +973,8 @@ button[onclick*="openProductModal"] {
   width: 100% !important;
   height: 100% !important;
   aspect-ratio: 1 / 1.414 !important;
-  transform: translateZ(4px);
-  transform-style: preserve-3d !important;
+  transform: translateZ(2px);
+  transform-style: flat !important;
   backface-visibility: hidden !important;
   -webkit-backface-visibility: hidden !important;
   z-index: 2;
@@ -969,10 +982,17 @@ button[onclick*="openProductModal"] {
   overflow: hidden !important;
   box-shadow: 0 22px 45px -12px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: high-quality !important;
+  -webkit-font-smoothing: antialiased !important;
 }
 
 .prism-face-paper-front {
   aspect-ratio: 1 / 1.414 !important;
+  transform-style: flat !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: high-quality !important;
+  -webkit-font-smoothing: antialiased !important;
 }
 
 /* Image inside Front Face: 100% Flush, Zero Air Gap, True Aspect Fill & Edge-to-Edge Artwork */
@@ -983,21 +1003,25 @@ button[onclick*="openProductModal"] {
 #modalPreviewContainer img {
   width: 100% !important;
   height: 100% !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   object-position: center !important;
   display: block !important;
   border-radius: 0px !important;
   margin: 0 !important;
   padding: 0 !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+  image-rendering: high-quality !important;
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
 }
 
-/* Shatterproof Acrylic Glazing Sheen Overlay */
+/* Shatterproof Acrylic Glazing Sheen Overlay (Clean Specular Reflection without Destructive Blend-Modes) */
 .prism-glazing-sheen {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.06) 24%, transparent 48%, rgba(255, 255, 255, 0.14) 75%, rgba(255, 255, 255, 0.02) 100%);
-  mix-blend-mode: soft-light;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.03) 24%, transparent 48%, rgba(255, 255, 255, 0.08) 75%, rgba(255, 255, 255, 0.01) 100%);
   z-index: 10;
   transition: opacity 0.3s ease;
   overflow: hidden;
@@ -1014,14 +1038,14 @@ button[onclick*="openProductModal"] {
     115deg,
     transparent 0%,
     transparent 38%,
-    rgba(255, 255, 255, 0.03) 43%,
-    rgba(255, 255, 255, 0.28) 50%,
-    rgba(255, 255, 255, 0.04) 57%,
+    rgba(255, 255, 255, 0.02) 43%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0.03) 57%,
     transparent 62%,
     transparent 100%
   );
   pointer-events: none;
-  animation: dynamicGlassSweep 7s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  animation: dynamicGlassSweep 8s cubic-bezier(0.25, 1, 0.5, 1) infinite;
 }
 
 /* ===================================================
@@ -2389,34 +2413,29 @@ button[onclick*="openProductModal"] {
   }
   #modalPreviewContainer .prism-3d-viewport {
     aspect-ratio: 1 / 1.414 !important;
-    height: clamp(170px, 32vh, 230px) !important;
-    max-height: calc(100% - 20px) !important;
+    height: clamp(230px, 38vh, 310px) !important;
+    max-height: calc(100% - 16px) !important;
     width: auto !important;
-    max-width: calc(100% - 32px) !important;
+    max-width: calc(100% - 24px) !important;
     flex-shrink: 0 !important;
     margin: 0 auto !important;
     display: block !important;
     position: relative !important;
     perspective: 1800px !important;
-    will-change: width, height, transform !important;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
     transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), height 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
-  /* In expanded state: strict CSS padding & bounding box constraint (max-width: 82%, max-height: 75%) with dedicated 24px safe margin */
+  /* In expanded state: strict CSS padding & bounding box constraint (max-width: 88%, max-height: 82%) with dedicated safe margin */
   .stage-expanded #modalPreviewContainer,
   #productModal.stage-expanded #modalPreviewContainer {
     flex: 1 1 auto !important;
     width: 100% !important;
     height: 100% !important;
     max-height: none !important;
-    padding: 24px !important;
-    padding-top: 28px !important;
-    padding-bottom: 24px !important;
-    padding-left: 24px !important;
-    padding-right: 36px !important;
+    padding: 16px !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -2426,11 +2445,11 @@ button[onclick*="openProductModal"] {
   .modal-preview-stage-pane.stage-expanded #modalPreviewContainer .prism-3d-viewport,
   #productModal.stage-expanded #modalPreviewContainer .prism-3d-viewport {
     aspect-ratio: 1 / 1.414 !important;
-    height: clamp(280px, 55vh, 460px) !important;
-    max-height: 75% !important;
+    height: clamp(380px, 68vh, 560px) !important;
+    max-height: 82% !important;
     width: auto !important;
-    max-width: 82% !important;
-    margin: 24px auto !important;
+    max-width: 88% !important;
+    margin: 16px auto !important;
     flex-shrink: 0 !important;
     display: block !important;
     position: relative !important;
@@ -3351,22 +3370,20 @@ button[onclick*="openProductModal"] {
     flex-grow: 1 !important;
   }
   #modalPreviewContainer {
-    max-height: calc(100% - 90px) !important;
+    max-height: calc(100% - 60px) !important;
     height: 100% !important;
     max-width: 100% !important;
-    padding: 16px 20px 10px 20px !important;
+    padding: 16px 24px !important;
   }
   #modalPreviewContainer .prism-3d-viewport {
     aspect-ratio: 1 / 1.414 !important;
-    height: clamp(260px, 48vh, 380px) !important;
-    max-height: calc(100% - 20px) !important;
+    height: clamp(380px, 66vh, 600px) !important;
+    max-height: calc(100% - 24px) !important;
     width: auto !important;
-    max-width: calc(100% - 40px) !important;
+    max-width: calc(100% - 32px) !important;
     flex-shrink: 0 !important;
     margin: 0 auto !important;
     perspective: 1800px !important;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
     transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
   }
   /* Desktop Full-Screen Stage Expansion */
@@ -3384,18 +3401,18 @@ button[onclick*="openProductModal"] {
   .stage-expanded #modalPreviewContainer,
   #productModal.stage-expanded #modalPreviewContainer {
     max-height: none !important;
-    height: calc(100% - 90px) !important;
-    padding: 24px !important;
+    height: calc(100% - 60px) !important;
+    padding: 20px !important;
     box-sizing: border-box !important;
   }
   .stage-expanded #modalPreviewContainer .prism-3d-viewport,
   #productModal.stage-expanded #modalPreviewContainer .prism-3d-viewport {
     aspect-ratio: 1 / 1.414 !important;
-    height: clamp(380px, 60vh, 580px) !important;
-    max-height: 75% !important;
+    height: clamp(520px, 80vh, 800px) !important;
+    max-height: 86% !important;
     width: auto !important;
-    max-width: 82% !important;
-    margin: 24px auto !important;
+    max-width: 88% !important;
+    margin: 16px auto !important;
     flex-shrink: 0 !important;
   }
   .stage-camera-dock-row .modal-expand-stage-btn,
@@ -3459,13 +3476,18 @@ button[onclick*="openProductModal"] {
   max-width: 100% !important;
   max-height: 100% !important;
   aspect-ratio: 1 / 1.414 !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   object-position: center !important;
   display: block !important;
   border-radius: 0px !important;
   margin: 0 !important;
   padding: 0 !important;
   border: none !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+  image-rendering: high-quality !important;
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
 }
 
 /* Safe Wall Zone Centering: Centered vertically between top controls and headboard/sofa */

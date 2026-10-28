@@ -814,8 +814,8 @@ function renderCatalog() {
                   <img 
                     src="${poster.image}" 
                     alt="${poster.title}" 
-                    class="w-full h-full object-cover block portrait-spec" 
-                    style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;"
+                    class="w-full h-full object-contain block portrait-spec" 
+                    style="width: 100% !important; height: 100% !important; object-fit: contain !important; display: block !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;" 
                     loading="${index < 8 ? 'eager' : 'lazy'}"
                     onerror="handlePosterImageError(this, '${poster.id}')"
                   />
@@ -1784,6 +1784,8 @@ function captureYourWallPhoto() {
   canvas.height = (video && video.videoHeight) ? video.videoHeight : 720;
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
 
   if (video && video.readyState >= 2) {
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -2347,7 +2349,14 @@ function updateModalPrismTransform(smooth = true) {
     stage.style.transform = `rotateX(${modalRotX}deg) rotateY(${modalRotY}deg)`;
   } else {
     // Standard Single 3D Poster Stage Transform
-    stage.style.transform = `translate3d(${posX}px, ${posY}px, 0) scale(${scale}) rotateX(${modalRotX}deg) rotateY(${modalRotY}deg)`;
+    const isFrontFlat = (Math.abs(modalRotY) === 0 && Math.abs(modalRotX) === 0 && posX === 0 && posY === 0 && Math.abs(scale - 1.0) < 0.01 && !isModalRoomMode);
+    stage.classList.toggle("stage-front-flat", isFrontFlat);
+
+    if (isFrontFlat) {
+      stage.style.transform = "none";
+    } else {
+      stage.style.transform = `translate3d(${posX}px, ${posY}px, 0) scale(${scale}) rotateX(${modalRotX}deg) rotateY(${modalRotY}deg)`;
+    }
   }
 
   // Update physical scale dimension badge text above the frame
@@ -2465,6 +2474,8 @@ function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSlic
           src="${posterImg}" 
           alt="${posterTitle}" 
           class="triptych-slice-img triptych-slice-${panelSliceIndex}" 
+          decoding="sync"
+          fetchpriority="high"
           onerror="this.onerror=null; this.src='assets/islamic-triptych-panorama.jpg';" 
         />
       </div>
@@ -2473,8 +2484,10 @@ function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSlic
       <img 
         src="${posterImg}" 
         alt="${posterTitle}" 
-        class="w-full h-full object-cover block pointer-events-none portrait-spec" 
-        style="width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: center !important; display: block !important; margin: 0 !important; padding: 0 !important;" 
+        class="w-full h-full object-contain block pointer-events-none portrait-spec" 
+        style="width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center !important; display: block !important; margin: 0 !important; padding: 0 !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;" 
+        decoding="sync"
+        fetchpriority="high"
         onerror="handlePosterImageError(this, '${currentCustomizingPoster ? currentCustomizingPoster.id : ''}')" 
       />
     `;
@@ -2490,7 +2503,6 @@ function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSlic
           <!-- Front Face (0deg): 200gsm Glossy Photographic Print Face -->
           <div class="prism-face-paper-front portrait-spec overflow-hidden absolute inset-0" style="aspect-ratio: 1 / 1.414; width: 100%; height: 100%;">
             ${frontArtHtml}
-            <div class="prism-glazing-sheen"></div>
           </div>
 
           <!-- Rear Face (180deg): Clean Unbranded White Photo Backing -->

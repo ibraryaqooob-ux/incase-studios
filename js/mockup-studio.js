@@ -583,8 +583,10 @@ class MockupStudio {
         <img 
           src="${posterImg}" 
           alt="${posterTitle}" 
-          class="w-full h-full object-cover block pointer-events-none portrait-spec" 
-          style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important; margin: 0 !important; padding: 0 !important;"
+          class="w-full h-full object-contain block pointer-events-none portrait-spec" 
+          style="width: 100% !important; height: 100% !important; object-fit: contain !important; display: block !important; margin: 0 !important; padding: 0 !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;"
+          decoding="sync"
+          fetchpriority="high"
           onerror="handlePosterImageError(this, '${this.currentPoster ? this.currentPoster.id : ''}')"
         />
       `;
@@ -1018,6 +1020,10 @@ class MockupStudio {
       canvas.width = 1920;
       canvas.height = 1280;
       const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+      }
 
       // 1. Draw Architectural Wall Surface (with dynamic paint color)
       ctx.fillStyle = this.currentWallColor || "#EAE8E3";
