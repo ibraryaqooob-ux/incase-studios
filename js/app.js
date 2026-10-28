@@ -1284,6 +1284,8 @@ function closeProductModal() {
     document.documentElement.style.overflow = "auto";
     window.history.replaceState(null, '', window.location.pathname);
     resetModalStudioWall();
+    const loupe = document.getElementById("modalPrintLoupe");
+    if (loupe) loupe.style.display = "none";
   }
 }
 
@@ -1370,10 +1372,10 @@ function showModalZoomIndicator(zoom) {
 }
 
 function toggleModalDoubleTapZoom() {
-  if (isModalRoomMode) return; // Scale locked in Live Room mode for accurate comparison
+  if (isModalRoomMode) return;
   const isMobile = window.innerWidth < 768;
-  const maxTarget = (isMobile && selectedSize === 'a3') ? 1.05 : (isMobile ? 1.08 : 1.25);
-  const target = (modalZoom > 1.02) ? 1.0 : maxTarget;
+  const maxTarget = isMobile ? 1.85 : 2.2;
+  const target = (modalZoom > 1.1) ? 1.0 : maxTarget;
   setModalZoom(target);
   showModalZoomIndicator(target);
 }
@@ -1385,15 +1387,12 @@ function setModalZoom(val) {
     return;
   }
   const isMobile = window.innerWidth < 1024;
-  // Strictly clamp zoom so it NEVER clips into bottom camera dock or wall swatches
-  const maxZoom = isMobile
-    ? (selectedSize === 'a3' ? 1.06 : 1.14)
-    : (selectedSize === 'a3' ? 1.15 : 1.25);
+  const maxZoom = isMobile ? 2.0 : 2.5;
   modalZoom = Math.max(0.95, Math.min(maxZoom, Math.round(val * 100) / 100));
   
   const stagePane = document.querySelector(".modal-preview-stage-pane");
   if (stagePane) {
-    stagePane.classList.toggle("stage-zoomed-active", modalZoom > 1.02);
+    stagePane.classList.toggle("stage-zoomed-active", modalZoom > 1.08);
   }
 
   const slider = document.getElementById("modalZoomSlider");
@@ -1404,14 +1403,12 @@ function setModalZoom(val) {
 }
 
 function zoomModalIn() {
-  const isMobile = window.innerWidth < 768;
-  const step = (isMobile && selectedSize === 'a3') ? 0.03 : 0.08;
+  const step = 0.15;
   setModalZoom(modalZoom + step);
 }
 
 function zoomModalOut() {
-  const isMobile = window.innerWidth < 768;
-  const step = (isMobile && selectedSize === 'a3') ? 0.03 : 0.08;
+  const step = 0.15;
   setModalZoom(modalZoom - step);
 }
 
@@ -2129,8 +2126,8 @@ function initModalStageGestures() {
   stagePane.addEventListener("wheel", (e) => {
     if (isModalRoomMode) return;
     e.preventDefault();
-    const delta = e.deltaY < 0 ? 0.05 : -0.05;
-    const target = Math.max(0.95, Math.min(1.28, Math.round((modalZoom + delta) * 100) / 100));
+    const delta = e.deltaY < 0 ? 0.08 : -0.08;
+    const target = Math.max(0.95, Math.min(2.5, Math.round((modalZoom + delta) * 100) / 100));
     setModalZoom(target);
     showModalZoomIndicator(target);
   }, { passive: false });
@@ -2142,12 +2139,63 @@ function initModalStageGestures() {
     toggleModalDoubleTapZoom();
   });
 
+  // Interactive High-Resolution Print Loupe (Active in Front View on Desktop)
+  stagePane.addEventListener("mousemove", (e) => {
+    const loupe = document.getElementById("modalPrintLoupe");
+    if (isPointerDown || isModalRoomMode || Math.abs(modalRotY) > 5 || Math.abs(modalRotX) > 5 || modalZoom > 1.35) {
+      if (loupe) loupe.style.display = "none";
+      return;
+    }
+    const frontFace = stagePane.querySelector(".prism-face-front, .prism-face-paper-front");
+    if (!frontFace) {
+      if (loupe) loupe.style.display = "none";
+      return;
+    }
+    const img = frontFace.querySelector("img");
+    if (!img) {
+      if (loupe) loupe.style.display = "none";
+      return;
+    }
+    const rect = img.getBoundingClientRect();
+    const x = e.clientX;
+    const y = e.clientY;
+    if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+      let activeLoupe = loupe;
+      if (!activeLoupe) {
+        activeLoupe = document.createElement("div");
+        activeLoupe.id = "modalPrintLoupe";
+        document.body.appendChild(activeLoupe);
+      }
+      activeLoupe.style.display = "block";
+      activeLoupe.style.left = `${x}px`;
+      activeLoupe.style.top = `${y}px`;
+
+      const relX = (x - rect.left) / rect.width;
+      const relY = (y - rect.top) / rect.height;
+      const zoomFactor = 2.85; // 285% magnification for razor-sharp typography
+      const posterSrc = currentCustomizingPoster ? currentCustomizingPoster.image : img.src;
+      activeLoupe.style.backgroundImage = `url("${posterSrc}")`;
+      activeLoupe.style.backgroundRepeat = "no-repeat";
+      activeLoupe.style.backgroundSize = `${rect.width * zoomFactor}px ${rect.height * zoomFactor}px`;
+      activeLoupe.style.backgroundPosition = `${-(relX * rect.width * zoomFactor - 95)}px ${-(relY * rect.height * zoomFactor - 95)}px`;
+    } else {
+      if (loupe) loupe.style.display = "none";
+    }
+  });
+
+  stagePane.addEventListener("mouseleave", () => {
+    const loupe = document.getElementById("modalPrintLoupe");
+    if (loupe) loupe.style.display = "none";
+  });
+
   window.addEventListener("mousemove", (e) => {
     if (!isPointerDown) return;
     if (isModalRoomMode) return;
     const dx = e.clientX - startX;
     if (dragMode === "rotate") {
       setModalRotation(startAngle + dx * 0.75, false);
+      const loupe = document.getElementById("modalPrintLoupe");
+      if (loupe) loupe.style.display = "none";
     }
   });
 
@@ -2156,6 +2204,8 @@ function initModalStageGestures() {
       isPointerDown = false;
       dragMode = "none";
     }
+    const loupe = document.getElementById("modalPrintLoupe");
+    if (loupe) loupe.style.display = "none";
   });
 
   // Touch Drag, Pinch-to-Zoom & Double-Tap on Mobile
@@ -2349,11 +2399,19 @@ function updateModalPrismTransform(smooth = true) {
     stage.style.transform = `rotateX(${modalRotX}deg) rotateY(${modalRotY}deg)`;
   } else {
     // Standard Single 3D Poster Stage Transform
-    const isFrontFlat = (Math.abs(modalRotY) === 0 && Math.abs(modalRotX) === 0 && posX === 0 && posY === 0 && Math.abs(scale - 1.0) < 0.01 && !isModalRoomMode);
+    const isFrontFlat = (Math.abs(modalRotY) === 0 && Math.abs(modalRotX) === 0 && !isModalRoomMode);
     stage.classList.toggle("stage-front-flat", isFrontFlat);
 
+    const viewport = stage.closest(".prism-3d-viewport");
+    if (viewport) {
+      viewport.classList.toggle("viewport-front-flat", isFrontFlat);
+    }
+
     if (isFrontFlat) {
-      stage.style.transform = "none";
+      // 100% Pure 2D High-DPI Subpixel Render (Zero 3D perspective or texture downsampling!)
+      stage.style.transform = (posX === 0 && posY === 0 && Math.abs(scale - 1.0) < 0.005)
+        ? "none"
+        : `translate(${posX}px, ${posY}px) scale(${scale})`;
     } else {
       stage.style.transform = `translate3d(${posX}px, ${posY}px, 0) scale(${scale}) rotateX(${modalRotX}deg) rotateY(${modalRotY}deg)`;
     }

@@ -951,17 +951,70 @@ button[onclick*="openProductModal"] {
   transition: none !important;
 }
 
-/* Zero 3D Compositing Penalty in Clean Front View */
-.prism-3d-stage.stage-front-flat {
+/* Zero 3D Compositing Penalty in Clean Front View (Full 2D Subpixel Retina Crispness) */
+.prism-3d-viewport.viewport-front-flat {
+  perspective: none !important;
+  -webkit-perspective: none !important;
   transform: none !important;
-  transform-style: flat !important;
 }
+
+.prism-3d-stage.stage-front-flat {
+  transform-style: flat !important;
+  -webkit-transform-style: flat !important;
+}
+
 .prism-3d-stage.stage-front-flat .prism-face-front,
 .prism-3d-stage.stage-front-flat .prism-face-paper-front {
   transform: none !important;
+  -webkit-transform: none !important;
   transform-style: flat !important;
+  -webkit-transform-style: flat !important;
   -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: high-quality !important;
+}
+
+.prism-3d-stage.stage-front-flat img {
+  transform: translateZ(0) !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: high-quality !important;
+}
+
+/* High-Resolution Interactive Print Spec Loupe */
+#modalPrintLoupe {
+  position: fixed;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  border: 2.5px solid #111114;
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+  display: none;
+  background-color: #ffffff;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+#modalPrintLoupe::after {
+  content: "100% SPEC DETAIL";
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(18, 18, 22, 0.92);
+  color: #f4f4f5;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 2.5px 7px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
 }
 
 /* Front Face (0deg): 9mm Slim Bezel Moulding + Full-Bleed Artwork + Acrylic Reflection */
