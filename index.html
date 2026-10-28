@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=20261026-v83">
+  <link rel="stylesheet" href="css/styles.css?v=20261028-v84">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/emblem.svg">
@@ -1042,21 +1042,16 @@
         <!-- Category Buttons Row (Wrap & Fully Visible on Mobile & Desktop) -->
         <div id="categoryScrollTrack" class="mobile-category-chip-strip flex flex-wrap items-center gap-1.5 sm:gap-2">
           <button type="button" data-category-tab="all" onclick="filterAndScrollToCategory('all')" class="category-tab-btn category-tab-active">All Prints</button>
-          <button type="button" data-category-tab="porsche" onclick="filterAndScrollToCategory('porsche')" class="category-tab-btn">Porsche</button>
           <button type="button" data-category-tab="bmw" onclick="filterAndScrollToCategory('bmw')" class="category-tab-btn">BMW M-Series</button>
-          <button type="button" data-category-tab="audi" onclick="filterAndScrollToCategory('audi')" class="category-tab-btn">Audi RS</button>
           <button type="button" data-category-tab="amg" onclick="filterAndScrollToCategory('amg')" class="category-tab-btn">Mercedes-AMG</button>
+          <button type="button" data-category-tab="porsche" onclick="filterAndScrollToCategory('porsche')" class="category-tab-btn">Porsche</button>
+          <button type="button" data-category-tab="audi" onclick="filterAndScrollToCategory('audi')" class="category-tab-btn">Audi RS</button>
+          <button type="button" data-category-tab="exotic" onclick="filterAndScrollToCategory('exotic')" class="category-tab-btn">Ferrari &amp; Lambo</button>
+          <button type="button" data-category-tab="cartoon-cars" onclick="filterAndScrollToCategory('cartoon-cars')" class="category-tab-btn">Through The Years</button>
           <button type="button" data-category-tab="custom-car" onclick="filterAndScrollToCategory('custom-car')" class="category-tab-btn category-tab-custom">Custom Your Car (£7.69)</button>
-          <button type="button" data-category-tab="cinema" onclick="filterAndScrollToCategory('cinema')" class="category-tab-btn">Movie &amp; Cinema</button>
-          <button type="button" data-category-tab="music" onclick="filterAndScrollToCategory('music')" class="category-tab-btn">Music Albums</button>
-          <button type="button" data-category-tab="football" onclick="filterAndScrollToCategory('football')" class="category-tab-btn">Football &amp; Stadiums</button>
           <button type="button" data-category-tab="islamic" onclick="filterAndScrollToCategory('islamic')" class="category-tab-btn">Islamic 3-Piece Sets</button>
           <button type="button" data-category-tab="custom-music" onclick="filterAndScrollToCategory('custom-music')" class="category-tab-btn category-tab-custom">Custom Album (£7.69)</button>
           <button type="button" data-category-tab="custom-design" onclick="filterAndScrollToCategory('custom-design')" class="category-tab-btn">Custom Design</button>
-          <button type="button" data-category-tab="travel" onclick="filterAndScrollToCategory('travel')" class="category-tab-btn">Travel &amp; Landmarks</button>
-          <button type="button" data-category-tab="animals" onclick="filterAndScrollToCategory('animals')" class="category-tab-btn">Wildlife &amp; Animals</button>
-          <button type="button" data-category-tab="exotic" onclick="filterAndScrollToCategory('exotic')" class="category-tab-btn">Ferrari &amp; Lambo</button>
-          <button type="button" data-category-tab="cartoon-cars" onclick="filterAndScrollToCategory('cartoon-cars')" class="category-tab-btn">Through The Years</button>
         </div>
       </div>
 
@@ -1074,7 +1069,7 @@
                 A4 / A3
               </span>
               <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 210 / 297; max-width: 200px; margin: 0 auto; border: 3.5px solid #111111 !important;">
-                <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1200&auto=format&fit=crop" alt="Porsche 911 GT3 RS (992)" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
+                <img src="assets/Porsche GT 3RS (Minimalistic).png" alt="Porsche 911 GT3 RS (992)" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
               </div>
             </div>
             <div class="p-3 pt-2">
@@ -1097,8 +1092,8 @@
           </div>
         </div>
 
-        <!-- Card 2: BMW M3 Competition -->
-        <div class="product-card group flex flex-col justify-between cursor-pointer transition-all duration-200" data-poster-id="bmw-m3-g80" onclick="openProductModal('bmw-m3-g80')">
+        <!-- Card 2: BMW M4 Competition -->
+        <div class="product-card group flex flex-col justify-between cursor-pointer transition-all duration-200" data-poster-id="bmw-m4-competition" onclick="openProductModal('bmw-m4-competition')">
           <div>
             <div class="product-card-stage relative px-2 py-3 sm:px-4 sm:py-5 flex items-center justify-center">
               <span class="absolute top-1.5 left-1.5 sm:top-2.5 sm:left-2.5 z-10 px-2 py-0.5 bg-zinc-950 text-white border border-zinc-800 text-[8px] sm:text-[8.5px] font-black uppercase tracking-wider shadow-sm">
@@ -1108,13 +1103,13 @@
                 A4 / A3
               </span>
               <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 210 / 297; max-width: 200px; margin: 0 auto; border: 3.5px solid #111111 !important;">
-                <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop" alt="BMW M3 Competition (G80)" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
+                <img src="assets/m4 comp face_ copy.PNG" alt="BMW M4 Competition" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
               </div>
             </div>
             <div class="p-3 pt-2">
               <span class="text-[9px] font-bold uppercase tracking-wider text-zinc-600 block mb-0.5">Bavarian Spec</span>
-              <h3 class="font-black text-xs sm:text-sm uppercase tracking-wide text-zinc-950 truncate group-hover:text-zinc-700 transition">BMW M3 Competition (G80)</h3>
-              <p class="text-[10px] text-zinc-600 truncate mt-0.5">Bavarian M Power Performance Spec</p>
+              <h3 class="font-black text-xs sm:text-sm uppercase tracking-wide text-zinc-950 truncate group-hover:text-zinc-700 transition">BMW M4 Competition</h3>
+              <p class="text-[10px] text-zinc-600 truncate mt-0.5">Precision Track-Bred Coupe (G82)</p>
             </div>
           </div>
           <div class="p-3 pt-0">
@@ -1125,7 +1120,7 @@
               </div>
               <span class="px-1.5 py-0.5 bg-red-600 text-white text-[8px] font-black uppercase tracking-wider">23% OFF</span>
             </div>
-            <button type="button" data-poster-id="bmw-m3-g80" onclick="event.stopPropagation(); openProductModal('bmw-m3-g80')" class="w-full py-2.5 px-3 bg-zinc-950 hover:bg-zinc-800 text-white font-black text-[10px] sm:text-[11px] uppercase tracking-wider rounded-xs transition text-center cursor-pointer shadow-sm">
+            <button type="button" data-poster-id="bmw-m4-competition" onclick="event.stopPropagation(); openProductModal('bmw-m4-competition')" class="w-full py-2.5 px-3 bg-zinc-950 hover:bg-zinc-800 text-white font-black text-[10px] sm:text-[11px] uppercase tracking-wider rounded-xs transition text-center cursor-pointer shadow-sm">
               Select Size &amp; Frame
             </button>
           </div>
@@ -1142,7 +1137,7 @@
                 A4 / A3
               </span>
               <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 210 / 297; max-width: 200px; margin: 0 auto; border: 3.5px solid #111111 !important;">
-                <img src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1200&auto=format&fit=crop" alt="Audi RS Q8 Quattro" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
+                <img src="assets/Audi Rsq8 (Minimalistic).png" alt="Audi RS Q8 Quattro" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
               </div>
             </div>
             <div class="p-3 pt-2">
@@ -1218,7 +1213,7 @@
                 BESTSELLER
               </span>
               <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 210 / 297; max-width: 200px; margin: 0 auto; border: 3.5px solid #111111 !important;">
-                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop" alt="Custom Your Car Spec Poster" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
+                <img src="assets/m4 comp face_ copy.PNG" alt="Custom Your Car Spec Poster" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
               </div>
             </div>
             <div class="p-3 pt-2">
@@ -1241,8 +1236,8 @@
           </div>
         </div>
 
-        <!-- Card 6: Interstellar Gargantua Spec -->
-        <div class="product-card group flex flex-col justify-between cursor-pointer transition-all duration-200" data-poster-id="cinema-interstellar" onclick="openProductModal('cinema-interstellar')">
+        <!-- Card 6: Audi RS6 Avant -->
+        <div class="product-card group flex flex-col justify-between cursor-pointer transition-all duration-200" data-poster-id="audi-rs6-avant" onclick="openProductModal('audi-rs6-avant')">
           <div>
             <div class="product-card-stage relative px-2 py-3 sm:px-4 sm:py-5 flex items-center justify-center">
               <span class="absolute top-1.5 left-1.5 sm:top-2.5 sm:left-2.5 z-10 px-2 py-0.5 bg-zinc-950 text-white border border-zinc-800 text-[8px] sm:text-[8.5px] font-black uppercase tracking-wider shadow-sm">
@@ -1252,13 +1247,13 @@
                 A4 / A3
               </span>
               <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 210 / 297; max-width: 200px; margin: 0 auto; border: 3.5px solid #111111 !important;">
-                <img src="https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=1200&auto=format&fit=crop" alt="Interstellar Gargantua Spec" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
+                <img src="assets/Audi RS6 (Minimalistic).png" alt="Audi RS6 Avant" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
               </div>
             </div>
             <div class="p-3 pt-2">
-              <span class="text-[9px] font-bold uppercase tracking-wider text-blue-700 block mb-0.5">Cult Cinema</span>
-              <h3 class="font-black text-xs sm:text-sm uppercase tracking-wide text-zinc-950 truncate group-hover:text-zinc-700 transition">Interstellar Gargantua Spec</h3>
-              <p class="text-[10px] text-zinc-600 truncate mt-0.5">Christopher Nolan Black Hole Gravitational Blueprint</p>
+              <span class="text-[9px] font-bold uppercase tracking-wider text-zinc-600 block mb-0.5">Ingolstadt Spec</span>
+              <h3 class="font-black text-xs sm:text-sm uppercase tracking-wide text-zinc-950 truncate group-hover:text-zinc-700 transition">Audi RS6 Avant</h3>
+              <p class="text-[10px] text-zinc-600 truncate mt-0.5">The Apex High-Performance Estate</p>
             </div>
           </div>
           <div class="p-3 pt-0">
@@ -1269,14 +1264,14 @@
               </div>
               <span class="px-1.5 py-0.5 bg-red-600 text-white text-[8px] font-black uppercase tracking-wider">23% OFF</span>
             </div>
-            <button type="button" data-poster-id="cinema-interstellar" onclick="event.stopPropagation(); openProductModal('cinema-interstellar')" class="w-full py-2.5 px-3 bg-zinc-950 hover:bg-zinc-800 text-white font-black text-[10px] sm:text-[11px] uppercase tracking-wider rounded-xs transition text-center cursor-pointer shadow-sm">
+            <button type="button" data-poster-id="audi-rs6-avant" onclick="event.stopPropagation(); openProductModal('audi-rs6-avant')" class="w-full py-2.5 px-3 bg-zinc-950 hover:bg-zinc-800 text-white font-black text-[10px] sm:text-[11px] uppercase tracking-wider rounded-xs transition text-center cursor-pointer shadow-sm">
               Select Size &amp; Frame
             </button>
           </div>
         </div>
 
-        <!-- Card 7: Frank Ocean - Blonde -->
-        <div class="product-card group flex flex-col justify-between cursor-pointer transition-all duration-200" data-poster-id="music-blonde" onclick="openProductModal('music-blonde')">
+        <!-- Card 7: Mercedes G63 AMG -->
+        <div class="product-card group flex flex-col justify-between cursor-pointer transition-all duration-200" data-poster-id="mercedes-g63-amg" onclick="openProductModal('mercedes-g63-amg')">
           <div>
             <div class="product-card-stage relative px-2 py-3 sm:px-4 sm:py-5 flex items-center justify-center">
               <span class="absolute top-1.5 left-1.5 sm:top-2.5 sm:left-2.5 z-10 px-2 py-0.5 bg-zinc-950 text-white border border-zinc-800 text-[8px] sm:text-[8.5px] font-black uppercase tracking-wider shadow-sm">
@@ -1286,13 +1281,13 @@
                 A4 / A3
               </span>
               <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 210 / 297; max-width: 200px; margin: 0 auto; border: 3.5px solid #111111 !important;">
-                <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?q=80&w=1200&auto=format&fit=crop" alt="Frank Ocean - Blonde" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
+                <img src="assets/g63 URBAN FACE psd.PNG" alt="Mercedes G63 AMG" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
               </div>
             </div>
             <div class="p-3 pt-2">
-              <span class="text-[9px] font-bold uppercase tracking-wider text-purple-700 block mb-0.5">Album Blueprints</span>
-              <h3 class="font-black text-xs sm:text-sm uppercase tracking-wide text-zinc-950 truncate group-hover:text-zinc-700 transition">Frank Ocean - Blonde</h3>
-              <p class="text-[10px] text-zinc-600 truncate mt-0.5">Definitive Minimalist Album Spec &amp; Tracklist</p>
+              <span class="text-[9px] font-bold uppercase tracking-wider text-zinc-600 block mb-0.5">Affalterbach Spec</span>
+              <h3 class="font-black text-xs sm:text-sm uppercase tracking-wide text-zinc-950 truncate group-hover:text-zinc-700 transition">Mercedes G63 AMG</h3>
+              <p class="text-[10px] text-zinc-600 truncate mt-0.5">Urban Automotive Performance Spec</p>
             </div>
           </div>
           <div class="p-3 pt-0">
@@ -1303,14 +1298,14 @@
               </div>
               <span class="px-1.5 py-0.5 bg-red-600 text-white text-[8px] font-black uppercase tracking-wider">23% OFF</span>
             </div>
-            <button type="button" data-poster-id="music-blonde" onclick="event.stopPropagation(); openProductModal('music-blonde')" class="w-full py-2.5 px-3 bg-zinc-950 hover:bg-zinc-800 text-white font-black text-[10px] sm:text-[11px] uppercase tracking-wider rounded-xs transition text-center cursor-pointer shadow-sm">
+            <button type="button" data-poster-id="mercedes-g63-amg" onclick="event.stopPropagation(); openProductModal('mercedes-g63-amg')" class="w-full py-2.5 px-3 bg-zinc-950 hover:bg-zinc-800 text-white font-black text-[10px] sm:text-[11px] uppercase tracking-wider rounded-xs transition text-center cursor-pointer shadow-sm">
               Select Size &amp; Frame
             </button>
           </div>
         </div>
 
-        <!-- Card 8: Cristiano Ronaldo - Real Madrid -->
-        <div class="product-card group flex flex-col justify-between cursor-pointer transition-all duration-200" data-poster-id="football-cr7" onclick="openProductModal('football-cr7')">
+        <!-- Card 8: Ferrari 296 GTB -->
+        <div class="product-card group flex flex-col justify-between cursor-pointer transition-all duration-200" data-poster-id="ferrari-296-gtb" onclick="openProductModal('ferrari-296-gtb')">
           <div>
             <div class="product-card-stage relative px-2 py-3 sm:px-4 sm:py-5 flex items-center justify-center">
               <span class="absolute top-1.5 left-1.5 sm:top-2.5 sm:left-2.5 z-10 px-2 py-0.5 bg-zinc-950 text-white border border-zinc-800 text-[8px] sm:text-[8.5px] font-black uppercase tracking-wider shadow-sm">
@@ -1320,13 +1315,13 @@
                 A4 / A3
               </span>
               <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 210 / 297; max-width: 200px; margin: 0 auto; border: 3.5px solid #111111 !important;">
-                <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1200&auto=format&fit=crop" alt="Cristiano Ronaldo - Real Madrid Iconic" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
+                <img src="assets/Ferrari 296 (Minimalistic).png" alt="Ferrari 296 GTB" class="w-full h-full object-cover block portrait-spec" loading="lazy" />
               </div>
             </div>
             <div class="p-3 pt-2">
-              <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-700 block mb-0.5">Matchday Icons</span>
-              <h3 class="font-black text-xs sm:text-sm uppercase tracking-wide text-zinc-950 truncate group-hover:text-zinc-700 transition">Cristiano Ronaldo - Real Madrid</h3>
-              <p class="text-[10px] text-zinc-600 truncate mt-0.5">Bernabéu Legend Career Statistics &amp; Trophy Count</p>
+              <span class="text-[9px] font-bold uppercase tracking-wider text-red-600 block mb-0.5">Maranello Spec</span>
+              <h3 class="font-black text-xs sm:text-sm uppercase tracking-wide text-zinc-950 truncate group-hover:text-zinc-700 transition">Ferrari 296 GTB</h3>
+              <p class="text-[10px] text-zinc-600 truncate mt-0.5">830 CV Hybrid V6 Berlinetta</p>
             </div>
           </div>
           <div class="p-3 pt-0">
@@ -1337,7 +1332,7 @@
               </div>
               <span class="px-1.5 py-0.5 bg-red-600 text-white text-[8px] font-black uppercase tracking-wider">23% OFF</span>
             </div>
-            <button type="button" data-poster-id="football-cr7" onclick="event.stopPropagation(); openProductModal('football-cr7')" class="w-full py-2.5 px-3 bg-zinc-950 hover:bg-zinc-800 text-white font-black text-[10px] sm:text-[11px] uppercase tracking-wider rounded-xs transition text-center cursor-pointer shadow-sm">
+            <button type="button" data-poster-id="ferrari-296-gtb" onclick="event.stopPropagation(); openProductModal('ferrari-296-gtb')" class="w-full py-2.5 px-3 bg-zinc-950 hover:bg-zinc-800 text-white font-black text-[10px] sm:text-[11px] uppercase tracking-wider rounded-xs transition text-center cursor-pointer shadow-sm">
               Select Size &amp; Frame
             </button>
           </div>
@@ -3044,9 +3039,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/catalog-data.js?v=20261026-v83"></script>
-  <script src="js/db.js?v=20261017-v60"></script>
-  <script src="js/mockup-studio.js?v=20261026-v83"></script>
-  <script src="js/app.js?v=20261026-v83"></script>
+  <script src="js/catalog-data.js?v=20261028-v84"></script>
+  <script src="js/db.js?v=20261028-v84"></script>
+  <script src="js/mockup-studio.js?v=20261028-v84"></script>
+  <script src="js/app.js?v=20261028-v84"></script>
 </body>
 </html>
