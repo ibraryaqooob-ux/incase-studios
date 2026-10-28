@@ -272,6 +272,24 @@ button:active, [role="button"]:active {
     0 8px 18px -4px rgba(0, 0, 0, 0.22) !important;
 }
 
+/* Universal Crisp Scaling & Zero Blur on Storefront Product Grid Images */
+.product-card img,
+.product-card-stage img,
+.product-card-mat img,
+.poster-frame-container img,
+#posterGrid img {
+  filter: none !important;
+  -webkit-filter: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+  image-rendering: high-quality !important;
+  -webkit-font-smoothing: antialiased !important;
+  transform: translateZ(0) !important;
+  -webkit-transform: translateZ(0) !important;
+}
+
 /* Universal Architectural Frame Borders strictly in Modals & Studio Visualizer */
 #productModal .frame-black-plastic,
 #productModal .frame-plastic,
@@ -944,7 +962,7 @@ button[onclick*="openProductModal"] {
   aspect-ratio: 1 / 1.414 !important;
   transform-style: preserve-3d;
   transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-  will-change: transform;
+  will-change: auto;
 }
 
 .prism-3d-stage.no-transition {
@@ -1028,8 +1046,8 @@ button[onclick*="openProductModal"] {
   aspect-ratio: 1 / 1.414 !important;
   transform: translateZ(2px);
   transform-style: flat !important;
-  backface-visibility: hidden !important;
-  -webkit-backface-visibility: hidden !important;
+  backface-visibility: visible !important;
+  -webkit-backface-visibility: visible !important;
   z-index: 2;
   box-sizing: border-box !important;
   overflow: hidden !important;
@@ -2474,7 +2492,7 @@ button[onclick*="openProductModal"] {
     margin: 0 auto !important;
     display: block !important;
     position: relative !important;
-    perspective: 1800px !important;
+    perspective: 2800px !important;
     transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), height 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
   /* In expanded state: strict CSS padding & bounding box constraint (max-width: 88%, max-height: 82%) with dedicated safe margin */
@@ -3436,7 +3454,7 @@ button[onclick*="openProductModal"] {
     max-width: calc(100% - 32px) !important;
     flex-shrink: 0 !important;
     margin: 0 auto !important;
-    perspective: 1800px !important;
+    perspective: 2800px !important;
     transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
   }
   /* Desktop Full-Screen Stage Expansion */

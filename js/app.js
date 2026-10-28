@@ -799,9 +799,11 @@ function renderCatalog() {
                     <img 
                       src="${panelSrc}" 
                       alt="${poster.title} Panel ${idx + 1}" 
-                      class="w-full h-full object-cover block portrait-spec"
-                      style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;"
-                      loading="${index < 6 ? 'eager' : 'lazy'}"
+                      class="w-full h-full object-contain block portrait-spec"
+                      style="width: 100% !important; height: 100% !important; object-fit: contain !important; display: block !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;"
+                      loading="eager"
+                      decoding="sync"
+                      fetchpriority="high"
                       onerror="this.onerror=null; this.src='assets/islamic-panel-${idx + 1}.jpg';"
                     />
                   </div>
@@ -809,14 +811,16 @@ function renderCatalog() {
               </div>
             ` : `
               <!-- Single Framed Print (Locked 1:1.414 Portrait Aspect Ratio) -->
-              <div class="w-[82%] sm:w-[76%] max-w-[210px] mx-auto transition-transform duration-300 group-hover:scale-[1.02]">
+              <div class="w-full max-w-[260px] mx-auto transition-transform duration-300 group-hover:scale-[1.02]">
                 <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 210 / 297; width: 100%; border: 4px solid #111111 !important;">
                   <img 
                     src="${poster.image}" 
                     alt="${poster.title}" 
                     class="w-full h-full object-contain block portrait-spec" 
                     style="width: 100% !important; height: 100% !important; object-fit: contain !important; display: block !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;" 
-                    loading="${index < 8 ? 'eager' : 'lazy'}"
+                    loading="eager"
+                    decoding="sync"
+                    fetchpriority="high"
                     onerror="handlePosterImageError(this, '${poster.id}')"
                   />
                 </div>
@@ -2415,6 +2419,13 @@ function updateModalPrismTransform(smooth = true) {
     } else {
       stage.style.transform = `translate3d(${posX}px, ${posY}px, 0) scale(${scale}) rotateX(${modalRotX}deg) rotateY(${modalRotY}deg)`;
     }
+
+    // Guarantee 100% texture sharpness at oblique angles (-90° to +90°) and hide only when facing rear MDF
+    const frontFaces = stage.querySelectorAll(".prism-face-front, .prism-face-paper-front");
+    const isPast90 = Math.abs(modalRotY) > 90;
+    frontFaces.forEach(f => {
+      f.style.visibility = isPast90 ? "hidden" : "visible";
+    });
   }
 
   // Update physical scale dimension badge text above the frame
