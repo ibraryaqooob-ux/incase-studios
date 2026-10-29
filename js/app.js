@@ -1390,8 +1390,7 @@ function setModalZoom(val) {
     updateModalPrismTransform(true);
     return;
   }
-  const isMobile = window.innerWidth < 1024;
-  const maxZoom = isMobile ? 2.0 : 2.5;
+  const maxZoom = 2.5; // Full 2.5x high-DPI inspection capability on both mobile and desktop
   modalZoom = Math.max(0.95, Math.min(maxZoom, Math.round(val * 100) / 100));
   
   const stagePane = document.querySelector(".modal-preview-stage-pane");
@@ -1404,6 +1403,7 @@ function setModalZoom(val) {
   const label = document.getElementById("modalZoomVal");
   if (label) label.textContent = `${Math.round(modalZoom * 100)}%`;
   updateModalPrismTransform(true);
+  updateModalRetinaCanvas();
 }
 
 function zoomModalIn() {
@@ -1434,8 +1434,17 @@ function toggleModalStageExpand(e) {
   const expandBtn = document.getElementById("modalExpandStageBtn");
 
   if (modal) modal.classList.toggle("stage-expanded", isModalStageExpanded);
-  if (stagePane) stagePane.classList.toggle("stage-expanded", isModalStageExpanded);
+  if (stagePane) {
+    stagePane.classList.toggle("stage-expanded", isModalStageExpanded);
+    stagePane.style.touchAction = isModalStageExpanded ? "none" : "pan-y";
+  }
   if (stageCol) stageCol.classList.toggle("stage-expanded", isModalStageExpanded);
+
+  // When collapsing from expanded to unexpanded view, reset zoom to 1.0 to eliminate container/shadow glitching
+  if (!isModalStageExpanded && modalZoom !== 1.0) {
+    modalZoom = 1.0;
+    if (stagePane) stagePane.classList.remove("stage-zoomed-active");
+  }
 
   if (expandBtn) {
     if (isModalRoomMode) {
@@ -1464,6 +1473,8 @@ function toggleModalStageExpand(e) {
   setTimeout(() => updateModalPrismTransform(true), 60);
   setTimeout(() => updateModalPrismTransform(true), 180);
   setTimeout(() => updateModalPrismTransform(true), 320);
+  setTimeout(() => updateModalRetinaCanvas(), 100);
+  setTimeout(() => updateModalRetinaCanvas(), 350);
 }
 
 function initExpandButtonListener() {
@@ -2220,6 +2231,11 @@ function initModalStageGestures() {
     dismissModalGestureHint();
 
     if (e.touches.length === 2) {
+      // STRICT: Pinch-to-zoom is strictly restricted to Expanded view or Live Room view only
+      if (!isModalStageExpanded && !isModalRoomMode) {
+        isPinching = false;
+        return; // In unexpanded view, disable pinch-to-zoom so native vertical page scroll works without container glitching
+      }
       isPinching = true;
       dragMode = "pinch";
       gestureDecided = true;
@@ -2254,8 +2270,8 @@ function initModalStageGestures() {
       );
       if (startPinchDist > 0) {
         const factor = curDist / startPinchDist;
-        // Clamp pinch zoom between 0.95 and 1.28 so the poster is NEVER cut in half
-        const newZoom = Math.max(0.95, Math.min(1.28, startPinchZoom * factor));
+        // In expanded view, clamp pinch zoom between 0.95 and 2.5 so customer can inspect every technical spec
+        const newZoom = Math.max(0.95, Math.min(2.5, startPinchZoom * factor));
         setModalZoom(newZoom);
         showModalZoomIndicator(newZoom);
       }
@@ -2304,7 +2320,8 @@ function initModalStageGestures() {
         if (dx < 12 && dy < 12) {
           const now = Date.now();
           if (now - lastTapTime < 320) {
-            if (!isModalRoomMode) {
+            // Double-Tap detection restricted to expanded view or Live Room
+            if ((isModalStageExpanded || isModalRoomMode)) {
               toggleModalDoubleTapZoom();
             }
             lastTapTime = 0;
@@ -2520,6 +2537,95 @@ function setModalFrameFromZoom(frameId) {
   updateModalPrice();
 }
 
+
+/**
+ * FORCE RETINA (HIGH-DPI) 3D TEXTURES ON MOBILE
+ * Matches the mobile screen's native device pixel density (window.devicePixelRatio: 2x or 3x).
+ * Applies high-quality linear smoothing (THREE.LinearFilter equivalent) and draws directly
+ * from the uncompressed 300 DPI master print asset with zero mipmap degradation.
+ */
+function updateModalRetinaCanvas(highResImgSrc) {
+  const canvas = document.getElementById("modalRetinaTextureCanvas");
+  if (!canvas) return;
+  const container = canvas.parentElement;
+  if (!container) return;
+
+  const rect = container.getBoundingClientRect();
+  if (rect.width <= 0 || rect.height <= 0) return;
+
+  // Set device pixel ratio to match mobile screen (Retina DPR: 2x or 3x on mobile devices)
+  const dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+  const zoomFactor = (typeof modalZoom === 'number' && modalZoom > 1.0) ? Math.min(2.5, modalZoom) : 1.0;
+  const targetWidth = Math.round(rect.width * dpr * zoomFactor);
+  const targetHeight = Math.round(rect.height * dpr * zoomFactor);
+
+  if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+  }
+
+  const ctx = canvas.getContext("2d", { alpha: false });
+  if (!ctx) return;
+
+  // Maximize texture filtering for crisp 2D spec typography (equivalent to THREE.LinearFilter without mipmap downsampling)
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+
+  const imgSrc = highResImgSrc || (currentCustomizingPoster ? currentCustomizingPoster.image : "");
+  if (!imgSrc) return;
+
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.src = imgSrc;
+
+  const renderToCanvas = () => {
+    if (!canvas || !ctx || canvas.width === 0 || canvas.height === 0) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const imgW = img.naturalWidth || 2480;
+    const imgH = img.naturalHeight || 3508;
+    const imgAspect = imgW / imgH;
+    const canvasAspect = canvas.width / canvas.height;
+
+    let drawW = canvas.width;
+    let drawH = canvas.height;
+    let drawX = 0;
+    let drawY = 0;
+
+    if (imgAspect > canvasAspect) {
+      drawH = canvas.width / imgAspect;
+      drawY = (canvas.height - drawH) / 2;
+    } else {
+      drawW = canvas.height * imgAspect;
+      drawX = (canvas.width - drawW) / 2;
+    }
+
+    ctx.drawImage(img, drawX, drawY, drawW, drawH);
+    canvas.style.opacity = "1";
+  };
+
+  if (img.complete && img.naturalWidth > 0) {
+    renderToCanvas();
+  } else {
+    img.onload = renderToCanvas;
+  }
+}
+
+// Window resize & orientation change listener for crisp Retina canvas re-rendering
+window.addEventListener("resize", () => {
+  if (currentCustomizingPoster) {
+    updateModalRetinaCanvas();
+  }
+}, { passive: true });
+
+window.addEventListener("orientationchange", () => {
+  setTimeout(() => {
+    if (currentCustomizingPoster) {
+      updateModalRetinaCanvas();
+    }
+  }, 200);
+}, { passive: true });
+
 function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSliceIndex = null, includeStageId = true) {
   const isA4 = (size === "a4");
   const isMobile = window.innerWidth < 768;
@@ -2550,15 +2656,23 @@ function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSlic
       </div>
     `
     : `
-      <img 
-        src="${posterImg}" 
-        alt="${posterTitle}" 
-        class="w-full h-full object-contain block pointer-events-none portrait-spec" 
-        style="width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center !important; display: block !important; margin: 0 !important; padding: 0 !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;" 
-        decoding="sync"
-        fetchpriority="high"
-        onerror="handlePosterImageError(this, '${currentCustomizingPoster ? currentCustomizingPoster.id : ''}')" 
-      />
+      <div class="relative w-full h-full overflow-hidden flex items-center justify-center">
+        <canvas 
+          id="modalRetinaTextureCanvas" 
+          class="modal-retina-canvas" 
+          style="width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center !important; display: block !important; margin: 0 !important; padding: 0 !important; z-index: 2; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;"
+        ></canvas>
+        <img 
+          id="modalFrontArtworkImg"
+          src="${posterImg}" 
+          alt="${posterTitle}" 
+          class="w-full h-full object-contain block pointer-events-none portrait-spec" 
+          style="width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center !important; display: block !important; margin: 0 !important; padding: 0 !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;" 
+          decoding="sync"
+          fetchpriority="high"
+          onerror="handlePosterImageError(this, '${currentCustomizingPoster ? currentCustomizingPoster.id : ''}')" 
+        />
+      </div>
     `;
 
   // Dedicated 0.4mm 3D Paper Model for Unframed Prints
@@ -2688,6 +2802,7 @@ function updateModalPreview() {
 
   updateModalPrismTransform(false);
   updateModalRotationControls();
+  updateModalRetinaCanvas();
 
   // Size buttons (A4 vs A3) with sleek dimension badges
   document.querySelectorAll("[data-size-btn]").forEach(btn => {

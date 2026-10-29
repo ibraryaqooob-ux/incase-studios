@@ -223,9 +223,11 @@ button:active, [role="button"]:active {
   box-sizing: border-box !important;
 }
 
-.product-card:hover {
-  transform: translateY(-4px) !important;
-  box-shadow: none !important;
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: none !important;
+  }
 }
 
 .product-card-stage,
@@ -261,15 +263,17 @@ button:active, [role="button"]:active {
   transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.product-card:hover .product-card-stage .poster-frame-container,
-.product-card:hover .product-card-stage .frame-black-plastic,
-.product-card:hover .product-card-stage .frame-black-aluminium,
-.product-card:hover .product-card-mat .poster-frame-container,
-.product-card:hover .product-card-frame {
-  transform: scale(1.025) !important;
-  box-shadow: 
-    0 24px 48px -10px rgba(0, 0, 0, 0.42), 
-    0 8px 18px -4px rgba(0, 0, 0, 0.22) !important;
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover .product-card-stage .poster-frame-container,
+  .product-card:hover .product-card-stage .frame-black-plastic,
+  .product-card:hover .product-card-stage .frame-black-aluminium,
+  .product-card:hover .product-card-mat .poster-frame-container,
+  .product-card:hover .product-card-frame {
+    transform: scale(1.025) !important;
+    box-shadow: 
+      0 24px 48px -10px rgba(0, 0, 0, 0.42), 
+      0 8px 18px -4px rgba(0, 0, 0, 0.22) !important;
+  }
 }
 
 /* Universal Crisp Scaling & Zero Blur on Storefront Product Grid Images */
@@ -283,7 +287,6 @@ button:active, [role="button"]:active {
   object-fit: contain !important;
   object-position: center !important;
   image-rendering: -webkit-optimize-contrast !important;
-  image-rendering: crisp-edges !important;
   image-rendering: high-quality !important;
   -webkit-font-smoothing: antialiased !important;
   transform: translateZ(0) !important;
@@ -354,12 +357,14 @@ button:active, [role="button"]:active {
   pointer-events: auto !important;
 }
 
-.product-card:hover {
-  transform: translateY(-6px);
-  border-color: #71717a !important;
-  box-shadow: 
-    0 22px 38px -10px rgba(0, 0, 0, 0.5),
-    0 10px 18px -6px rgba(0, 0, 0, 0.3);
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover {
+    transform: translateY(-6px);
+    border-color: #71717a !important;
+    box-shadow: 
+      0 22px 38px -10px rgba(0, 0, 0, 0.5),
+      0 10px 18px -6px rgba(0, 0, 0, 0.3);
+  }
 }
 
 .product-card button,
@@ -373,8 +378,10 @@ button[onclick*="openProductModal"] {
   transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.product-card:hover .poster-img {
-  transform: scale(1.025);
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover .poster-img {
+    transform: scale(1.025);
+  }
 }
 
 /* Card details box (crisp gallery white with thin architectural border) */
@@ -522,27 +529,29 @@ button[onclick*="openProductModal"] {
 }
 
 /* Smooth lift and amplified luxury drop-shadow on hover */
-.marquee-item:hover {
-  transform: translateY(-4px) scale(1.03) !important;
-  z-index: 30 !important;
-}
+@media (hover: hover) and (pointer: fine) {
+  .marquee-item:hover {
+    transform: translateY(-4px) scale(1.03) !important;
+    z-index: 30 !important;
+  }
 
-.marquee-item:hover .product-card-stage {
-  box-shadow: none !important;
-  border: none !important;
-}
+  .marquee-item:hover .product-card-stage {
+    box-shadow: none !important;
+    border: none !important;
+  }
 
-.marquee-item:hover .poster-frame-container {
-  box-shadow: 
-    0 26px 48px -8px rgba(0, 0, 0, 0.95), 
-    0 10px 20px -4px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.22),
-    0 0 20px rgba(255, 255, 255, 0.06) !important;
-}
+  .marquee-item:hover .poster-frame-container {
+    box-shadow: 
+      0 26px 48px -8px rgba(0, 0, 0, 0.95), 
+      0 10px 20px -4px rgba(0, 0, 0, 0.7),
+      0 0 0 1px rgba(255, 255, 255, 0.22),
+      0 0 20px rgba(255, 255, 255, 0.06) !important;
+  }
 
-.marquee-item:hover .poster-frame-container::after {
-  opacity: 0.9;
-  transform: scale(1.15) translateY(2px);
+  .marquee-item:hover .poster-frame-container::after {
+    opacity: 0.9;
+    transform: scale(1.15) translateY(2px);
+  }
 }
 
 @media (min-width: 640px) {
@@ -650,8 +659,10 @@ button[onclick*="openProductModal"] {
   transition: color 0.15s ease !important;
 }
 
-.hero-museum-spec-tag:hover {
-  color: #18181b !important;
+@media (hover: hover) and (pointer: fine) {
+  .hero-museum-spec-tag:hover {
+    color: #18181b !important;
+  }
 }
 
 /* Hero Centered Brand Logo (Zero horizontal clipping on mobile) */
@@ -775,11 +786,13 @@ button[onclick*="openProductModal"] {
   z-index: 30 !important;
 }
 
-.video-mute-pill:hover {
-  background: rgba(28, 28, 35, 0.95) !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  color: #ffffff !important;
-  transform: translateY(-1px) scale(1.02);
+@media (hover: hover) and (pointer: fine) {
+  .video-mute-pill:hover {
+    background: rgba(28, 28, 35, 0.95) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) scale(1.02);
+  }
 }
 
 .video-mute-pill:active {
@@ -1081,7 +1094,6 @@ button[onclick*="openProductModal"] {
   margin: 0 !important;
   padding: 0 !important;
   image-rendering: -webkit-optimize-contrast !important;
-  image-rendering: crisp-edges !important;
   image-rendering: high-quality !important;
   -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
@@ -1510,10 +1522,12 @@ button[onclick*="openProductModal"] {
   flex-shrink: 0;
 }
 
-.category-tab-btn:hover {
-  background: #27272A;
-  color: #FFFFFF;
-  border-color: #3F3F46;
+@media (hover: hover) and (pointer: fine) {
+  .category-tab-btn:hover {
+    background: #27272A;
+    color: #FFFFFF;
+    border-color: #3F3F46;
+  }
 }
 
 .category-tab-btn.category-tab-active,
@@ -1532,9 +1546,11 @@ button[onclick*="openProductModal"] {
   font-weight: 800;
 }
 
-.category-tab-btn.category-tab-custom:hover {
-  background: #FBBF24;
-  color: #000000;
+@media (hover: hover) and (pointer: fine) {
+  .category-tab-btn.category-tab-custom:hover {
+    background: #FBBF24;
+    color: #000000;
+  }
 }
 
 .category-tab-btn.category-tab-custom.category-tab-active {
@@ -1596,10 +1612,12 @@ button[onclick*="openProductModal"] {
   border-radius: 4px;
   transition: all 0.2s ease;
 }
-.top-down-layer-row:hover {
-  background: #191920;
-  border-color: #3f3f4a;
-  transform: translateX(3px);
+@media (hover: hover) and (pointer: fine) {
+  .top-down-layer-row:hover {
+    background: #191920;
+    border-color: #3f3f4a;
+    transform: translateX(3px);
+  }
 }
 .top-down-layer-num {
   font-family: monospace;
@@ -1671,10 +1689,12 @@ button[onclick*="openProductModal"] {
   align-items: center;
   gap: 4px;
 }
-.clean-view-btn:hover {
-  background: #272730;
-  color: #ffffff;
-  border-color: #52525e;
+@media (hover: hover) and (pointer: fine) {
+  .clean-view-btn:hover {
+    background: #272730;
+    color: #ffffff;
+    border-color: #52525e;
+  }
 }
 .clean-view-btn.active {
   background: #ffffff !important;
@@ -1745,10 +1765,12 @@ button[onclick*="openProductModal"] {
   transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease;
 }
 
-.sticky-pillar-card:hover {
-  transform: translateY(-4px);
-  border-color: #3f3f46 !important;
-  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5);
+@media (hover: hover) and (pointer: fine) {
+  .sticky-pillar-card:hover {
+    transform: translateY(-4px);
+    border-color: #3f3f46 !important;
+    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5);
+  }
 }
 
 /* Interactive Pillar Left Navigation Bar */
@@ -1770,10 +1792,12 @@ button[onclick*="openProductModal"] {
   position: relative;
 }
 
-.pillar-nav-btn:hover {
-  background-color: #222228;
-  color: #ffffff;
-  border-color: #3f3f46;
+@media (hover: hover) and (pointer: fine) {
+  .pillar-nav-btn:hover {
+    background-color: #222228;
+    color: #ffffff;
+    border-color: #3f3f46;
+  }
 }
 
 /* Active Glowing Left Indicator Bar */
@@ -1798,12 +1822,14 @@ button[onclick*="openProductModal"] {
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn-primary-action:hover {
-  transform: translateY(-1px);
-}
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary-action:hover {
+    transform: translateY(-1px);
+  }
 
-.btn-primary-action:hover .arrow-slide {
-  transform: translateX(4px);
+  .btn-primary-action:hover .arrow-slide {
+    transform: translateX(4px);
+  }
 }
 
 .arrow-slide {
@@ -1822,11 +1848,13 @@ button[onclick*="openProductModal"] {
   background: #000;
 }
 
-.studio-video-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 
-    0 0 65px -8px rgba(255, 255, 255, 0.12),
-    0 40px 85px -15px rgba(0, 0, 0, 0.98);
+@media (hover: hover) and (pointer: fine) {
+  .studio-video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      0 0 65px -8px rgba(255, 255, 255, 0.12),
+      0 40px 85px -15px rgba(0, 0, 0, 0.98);
+  }
 }
 
 .studio-video-glow {
@@ -1892,10 +1920,12 @@ button[onclick*="openProductModal"] {
   transition: all 0.18s ease;
 }
 
-.studio-zoom-pill-btn:hover {
-  background: rgba(255, 255, 255, 0.22);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: scale(1.05);
+@media (hover: hover) and (pointer: fine) {
+  .studio-zoom-pill-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
 }
 
 .studio-zoom-pill-btn:active {
@@ -1915,8 +1945,10 @@ button[onclick*="openProductModal"] {
   transition: color 0.18s ease;
 }
 
-.studio-zoom-pill-label:hover {
-  color: #6ee7b7;
+@media (hover: hover) and (pointer: fine) {
+  .studio-zoom-pill-label:hover {
+    color: #6ee7b7;
+  }
 }
 
 /* ===================================================
@@ -2287,9 +2319,11 @@ button[onclick*="openProductModal"] {
     margin: 0 3px !important;
   }
 
-  .quick-toggle-btn:hover {
-    color: #ffffff !important;
-    background: rgba(255, 255, 255, 0.08) !important;
+  @media (hover: hover) and (pointer: fine) {
+    .quick-toggle-btn:hover {
+      color: #ffffff !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+    }
   }
 
   .quick-toggle-btn.active {
@@ -2408,10 +2442,12 @@ button[onclick*="openProductModal"] {
     color: #e4e4e7 !important;
   }
 
-  #modalExpandStageBtn.modal-expand-stage-btn:hover {
-    background: rgba(30, 30, 36, 0.95) !important;
-    border-color: rgba(255, 255, 255, 0.3) !important;
-    color: #ffffff !important;
+  @media (hover: hover) and (pointer: fine) {
+    #modalExpandStageBtn.modal-expand-stage-btn:hover {
+      background: rgba(30, 30, 36, 0.95) !important;
+      border-color: rgba(255, 255, 255, 0.3) !important;
+      color: #ffffff !important;
+    }
   }
 
   /* ===================================================
@@ -2643,9 +2679,11 @@ button[onclick*="openProductModal"] {
     user-select: none !important;
     -webkit-tap-highlight-color: transparent !important;
   }
-  .modal-angle-floating-dock .dock-pill-btn:hover,
-  #modalAngleDockContainer .dock-pill-btn:hover {
-    color: #ffffff !important;
+  @media (hover: hover) and (pointer: fine) {
+    .modal-angle-floating-dock .dock-pill-btn:hover,
+    #modalAngleDockContainer .dock-pill-btn:hover {
+      color: #ffffff !important;
+    }
   }
   .modal-angle-floating-dock .dock-pill-btn.active,
   #modalAngleDockContainer .dock-pill-btn.active {
@@ -3242,12 +3280,14 @@ button[onclick*="openProductModal"] {
   user-select: none;
   touch-action: manipulation;
 }
-.dock-pill-btn:hover,
-.stage-architect-btn:hover,
-.stage-control-btn:hover {
-  background: #27272a;
-  color: #ffffff;
-  border-color: #52525b;
+@media (hover: hover) and (pointer: fine) {
+  .dock-pill-btn:hover,
+  .stage-architect-btn:hover,
+  .stage-control-btn:hover {
+    background: #27272a;
+    color: #ffffff;
+    border-color: #52525b;
+  }
 }
 .dock-pill-btn:active,
 .stage-architect-btn:active,
@@ -3336,10 +3376,12 @@ button[onclick*="openProductModal"] {
     padding: 6px 14px;
   }
 }
-.header-nav-btn:hover {
-  background: #27272a;
-  border-color: #52525b;
-  color: #ffffff;
+@media (hover: hover) and (pointer: fine) {
+  .header-nav-btn:hover {
+    background: #27272a;
+    border-color: #52525b;
+    color: #ffffff;
+  }
 }
 .header-nav-btn:active {
   transform: scale(0.96);
@@ -3349,9 +3391,11 @@ button[onclick*="openProductModal"] {
   color: #d4d4d8;
   transition: color 0.15s ease;
 }
-.header-nav-btn:hover i,
-.header-nav-btn:hover svg {
-  color: #ffffff;
+@media (hover: hover) and (pointer: fine) {
+  .header-nav-btn:hover i,
+  .header-nav-btn:hover svg {
+    color: #ffffff;
+  }
 }
 
 /* Interior Room Scene & Furniture in Configurator Modal: Angled Gallery Perspective */
@@ -3555,7 +3599,6 @@ button[onclick*="openProductModal"] {
   padding: 0 !important;
   border: none !important;
   image-rendering: -webkit-optimize-contrast !important;
-  image-rendering: crisp-edges !important;
   image-rendering: high-quality !important;
   -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
@@ -3916,9 +3959,11 @@ button[onclick*="openProductModal"] {
   flex-shrink: 0 !important;
 }
 
-.wall-swatch-dot:hover {
-  transform: scale(1.1) !important;
-  border-color: rgba(255, 255, 255, 0.85) !important;
+@media (hover: hover) and (pointer: fine) {
+  .wall-swatch-dot:hover {
+    transform: scale(1.1) !important;
+    border-color: rgba(255, 255, 255, 0.85) !important;
+  }
 }
 
 .wall-swatch-dot:active {
@@ -4019,13 +4064,15 @@ button[onclick*="openProductModal"] {
   border-width: 4.5px;
 }
 
-.hero-shelf-frame-a3:hover,
-.hero-shelf-frame-a4:hover {
-  transform: scale(1.025);
-  box-shadow:
-    -8px -4px 24px rgba(0, 0, 0, 0.3),
-    0 3px 8px rgba(0, 0, 0, 0.5),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+@media (hover: hover) and (pointer: fine) {
+  .hero-shelf-frame-a3:hover,
+  .hero-shelf-frame-a4:hover {
+    transform: scale(1.025);
+    box-shadow:
+      -8px -4px 24px rgba(0, 0, 0, 0.3),
+      0 3px 8px rgba(0, 0, 0, 0.5),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  }
 }
 
 .hero-shelf-frame-a3 img,
@@ -4328,9 +4375,13 @@ a:active,
   opacity: 0.55;
   transition: opacity 0.35s ease;
 }
-.ledge-artwork-unit.ledge-focused::before,
-.ledge-artwork-unit:hover::before {
+.ledge-artwork-unit.ledge-focused::before {
   opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .ledge-artwork-unit:hover::before {
+    opacity: 1;
+  }
 }
 
 /* Grounded Contact Shadow Directly on the Shelf Surface */
@@ -4413,7 +4464,14 @@ a:active,
   }
 }
 
-.ledge-artwork-unit:hover .ledge-frame-box,
+@media (hover: hover) and (pointer: fine) {
+  .ledge-artwork-unit:hover .ledge-frame-box {
+    box-shadow:
+      -14px -6px 34px rgba(0, 0, 0, 0.42),
+      0 3px 10px rgba(0, 0, 0, 0.65),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.28) !important;
+  }
+}
 .ledge-artwork-unit.ledge-focused .ledge-frame-box {
   box-shadow:
     -14px -6px 34px rgba(0, 0, 0, 0.42),
@@ -4465,7 +4523,12 @@ a:active,
   transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.ledge-artwork-unit:hover .ledge-hover-title-badge,
+@media (hover: hover) and (pointer: fine) {
+  .ledge-artwork-unit:hover .ledge-hover-title-badge {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
 .ledge-artwork-unit.ledge-focused .ledge-hover-title-badge {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
@@ -4756,3 +4819,80 @@ img.triptych-slice-2 {
 
 
 
+
+/* ===================================================
+   CRITICAL MOBILE TOUCH-ACTION: RESTRICT PINCH-TO-ZOOM TO EXPANDED VIEW ONLY
+   =================================================== */
+
+/* 1. Unexpanded Stage: Strict pan-y allows natural vertical page scrolling; disables 3D pinch zoom */
+#productModal:not(.stage-expanded):not(.modal-room-hanging-mode) .modal-preview-stage-pane,
+#productModal:not(.stage-expanded):not(.modal-room-hanging-mode) #modalPreviewContainer,
+#productModal:not(.stage-expanded):not(.modal-room-hanging-mode) .modal-prism-wrapper,
+#productModal:not(.stage-expanded):not(.modal-room-hanging-mode) .prism-3d-viewport,
+#productModal:not(.stage-expanded):not(.modal-room-hanging-mode) .prism-3d-stage {
+  touch-action: pan-y !important;
+}
+
+/* 2. Expanded / Live Room Stage: touch-action: none allows full multi-touch rotation & pinch-to-zoom */
+#productModal.stage-expanded .modal-preview-stage-pane,
+#productModal.modal-room-hanging-mode .modal-preview-stage-pane,
+.stage-expanded .modal-preview-stage-pane,
+.modal-room-hanging-mode .modal-preview-stage-pane,
+#productModal.stage-expanded #modalPreviewContainer,
+#productModal.stage-expanded .modal-prism-wrapper,
+#productModal.stage-expanded .prism-3d-viewport,
+#productModal.stage-expanded .prism-3d-stage,
+.stage-expanded #modalPreviewContainer,
+.stage-expanded .modal-prism-wrapper,
+.stage-expanded .prism-3d-viewport,
+.stage-expanded .prism-3d-stage {
+  touch-action: none !important;
+}
+
+/* Retina DPR Canvas Texture for 3D Viewer */
+.modal-retina-canvas {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: high-quality !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+}
+
+/* Prevent sticky hover effects on mobile & touch devices */
+@media (hover: none) or (pointer: coarse) {
+  .product-card:hover,
+  .product-card:hover .product-card-stage .poster-frame-container,
+  .product-card:hover .poster-img,
+  .marquee-item:hover,
+  .marquee-item:hover .product-card-stage,
+  .marquee-item:hover .poster-frame-container,
+  .category-tab-btn:hover,
+  .quick-toggle-btn:hover,
+  .dock-pill-btn:hover,
+  .stage-architect-btn:hover,
+  .stage-control-btn:hover,
+  .header-nav-btn:hover,
+  .btn-primary-action:hover,
+  .wall-swatch-dot:hover,
+  .hero-shelf-frame-a3:hover,
+  .hero-shelf-frame-a4:hover,
+  .ledge-artwork-unit:hover .ledge-frame-box,
+  .ledge-artwork-unit:hover .ledge-hover-title-badge {
+    transform: none !important;
+    box-shadow: inherit !important;
+    background: inherit !important;
+    color: inherit !important;
+    border-color: inherit !important;
+  }
+}
