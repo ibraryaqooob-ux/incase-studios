@@ -954,7 +954,7 @@ button[onclick*="openProductModal"] {
    =================================================== */
 
 .prism-3d-viewport {
-  perspective: 1200px;
+  perspective: 2800px !important;
   perspective-origin: 50% 50%;
   position: relative !important;
   aspect-ratio: 1 / 1.414 !important;
@@ -2418,29 +2418,74 @@ button[onclick*="openProductModal"] {
     display: none !important;
   }
 
-  /* Anchored Top-Right Expand Button with Helpful Microcopy */
-  #modalExpandStageBtn.modal-expand-stage-btn {
-    position: static !important;
-    min-height: 28px !important;
-    padding: 4px 10px !important;
-    border-radius: 9999px !important;
-    background: rgba(18, 18, 22, 0.9) !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.16) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 5px !important;
-    cursor: pointer !important;
-    pointer-events: auto !important;
-    touch-action: manipulation !important;
-    -webkit-tap-highlight-color: transparent !important;
-    font-size: 9.5px !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.05em !important;
-    color: #e4e4e7 !important;
+
+/* ===================================================
+   VIVID GLOWING "TAP TO EXPAND" CTA BUTTON
+   =================================================== */
+@keyframes expandPulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.75), 0 2px 10px rgba(0, 0, 0, 0.6);
+    border-color: #f59e0b;
   }
+  50% {
+    box-shadow: 0 0 0 9px rgba(245, 158, 11, 0), 0 4px 18px rgba(245, 158, 11, 0.5);
+    border-color: #fbbf24;
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0), 0 2px 10px rgba(0, 0, 0, 0.6);
+    border-color: #f59e0b;
+  }
+}
+
+#modalExpandStageBtn.modal-expand-stage-btn {
+  position: static !important;
+  min-height: 28px !important;
+  padding: 4px 12px !important;
+  border-radius: 9999px !important;
+  background: #18181b !important;
+  border: 1.5px solid #f59e0b !important;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.4) !important;
+  animation: expandPulseGlow 2s infinite ease-in-out !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+  -webkit-tap-highlight-color: transparent !important;
+  font-size: 9.5px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.08em !important;
+  color: #fbbf24 !important;
+  transition: all 0.25s ease !important;
+}
+
+#modalExpandStageBtn.modal-expand-stage-btn i,
+#modalExpandStageBtn.modal-expand-stage-btn svg {
+  color: #fbbf24 !important;
+}
+
+#modalExpandStageBtn.modal-expand-stage-btn #modalExpandBtnText {
+  color: #fef3c7 !important;
+  font-weight: 900 !important;
+}
+
+.stage-expanded #modalExpandStageBtn.modal-expand-stage-btn {
+  animation: none !important;
+  background: #27272a !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+  color: #ffffff !important;
+}
+
+.stage-expanded #modalExpandStageBtn.modal-expand-stage-btn #modalExpandBtnText {
+  color: #e4e4e7 !important;
+}
+
+.stage-expanded #modalExpandStageBtn.modal-expand-stage-btn i {
+  color: #a1a1aa !important;
+}
+
 
   @media (hover: hover) and (pointer: fine) {
     #modalExpandStageBtn.modal-expand-stage-btn:hover {
@@ -4894,5 +4939,20 @@ img.triptych-slice-2 {
     background: inherit !important;
     color: inherit !important;
     border-color: inherit !important;
+  }
+}
+
+/* Disable gesture hint and loupe touch interference */
+#modalStageGestureHint,
+.modal-stage-gesture-hint {
+  pointer-events: none !important;
+}
+
+@media (hover: none) or (pointer: coarse) {
+  #modalPrintLoupe {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
 }

@@ -870,7 +870,124 @@ const DEFAULT_POSTERS = [
     "paperSpec": "Premium 200gsm Heavyweight Glossy Photo Paper",
     "description": "Upload a photo of your family, dog, cat, or loved one. Our studio enhances the resolution, adjusts lighting, and prints on gallery-grade glossy stock.",
     "image": "assets/hero-room-shelf.jpg"
-  }
+  },
+  {
+    "id": "custom-car-poster",
+    "title": "Custom Your Car Spec Poster",
+    "subtitle": "Personalized Studio Vehicle Print",
+    "category": "custom",
+    "basePrice": 7.0,
+    "wasPrice": 7.0,
+    "orientation": "portrait",
+    "rating": 5.0,
+    "reviewsCount": 240,
+    "bestseller": true,
+    "tags": ["Custom", "Car", "Vehicle", "Bespoke", "Spec"],
+    "paperSpec": "Premium 200gsm Heavyweight Glossy Photo Paper",
+    "description": "Custom commission print of your exact car model, exterior color, registration plate, and factory options. Hand-rendered by our automotive design studio.",
+    "image": "assets/m4 comp face_ copy.PNG"
+  },
+  {
+    "id": "islamic-ayatul-kursi-set",
+    "title": "Ayatul Kursi & Sacred Blueprint Set",
+    "subtitle": "3-Piece Architectural Gallery Blueprint",
+    "category": "islamic",
+    "basePrice": 22.0,
+    "wasPrice": 22.0,
+    "orientation": "portrait",
+    "rating": 5.0,
+    "reviewsCount": 312,
+    "bestseller": true,
+    "tags": ["Islamic", "Ayatul Kursi", "Triptych", "Gold", "Blueprint"],
+    "paperSpec": "Premium 200gsm Heavyweight Glossy Photo Paper",
+    "description": "The majestic Verse of the Throne paired with holy sanctuary blueprints. Includes all 3 matching vertical gallery prints.",
+    "image": "assets/islamic-panel-2.jpg",
+    "triptychImages": [
+      "assets/islamic-panel-1.jpg",
+      "assets/islamic-panel-2.jpg",
+      "assets/islamic-panel-3.jpg"
+    ]
+  },
+  {
+    "id": "isl-01",
+    "title": "Ayatul Kursi Blueprint Print",
+    "subtitle": "Geometric Islamic Architectural Spec",
+    "category": "islamic",
+    "basePrice": 7.0,
+    "wasPrice": 7.0,
+    "orientation": "portrait",
+    "rating": 5.0,
+    "reviewsCount": 184,
+    "bestseller": true,
+    "tags": ["Islamic", "Ayatul Kursi", "Calligraphy", "Blueprint"],
+    "paperSpec": "Premium 200gsm Heavyweight Glossy Photo Paper",
+    "description": "High-contrast geometric technical Islamic calligraphy of Ayatul Kursi rendered on rich architectural background.",
+    "image": "assets/islamic-panel-1.jpg"
+  },
+  {
+    "id": "bmw-m3-g80",
+    "title": "BMW M3 Competition (G80)",
+    "subtitle": "High-Performance Bavarian Saloon",
+    "category": "bmw",
+    "basePrice": 7.0,
+    "wasPrice": 7.0,
+    "orientation": "portrait",
+    "rating": 5.0,
+    "reviewsCount": 218,
+    "bestseller": true,
+    "tags": ["BMW", "M3", "G80", "Competition", "M Power"],
+    "paperSpec": "Premium 200gsm Heavyweight Glossy Photo Paper",
+    "description": "503 HP S58 twin-turbo inline-six engineering diagram with precision aerodynamic profiles and factory telemetry stamps.",
+    "image": "assets/Bmw M3 (Minimalistic).png"
+  },
+  {
+    "id": "ferrari-pista",
+    "title": "Ferrari 488 Pista",
+    "subtitle": "Special Series V8 Track Masterpiece",
+    "category": "ferrari",
+    "basePrice": 7.0,
+    "wasPrice": 7.0,
+    "orientation": "portrait",
+    "rating": 5.0,
+    "reviewsCount": 175,
+    "bestseller": true,
+    "tags": ["Ferrari", "488 Pista", "Maranello", "V8", "Supercar"],
+    "paperSpec": "Premium 200gsm Heavyweight Glossy Photo Paper",
+    "description": "Maranello's track-honed special series featuring the S-Duct aerodynamic nose, 710 HP twin-turbo V8, and Italian racing tri-color stripe.",
+    "image": "assets/Ferrari 296 (Minimalistic).png"
+  },
+  {
+    "id": "porsche-turbo-s",
+    "title": "Porsche 911 Turbo S (992)",
+    "subtitle": "All-Weather Supercar Benchmark",
+    "category": "porsche",
+    "basePrice": 7.0,
+    "wasPrice": 7.0,
+    "orientation": "portrait",
+    "rating": 5.0,
+    "reviewsCount": 204,
+    "bestseller": true,
+    "tags": ["Porsche", "Turbo S", "992", "Stuttgart", "AWD"],
+    "paperSpec": "Premium 200gsm Heavyweight Glossy Photo Paper",
+    "description": "640 HP all-wheel-drive icon with active aerodynamics, side air intakes, and technical chassis specification layout.",
+    "image": "assets/Porsche GT 3RS (Minimalistic).png"
+  },
+  {
+    "id": "football-anfield",
+    "title": "Anfield Stadium — Liverpool FC",
+    "subtitle": "Cathedral of European Football",
+    "category": "football",
+    "basePrice": 7.0,
+    "wasPrice": 7.0,
+    "orientation": "portrait",
+    "rating": 5.0,
+    "reviewsCount": 260,
+    "bestseller": true,
+    "tags": ["Football", "Liverpool", "Anfield", "Stadium", "Kop"],
+    "paperSpec": "Premium 200gsm Heavyweight Glossy Photo Paper",
+    "description": "Architectural elevation of the iconic Spion Kop and Main Stand at Anfield with matchday coordinates and historic club crest.",
+    "image": "assets/hero-room-shelf.jpg"
+  },
 ];
 
 const ROOM_SCENES = [
@@ -930,4 +1047,32 @@ if (typeof window !== "undefined") {
   window.DEFAULT_POSTERS = DEFAULT_POSTERS;
   window.ROOM_SCENES = ROOM_SCENES;
   window.WALL_PAINT_COLORS = WALL_PAINT_COLORS;
+}
+
+// Instant Asset Preloader (useTexture.preload equivalent)
+function preloadCatalogAssets() {
+  if (typeof window === "undefined") return;
+  const list = (typeof DEFAULT_POSTERS !== "undefined" && Array.isArray(DEFAULT_POSTERS)) ? DEFAULT_POSTERS : [];
+  list.forEach(p => {
+    if (p && p.image) {
+      const img = new Image();
+      img.decoding = "sync";
+      img.src = p.image;
+    }
+    if (p && p.triptychImages) {
+      p.triptychImages.forEach(src => {
+        const img = new Image();
+        img.decoding = "sync";
+        img.src = src;
+      });
+    }
+  });
+}
+if (typeof window !== "undefined") {
+  window.preloadCatalogAssets = preloadCatalogAssets;
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", preloadCatalogAssets);
+  } else {
+    preloadCatalogAssets();
+  }
 }

@@ -1189,9 +1189,33 @@ function openProductModal(posterId) {
   }
   lastProductModalOpenTime = now;
 
-  let poster = (typeof allPosters !== "undefined" ? allPosters : []).find(p => p.id === posterId);
+  // Canonical ID Alias Mapping to prevent any wrong product fallback
+  const ID_ALIASES = {
+    'custom-car-poster': 'custom-car-poster',
+    'islamic-ayatul-kursi-set': 'islamic-ayatul-kursi-set',
+    'isl-01': 'isl-01',
+    'isl-02': 'islamic-daily-remembrance-set',
+    'isl-03': 'islamic-protection-set',
+    'bmw-m3-g80': 'bmw-m3-g80',
+    'ferrari-pista': 'ferrari-pista',
+    'porsche-turbo-s': 'porsche-turbo-s',
+    'amg-g63': 'mercedes-g63-amg',
+    'lambo-revuelto': 'lamborghini-huracan-evo',
+    'football-anfield': 'football-anfield'
+  };
+
+  const lookupId = ID_ALIASES[posterId] || posterId;
+  let poster = (typeof allPosters !== "undefined" ? allPosters : []).find(p => p.id === lookupId || p.id === posterId);
   if (!poster && typeof DEFAULT_POSTERS !== "undefined") {
-    poster = DEFAULT_POSTERS.find(p => p.id === posterId) || DEFAULT_POSTERS[0];
+    poster = DEFAULT_POSTERS.find(p => p.id === lookupId || p.id === posterId);
+  }
+  // If still not found, search by prefix/slug match before ANY fallback
+  if (!poster && typeof allPosters !== "undefined") {
+    const slugKey = posterId.split('-')[0].toLowerCase();
+    poster = allPosters.find(p => p.id.includes(slugKey) || p.category.includes(slugKey));
+  }
+  if (!poster && typeof DEFAULT_POSTERS !== "undefined") {
+    poster = DEFAULT_POSTERS[0];
   }
   if (!poster) return;
   currentCustomizingPoster = poster;
@@ -1385,6 +1409,11 @@ function toggleModalDoubleTapZoom() {
 }
 
 function setModalZoom(val) {
+  // STRICT: Only allow scaling once inside expanded view or Live Room
+  if (!isModalStageExpanded && !isModalRoomMode) {
+    modalZoom = 1.0;
+    return;
+  }
   if (isModalRoomMode) {
     modalZoom = 1.0;
     updateModalPrismTransform(true);
@@ -2157,7 +2186,8 @@ function initModalStageGestures() {
   // Interactive High-Resolution Print Loupe (Active in Front View on Desktop)
   stagePane.addEventListener("mousemove", (e) => {
     const loupe = document.getElementById("modalPrintLoupe");
-    if (isPointerDown || isModalRoomMode || Math.abs(modalRotY) > 5 || Math.abs(modalRotX) > 5 || modalZoom > 1.35) {
+    const isTouch = window.matchMedia("(hover: none)").matches || window.innerWidth < 1024;
+    if (isTouch || isPointerDown || isModalRoomMode || Math.abs(modalRotY) > 5 || Math.abs(modalRotX) > 5 || modalZoom > 1.35) {
       if (loupe) loupe.style.display = "none";
       return;
     }
@@ -2564,7 +2594,8 @@ function updateModalRetinaCanvas(highResImgSrc) {
     canvas.height = targetHeight;
   }
 
-  const ctx = canvas.getContext("2d", { alpha: false });
+  // Transparent context: Never flash white or obscure underlying artwork
+  const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
   // Maximize texture filtering for crisp 2D spec typography (equivalent to THREE.LinearFilter without mipmap downsampling)
@@ -2575,7 +2606,7 @@ function updateModalRetinaCanvas(highResImgSrc) {
   if (!imgSrc) return;
 
   const img = new Image();
-  img.crossOrigin = "anonymous";
+  img.decoding = "sync";
   img.src = imgSrc;
 
   const renderToCanvas = () => {
@@ -2760,35 +2791,69 @@ function updateModalPreview() {
   const previewContainer = document.getElementById("modalPreviewContainer");
   if (!previewContainer) return;
 
-  // If Islamic print in 3-Piece Mode: show 3 strictly identical 1:1.414 portrait frames with Smart Focus center isolation on rotation
-  if (isTriptychMode && currentCustomizingPoster.category === "islamic") {
-    const panels = (currentCustomizingPoster.triptychImages && currentCustomizingPoster.triptychImages.length === 3)
-      ? currentCustomizingPoster.triptychImages
-      : ["assets/islamic-panel-1.jpg", "assets/islamic-panel-2.jpg", "assets/islamic-panel-3.jpg"];
-    previewContainer.innerHTML = `
-      <div class="modal-prism-wrapper flex flex-col items-center justify-center w-full h-full px-2" style="max-height: 100%; max-width: 100%;">
-        <div id="modalTriptychStageWrapper" class="triptych-stage-wrapper relative flex items-center justify-center w-full h-full" style="transform-style: preserve-3d;">
-          <div class="triptych-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(6px, 1.8vw, 12px); width: 100%; align-items: center; justify-items: center; transform-style: preserve-3d;">
-            <div id="triptychOuterLeft" class="triptych-panel triptych-outer-left" style="aspect-ratio: 1 / 1.414; width: 100%; max-height: 100%;">
-              ${renderModalPrismHtml(panels[0], `${currentCustomizingPoster.title} — Left Panel`, selectedFrame, selectedSize, null, false)}
-            </div>
-            <div id="triptychCenter" class="triptych-panel triptych-center" style="aspect-ratio: 1 / 1.414; width: 100%; max-height: 100%; transform-style: preserve-3d;">
-              ${renderModalPrismHtml(panels[1], `${currentCustomizingPoster.title} — Center Panel`, selectedFrame, selectedSize, null, true)}
-            </div>
-            <div id="triptychOuterRight" class="triptych-panel triptych-outer-right" style="aspect-ratio: 1 / 1.414; width: 100%; max-height: 100%;">
-              ${renderModalPrismHtml(panels[2], `${currentCustomizingPoster.title} — Right Panel`, selectedFrame, selectedSize, null, false)}
+  const isIslamicSet = (isTriptychMode && currentCustomizingPoster.category === "islamic");
+
+  // PERSISTENT 3D VIEWER LAYOUT: Check if persistent 3D stage is already mounted
+  const existingStage = document.getElementById("modalPrismStage");
+  const existingTriptych = document.getElementById("modalTriptychStageWrapper");
+  const canUpdateInPlace = (isIslamicSet ? !!existingTriptych : (!!existingStage && !existingTriptych));
+
+  if (canUpdateInPlace) {
+    // Dynamically update texture/image in place WITHOUT unmounting or rebuilding DOM/Canvas!
+    if (isIslamicSet) {
+      const panels = (currentCustomizingPoster.triptychImages && currentCustomizingPoster.triptychImages.length === 3)
+        ? currentCustomizingPoster.triptychImages
+        : ["assets/islamic-panel-1.jpg", "assets/islamic-panel-2.jpg", "assets/islamic-panel-3.jpg"];
+      const leftImg = previewContainer.querySelector("#triptychOuterLeft img");
+      const centerImg = previewContainer.querySelector("#triptychCenter img");
+      const rightImg = previewContainer.querySelector("#triptychOuterRight img");
+      if (leftImg && leftImg.src !== panels[0]) leftImg.src = panels[0];
+      if (centerImg && centerImg.src !== panels[1]) centerImg.src = panels[1];
+      if (rightImg && rightImg.src !== panels[2]) rightImg.src = panels[2];
+    } else {
+      const frontImg = document.getElementById("modalFrontArtworkImg");
+      if (frontImg && frontImg.src !== currentCustomizingPoster.image) {
+        frontImg.src = currentCustomizingPoster.image;
+        frontImg.alt = currentCustomizingPoster.title;
+      }
+      // Update frame classes in place
+      const frontFace = existingStage.querySelector(".prism-face-front");
+      if (frontFace) {
+        frontFace.className = `prism-face-front poster-frame-container ${selectedFrame === 'aluminium' ? 'frame-black-aluminium' : 'frame-black-plastic'} portrait-spec overflow-hidden absolute inset-0`;
+      }
+      existingStage.classList.toggle("prism-depth-aluminium", selectedFrame === "aluminium");
+      existingStage.classList.toggle("prism-depth-plastic", selectedFrame !== "aluminium" && selectedFrame !== "unframed");
+    }
+  } else {
+    // Initial mount or structure change
+    if (isIslamicSet) {
+      const panels = (currentCustomizingPoster.triptychImages && currentCustomizingPoster.triptychImages.length === 3)
+        ? currentCustomizingPoster.triptychImages
+        : ["assets/islamic-panel-1.jpg", "assets/islamic-panel-2.jpg", "assets/islamic-panel-3.jpg"];
+      previewContainer.innerHTML = `
+        <div class="modal-prism-wrapper flex flex-col items-center justify-center w-full h-full px-2" style="max-height: 100%; max-width: 100%;">
+          <div id="modalTriptychStageWrapper" class="triptych-stage-wrapper relative flex items-center justify-center w-full h-full" style="transform-style: preserve-3d;">
+            <div class="triptych-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(6px, 1.8vw, 12px); width: 100%; align-items: center; justify-items: center; transform-style: preserve-3d;">
+              <div id="triptychOuterLeft" class="triptych-panel triptych-outer-left" style="aspect-ratio: 1 / 1.414; width: 100%; max-height: 100%;">
+                ${renderModalPrismHtml(panels[0], `${currentCustomizingPoster.title} — Left Panel`, selectedFrame, selectedSize, null, false)}
+              </div>
+              <div id="triptychCenter" class="triptych-panel triptych-center" style="aspect-ratio: 1 / 1.414; width: 100%; max-height: 100%; transform-style: preserve-3d;">
+                ${renderModalPrismHtml(panels[1], `${currentCustomizingPoster.title} — Center Panel`, selectedFrame, selectedSize, null, true)}
+              </div>
+              <div id="triptychOuterRight" class="triptych-panel triptych-outer-right" style="aspect-ratio: 1 / 1.414; width: 100%; max-height: 100%;">
+                ${renderModalPrismHtml(panels[2], `${currentCustomizingPoster.title} — Right Panel`, selectedFrame, selectedSize, null, false)}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    `;
-  } else {
-    // Single Portrait 3D Prism inside the sleek Black Frame border
-    previewContainer.innerHTML = `
-      <div class="modal-prism-wrapper flex flex-col items-center justify-center w-full h-full" style="max-height: 100%; max-width: 100%;">
-        ${renderModalPrismHtml(currentCustomizingPoster.image, currentCustomizingPoster.title, selectedFrame, selectedSize, null, true)}
-      </div>
-    `;
+      `;
+    } else {
+      previewContainer.innerHTML = `
+        <div class="modal-prism-wrapper flex flex-col items-center justify-center w-full h-full" style="max-height: 100%; max-width: 100%;">
+          ${renderModalPrismHtml(currentCustomizingPoster.image, currentCustomizingPoster.title, selectedFrame, selectedSize, null, true)}
+        </div>
+      `;
+    }
   }
 
   const gestureHint = document.getElementById("modalStageGestureHint");
@@ -2971,9 +3036,33 @@ function updateModalPrice() {
 
 // Quick Room Preview from catalog card
 function quickRoomPreview(posterId) {
-  let poster = (typeof allPosters !== "undefined" ? allPosters : []).find(p => p.id === posterId);
+  // Canonical ID Alias Mapping to prevent any wrong product fallback
+  const ID_ALIASES = {
+    'custom-car-poster': 'custom-car-poster',
+    'islamic-ayatul-kursi-set': 'islamic-ayatul-kursi-set',
+    'isl-01': 'isl-01',
+    'isl-02': 'islamic-daily-remembrance-set',
+    'isl-03': 'islamic-protection-set',
+    'bmw-m3-g80': 'bmw-m3-g80',
+    'ferrari-pista': 'ferrari-pista',
+    'porsche-turbo-s': 'porsche-turbo-s',
+    'amg-g63': 'mercedes-g63-amg',
+    'lambo-revuelto': 'lamborghini-huracan-evo',
+    'football-anfield': 'football-anfield'
+  };
+
+  const lookupId = ID_ALIASES[posterId] || posterId;
+  let poster = (typeof allPosters !== "undefined" ? allPosters : []).find(p => p.id === lookupId || p.id === posterId);
   if (!poster && typeof DEFAULT_POSTERS !== "undefined") {
-    poster = DEFAULT_POSTERS.find(p => p.id === posterId) || DEFAULT_POSTERS[0];
+    poster = DEFAULT_POSTERS.find(p => p.id === lookupId || p.id === posterId);
+  }
+  // If still not found, search by prefix/slug match before ANY fallback
+  if (!poster && typeof allPosters !== "undefined") {
+    const slugKey = posterId.split('-')[0].toLowerCase();
+    poster = allPosters.find(p => p.id.includes(slugKey) || p.category.includes(slugKey));
+  }
+  if (!poster && typeof DEFAULT_POSTERS !== "undefined") {
+    poster = DEFAULT_POSTERS[0];
   }
   if (!poster) return;
 
