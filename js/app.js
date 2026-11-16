@@ -2157,7 +2157,8 @@ function initModalStageGestures() {
   // Desktop Mouse Dragging (3D Rotation)
   stagePane.addEventListener("mousedown", (e) => {
     if (isModalRoomMode) return;
-    if (e.target.closest("button") || e.target.closest("input") || e.target.closest("label") || e.target.closest(".side-profile-pointer-badge") || e.target.closest("#modalWallColorSidePanel")) return;
+    if (e.target.closest("button") || e.target.closest(".hotspot-card") || e.target.closest("input") || e.target.closest("label") || e.target.closest(".side-profile-pointer-badge") || e.target.closest("#modalWallColorSidePanel")) return;
+    closeAllHotspots();
     dismissModalGestureHint();
     isPointerDown = true;
     startX = e.clientX;
@@ -2257,7 +2258,8 @@ function initModalStageGestures() {
   stagePane.addEventListener("touchstart", (e) => {
     if (isModalRoomMode) return;
     const target = e.target;
-    if (target.closest("button") || target.closest(".stage-architect-btn") || target.closest("#modalExpandStageBtn") || target.closest("input") || target.closest("label") || target.closest(".side-profile-pointer-badge") || target.closest("#modalWallColorSidePanel")) return;
+    if (target.closest("button") || target.closest(".hotspot-card") || target.closest(".stage-architect-btn") || target.closest("#modalExpandStageBtn") || target.closest("input") || target.closest("label") || target.closest(".side-profile-pointer-badge") || target.closest("#modalWallColorSidePanel")) return;
+    closeAllHotspots();
     dismissModalGestureHint();
 
     if (e.touches.length === 2) {
@@ -2473,6 +2475,16 @@ function updateModalPrismTransform(smooth = true) {
     frontFaces.forEach(f => {
       f.style.visibility = isPast90 ? "hidden" : "visible";
     });
+
+    // Show edge hotspot on front/side angles and back hotspot when rotated to rear
+    const edgeHotspots = stage.querySelectorAll(".hotspot-edge");
+    const backHotspots = stage.querySelectorAll(".hotspot-back");
+    edgeHotspots.forEach(h => {
+      h.style.visibility = Math.abs(modalRotY) <= 105 ? "visible" : "hidden";
+    });
+    backHotspots.forEach(h => {
+      h.style.visibility = Math.abs(modalRotY) > 95 ? "visible" : "hidden";
+    });
   }
 
   // Update physical scale dimension badge text above the frame
@@ -2657,6 +2669,67 @@ window.addEventListener("orientationchange", () => {
   }, 200);
 }, { passive: true });
 
+/**
+ * 3D Spatial Annotations (Hotspots) for Frame & Backboard Inspection
+ */
+function renderHotspotHtml(id, positionClass, title, description) {
+  return `
+    <div class="hotspot-3d-wrapper ${positionClass}" data-hotspot-id="${id}">
+      <button
+        type="button"
+        class="hotspot-button"
+        aria-label="${title}"
+        aria-expanded="false"
+        onclick="toggleHotspotAnnotation('${id}', event)"
+      >+</button>
+      <div class="hotspot-card" role="dialog" aria-label="${title}" onclick="event.stopPropagation()">
+        <div class="hotspot-card-title">${title}</div>
+        <div class="hotspot-card-desc">${description}</div>
+      </div>
+    </div>
+  `;
+}
+
+function toggleHotspotAnnotation(hotspotId, event) {
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+  const wrappers = document.querySelectorAll(".hotspot-3d-wrapper");
+  wrappers.forEach(w => {
+    const btn = w.querySelector(".hotspot-button");
+    const card = w.querySelector(".hotspot-card");
+    if (!btn || !card) return;
+    if (w.getAttribute("data-hotspot-id") === hotspotId) {
+      const nextExpanded = !btn.classList.contains("is-expanded");
+      btn.classList.toggle("is-expanded", nextExpanded);
+      card.classList.toggle("is-expanded", nextExpanded);
+      btn.setAttribute("aria-expanded", nextExpanded ? "true" : "false");
+    } else {
+      btn.classList.remove("is-expanded");
+      card.classList.remove("is-expanded");
+      btn.setAttribute("aria-expanded", "false");
+    }
+  });
+}
+
+function closeAllHotspots() {
+  document.querySelectorAll(".hotspot-3d-wrapper").forEach(w => {
+    const btn = w.querySelector(".hotspot-button");
+    const card = w.querySelector(".hotspot-card");
+    if (btn) {
+      btn.classList.remove("is-expanded");
+      btn.setAttribute("aria-expanded", "false");
+    }
+    if (card) card.classList.remove("is-expanded");
+  });
+}
+
+if (typeof window !== "undefined") {
+  window.toggleHotspotAnnotation = toggleHotspotAnnotation;
+  window.closeAllHotspots = closeAllHotspots;
+}
+
 function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSliceIndex = null, includeStageId = true) {
   const isA4 = (size === "a4");
   const isMobile = window.innerWidth < 768;
@@ -2779,6 +2852,12 @@ function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSlic
         <div class="prism-wall-right ${frameType === 'aluminium' ? 'prism-wall-aluminium' : 'prism-wall-plastic'}"></div>
         <div class="prism-wall-top ${frameType === 'aluminium' ? 'prism-wall-aluminium' : 'prism-wall-plastic'}"></div>
         <div class="prism-wall-bottom ${frameType === 'aluminium' ? 'prism-wall-aluminium' : 'prism-wall-plastic'}"></div>
+
+        ${includeStageId ? `
+          <!-- 4. 3D Spatial Annotations (Hotspots) -->
+          ${renderHotspotHtml("hotspot-edge", "hotspot-edge", "Premium Frame", "Sleek aluminum or plastic edges for a gallery finish.")}
+          ${renderHotspotHtml("hotspot-back", "hotspot-back", "Ready to Hang", "Shipped flat with easy rear-loading.")}
+        ` : ''}
 
       </div>
     </div>
