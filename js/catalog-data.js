@@ -1049,26 +1049,46 @@ if (typeof window !== "undefined") {
   window.WALL_PAINT_COLORS = WALL_PAINT_COLORS;
 }
 
-// Instant Asset Preloader (useTexture.preload equivalent)
+// Derive lightweight grid thumbnail path (assets/thumbs/<stem>.jpg) while keeping full-res master for 3D viewer
+function getPosterThumb(imagePath) {
+  if (!imagePath || typeof imagePath !== "string") return imagePath;
+  if (!imagePath.startsWith("assets/") || imagePath.startsWith("assets/thumbs/")) return imagePath;
+  const filename = imagePath.slice("assets/".length);
+  const dotIdx = filename.lastIndexOf(".");
+  if (dotIdx === -1) return imagePath;
+  return `assets/thumbs/${filename.slice(0, dotIdx)}.jpg`;
+}
+
+// Instant Asset Preloader (preloads lightweight grid thumbnails so initial load stays fast)
 function preloadCatalogAssets() {
   if (typeof window === "undefined") return;
   const list = (typeof DEFAULT_POSTERS !== "undefined" && Array.isArray(DEFAULT_POSTERS)) ? DEFAULT_POSTERS : [];
+  const seen = new Set();
   list.forEach(p => {
     if (p && p.image) {
-      const img = new Image();
-      img.decoding = "sync";
-      img.src = p.image;
+      const thumbSrc = getPosterThumb(p.image);
+      if (!seen.has(thumbSrc)) {
+        seen.add(thumbSrc);
+        const img = new Image();
+        img.decoding = "async";
+        img.src = thumbSrc;
+      }
     }
     if (p && p.triptychImages) {
       p.triptychImages.forEach(src => {
-        const img = new Image();
-        img.decoding = "sync";
-        img.src = src;
+        const thumbSrc = getPosterThumb(src);
+        if (!seen.has(thumbSrc)) {
+          seen.add(thumbSrc);
+          const img = new Image();
+          img.decoding = "async";
+          img.src = thumbSrc;
+        }
       });
     }
   });
 }
 if (typeof window !== "undefined") {
+  window.getPosterThumb = getPosterThumb;
   window.preloadCatalogAssets = preloadCatalogAssets;
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", preloadCatalogAssets);

@@ -366,11 +366,11 @@ function renderMarqueeCarousel() {
         <div class="product-card-stage p-1 sm:p-1.5 bg-transparent border-0 flex items-center justify-center">
           <div class="poster-frame-container frame-black-aluminium portrait-spec w-full relative overflow-hidden" style="border: 4px solid #111111 !important;">
             <img 
-              src="${poster.image}" 
+              src="${typeof getPosterThumb === 'function' ? getPosterThumb(poster.image) : poster.image}" 
               alt="${poster.title}" 
               class="w-full h-full object-cover block portrait-spec" 
               loading="${idx < 10 ? 'eager' : 'lazy'}"
-              onerror="handlePosterImageError(this, '${poster.id}')"
+              onerror="if(this.dataset.thumbFallback!=='1'){this.dataset.thumbFallback='1';this.src='${poster.image}';}else{handlePosterImageError(this, '${poster.id}');}"
             />
           </div>
         </div>
@@ -797,14 +797,14 @@ function renderCatalog() {
                 ${panels.map((panelSrc, idx) => `
                   <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 210 / 297; width: 100%; border: 4px solid #111111 !important;">
                     <img 
-                      src="${panelSrc}" 
+                      src="${typeof getPosterThumb === 'function' ? getPosterThumb(panelSrc) : panelSrc}" 
                       alt="${poster.title} Panel ${idx + 1}" 
                       class="w-full h-full object-contain block portrait-spec"
                       style="width: 100% !important; height: 100% !important; object-fit: contain !important; display: block !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;"
                       loading="eager"
                       decoding="sync"
                       fetchpriority="high"
-                      onerror="this.onerror=null; this.src='assets/islamic-panel-${idx + 1}.jpg';"
+                      onerror="this.onerror=null; this.src='${panelSrc}';"
                     />
                   </div>
                 `).join("")}
@@ -814,14 +814,14 @@ function renderCatalog() {
               <div class="w-full max-w-[260px] mx-auto transition-transform duration-300 group-hover:scale-[1.02]">
                 <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 210 / 297; width: 100%; border: 4px solid #111111 !important;">
                   <img 
-                    src="${poster.image}" 
+                    src="${typeof getPosterThumb === 'function' ? getPosterThumb(poster.image) : poster.image}" 
                     alt="${poster.title}" 
                     class="w-full h-full object-contain block portrait-spec" 
                     style="width: 100% !important; height: 100% !important; object-fit: contain !important; display: block !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;" 
                     loading="eager"
                     decoding="sync"
                     fetchpriority="high"
-                    onerror="handlePosterImageError(this, '${poster.id}')"
+                    onerror="if(this.dataset.thumbFallback!=='1'){this.dataset.thumbFallback='1';this.src='${poster.image}';}else{handlePosterImageError(this, '${poster.id}');}"
                   />
                 </div>
               </div>
