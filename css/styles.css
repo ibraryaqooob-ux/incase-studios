@@ -2578,23 +2578,23 @@ button[onclick*="openProductModal"] {
   border-radius: 2px;
 }
 
-.frame-dim-bottom {
+.frame-dim-top {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -16px;
+  top: -16px;
   height: 9px;
   border-left: 1px solid rgba(24, 24, 27, 0.45);
   border-right: 1px solid rgba(24, 24, 27, 0.45);
-  border-bottom: 1px solid rgba(24, 24, 27, 0.45);
+  border-top: 1px solid rgba(24, 24, 27, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.frame-dim-bottom-label {
+.frame-dim-top-label {
   position: absolute;
-  top: 11px;
+  bottom: 11px;
   left: 50%;
   transform: translateX(-50%);
   white-space: nowrap;
@@ -2691,12 +2691,12 @@ button[onclick*="openProductModal"] {
   }
   #modalPreviewContainer .prism-3d-viewport {
     aspect-ratio: 1 / 1.414 !important;
-    height: clamp(230px, 38vh, 310px) !important;
-    max-height: calc(100% - 16px) !important;
+    height: clamp(210px, 34vh, 285px) !important;
+    max-height: calc(100% - 28px) !important;
     width: auto !important;
-    max-width: calc(100% - 24px) !important;
+    max-width: calc(100% - 36px) !important;
     flex-shrink: 0 !important;
-    margin: 0 auto !important;
+    margin: 10px auto 4px auto !important;
     display: block !important;
     position: relative !important;
     perspective: 2800px !important;

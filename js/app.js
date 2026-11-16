@@ -2468,9 +2468,9 @@ function updateModalPrismTransform(smooth = true) {
       g.style.opacity = showDims ? "1" : "0";
       g.style.visibility = showDims ? "visible" : "hidden";
       const rLabel = g.querySelector(".frame-dim-right-label");
-      const bLabel = g.querySelector(".frame-dim-bottom-label");
+      const tLabel = g.querySelector(".frame-dim-top-label");
       if (rLabel) rLabel.textContent = selectedSize === "a4" ? "29.7 cm" : "42 cm";
-      if (bLabel) bLabel.textContent = selectedSize === "a4" ? "21 cm" : "29.7 cm";
+      if (tLabel) tLabel.textContent = selectedSize === "a4" ? "21 cm" : "29.7 cm";
     });
   }
 
@@ -2850,11 +2850,11 @@ function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSlic
         ${includeStageId ? `
           <!-- 4. Architectural Dimension Lines Beside Frame -->
           <div class="frame-dim-guides" aria-hidden="true">
+            <div class="frame-dim-top">
+              <span class="frame-dim-top-label">${size === 'a4' ? '21 cm' : '29.7 cm'}</span>
+            </div>
             <div class="frame-dim-right">
               <span class="frame-dim-right-label">${size === 'a4' ? '29.7 cm' : '42 cm'}</span>
-            </div>
-            <div class="frame-dim-bottom">
-              <span class="frame-dim-bottom-label">${size === 'a4' ? '21 cm' : '29.7 cm'}</span>
             </div>
           </div>
 
