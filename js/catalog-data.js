@@ -1059,32 +1059,17 @@ function getPosterThumb(imagePath) {
   return `assets/thumbs/${filename.slice(0, dotIdx)}.jpg`;
 }
 
-// Instant Asset Preloader (preloads lightweight grid thumbnails so initial load stays fast)
+// Preload ONLY the active hero showcase pair on initial load to avoid mobile GPU decode contention
 function preloadCatalogAssets() {
   if (typeof window === "undefined") return;
-  const list = (typeof DEFAULT_POSTERS !== "undefined" && Array.isArray(DEFAULT_POSTERS)) ? DEFAULT_POSTERS : [];
-  const seen = new Set();
-  list.forEach(p => {
-    if (p && p.image) {
-      const thumbSrc = getPosterThumb(p.image);
-      if (!seen.has(thumbSrc)) {
-        seen.add(thumbSrc);
-        const img = new Image();
-        img.decoding = "async";
-        img.src = thumbSrc;
-      }
-    }
-    if (p && p.triptychImages) {
-      p.triptychImages.forEach(src => {
-        const thumbSrc = getPosterThumb(src);
-        if (!seen.has(thumbSrc)) {
-          seen.add(thumbSrc);
-          const img = new Image();
-          img.decoding = "async";
-          img.src = thumbSrc;
-        }
-      });
-    }
+  const activeHeroThumbs = [
+    "assets/thumbs/Porsche GT 3RS (Minimalistic).jpg",
+    "assets/thumbs/Bmw M3 (Minimalistic).jpg"
+  ];
+  activeHeroThumbs.forEach(src => {
+    const img = new Image();
+    img.decoding = "async";
+    img.src = src;
   });
 }
 if (typeof window !== "undefined") {

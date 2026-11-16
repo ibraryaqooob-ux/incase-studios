@@ -569,12 +569,28 @@ button[onclick*="openProductModal"] {
   --hero-a4-w: clamp(125px, 28vw, 175px);
 }
 
-@keyframes autoSpin360 {
+/* Smooth Front-Facing Showcase Arc + Subtle Levitation (Never turns edge-on!) */
+@keyframes heroShowcaseArcA3 {
   0% {
-    transform: rotateY(0deg);
+    transform: translateY(0px) rotateY(-20deg) rotateX(2deg);
+  }
+  50% {
+    transform: translateY(-5px) rotateY(4deg) rotateX(1deg);
   }
   100% {
-    transform: rotateY(360deg);
+    transform: translateY(0px) rotateY(22deg) rotateX(2deg);
+  }
+}
+
+@keyframes heroShowcaseArcA4 {
+  0% {
+    transform: translateY(-2px) rotateY(-12deg) rotateX(3deg);
+  }
+  50% {
+    transform: translateY(-7px) rotateY(14deg) rotateX(1deg);
+  }
+  100% {
+    transform: translateY(-2px) rotateY(30deg) rotateX(3deg);
   }
 }
 
@@ -591,8 +607,19 @@ button[onclick*="openProductModal"] {
   padding: 16px 0 28px 0;
 }
 
+/* Soft Studio Gallery Aura (Warm Ivory/Gold Ambient Backlight) */
+.hero-studio-aura {
+  position: absolute;
+  inset: -12px 6% 4px 6%;
+  background: radial-gradient(ellipse at 50% 52%, rgba(251, 191, 36, 0.14) 0%, rgba(255, 248, 230, 0.45) 38%, transparent 72%);
+  filter: blur(18px);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .hero-prism-wrapper {
   position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -618,15 +645,15 @@ button[onclick*="openProductModal"] {
   pointer-events: auto !important;
 }
 
-/* Continuous Un-interruptible 360 Auto-Spin (16s linear infinite) */
+/* Offset Front-Facing Showcase Arc + Subtle Levitation */
 .hero-auto-spin {
-  animation: autoSpin360 16s linear infinite !important;
+  animation: heroShowcaseArcA3 8s ease-in-out infinite alternate !important;
   transform-style: preserve-3d !important;
   will-change: transform;
 }
 
 .hero-auto-spin-offset {
-  animation: autoSpin360 16s linear infinite -0.8s !important;
+  animation: heroShowcaseArcA4 10s ease-in-out infinite alternate -3.5s !important;
   transform-style: preserve-3d !important;
   will-change: transform;
 }
@@ -5102,4 +5129,14 @@ img.triptych-slice-2 {
   object-fit: cover !important;
   object-position: center !important;
   display: block !important;
+}
+
+/* Sleek Dark Skeleton Pulse inside 3D Product Frame (Zero Blank White Flash) */
+@keyframes modalSkeletonPulse {
+  0%, 100% { background-color: #141418; }
+  50% { background-color: #1f1f25; }
+}
+.modal-artwork-skeleton {
+  background-color: #141418;
+  animation: modalSkeletonPulse 1.6s ease-in-out infinite;
 }

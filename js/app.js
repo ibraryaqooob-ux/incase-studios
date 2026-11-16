@@ -2602,11 +2602,18 @@ function updateModalRetinaCanvas(highResImgSrc) {
   const rect = container.getBoundingClientRect();
   if (rect.width <= 0 || rect.height <= 0) return;
 
-  // Set device pixel ratio to match mobile screen (Retina DPR: 2x or 3x on mobile devices)
-  const dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+  // Set device pixel ratio to match screen, but cap 3D canvas texture at 1024px wide on mobile
+  // so iPhone/Android GPUs decode and spin at 60fps with zero lag
+  const isMobile = window.innerWidth < 1024;
+  const dpr = Math.max(1, Math.min(isMobile ? 2 : 3, window.devicePixelRatio || 1));
   const zoomFactor = (typeof modalZoom === 'number' && modalZoom > 1.0) ? Math.min(2.5, modalZoom) : 1.0;
-  const targetWidth = Math.round(rect.width * dpr * zoomFactor);
-  const targetHeight = Math.round(rect.height * dpr * zoomFactor);
+  let targetWidth = Math.round(rect.width * dpr * zoomFactor);
+  let targetHeight = Math.round(rect.height * dpr * zoomFactor);
+  if (isMobile && targetWidth > 1024) {
+    const capRatio = 1024 / targetWidth;
+    targetWidth = 1024;
+    targetHeight = Math.round(targetHeight * capRatio);
+  }
 
   if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
     canvas.width = targetWidth;
@@ -2767,7 +2774,7 @@ function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSlic
       </div>
     `
     : `
-      <div class="relative w-full h-full overflow-hidden flex items-center justify-center">
+      <div class="relative w-full h-full overflow-hidden flex items-center justify-center modal-artwork-skeleton">
         <canvas 
           id="modalRetinaTextureCanvas" 
           class="modal-retina-canvas" 
@@ -2775,13 +2782,13 @@ function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSlic
         ></canvas>
         <img 
           id="modalFrontArtworkImg"
-          src="${posterImg}" 
+          src="${typeof getPosterThumb === 'function' ? getPosterThumb(posterImg) : posterImg}" 
           alt="${posterTitle}" 
           class="w-full h-full object-contain block pointer-events-none portrait-spec" 
           style="width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center !important; display: block !important; margin: 0 !important; padding: 0 !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;" 
           decoding="sync"
           fetchpriority="high"
-          onerror="handlePosterImageError(this, '${currentCustomizingPoster ? currentCustomizingPoster.id : ''}')" 
+          onerror="if(this.dataset.thumbFallback!=='1'){this.dataset.thumbFallback='1';this.src='${posterImg}';}else{handlePosterImageError(this, '${currentCustomizingPoster ? currentCustomizingPoster.id : ''}');}" 
         />
       </div>
     `;
@@ -2898,8 +2905,12 @@ function updateModalPreview() {
       if (rightImg && rightImg.src !== panels[2]) rightImg.src = panels[2];
     } else {
       const frontImg = document.getElementById("modalFrontArtworkImg");
-      if (frontImg && frontImg.src !== currentCustomizingPoster.image) {
-        frontImg.src = currentCustomizingPoster.image;
+      const retinaCanvas = document.getElementById("modalRetinaTextureCanvas");
+      const instantSrc = (typeof getPosterThumb === "function") ? getPosterThumb(currentCustomizingPoster.image) : currentCustomizingPoster.image;
+      if (retinaCanvas) retinaCanvas.style.opacity = "0";
+      if (frontImg && frontImg.src !== instantSrc) {
+        frontImg.dataset.thumbFallback = "0";
+        frontImg.src = instantSrc;
         frontImg.alt = currentCustomizingPoster.title;
       }
       // Update frame classes in place
