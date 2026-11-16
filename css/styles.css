@@ -305,11 +305,13 @@ button:active, [role="button"]:active {
 .studio-framed-wall-art .frame-black-plastic,
 .prism-face-front.frame-black-plastic,
 .prism-face-front.frame-black-aluminium {
-  border: none !important;
-  border-width: 0 !important;
-  padding: var(--frame-bezel-pct, 3.6%) !important;
-  background: #111111 !important;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 20px 45px -10px rgba(0, 0, 0, 0.38), 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  border: var(--frame-bezel-px, 5px) solid #111111 !important;
+  border-width: var(--frame-bezel-px, 5px) !important;
+  border-style: solid !important;
+  border-color: #111111 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.38), 0 4px 12px rgba(0, 0, 0, 0.2) !important;
 }
 
 #productModal .frame-black-aluminium,
@@ -2883,12 +2885,14 @@ button[onclick*="openProductModal"] {
   .stage-expanded.modal-room-hanging-mode .poster-frame-container,
   #productModal.stage-expanded.modal-room-hanging-mode .prism-face-front,
   #productModal.stage-expanded.modal-room-hanging-mode .poster-frame-container {
-    border: none !important;
-    border-width: 0 !important;
-    padding: var(--frame-bezel-pct, 3.6%) !important;
-    background: #111111 !important;
+    border: var(--frame-bezel-px, 5px) solid #111111 !important;
+    border-width: var(--frame-bezel-px, 5px) !important;
+    border-style: solid !important;
+    border-color: #111111 !important;
+    padding: 0 !important;
+    background: transparent !important;
     box-sizing: border-box !important;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14), 0 18px 38px -10px rgba(0, 0, 0, 0.42), 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 18px 38px -10px rgba(0, 0, 0, 0.42), 0 4px 12px rgba(0, 0, 0, 0.2) !important;
   }
 
   #productModal .prism-face-paper-front {
@@ -5195,12 +5199,16 @@ img.triptych-slice-2 {
   display: block !important;
 }
 
-/* Sleek Dark Skeleton Pulse inside 3D Product Frame (Zero Blank White Flash) */
+/* Sleek Dark Skeleton Pulse inside 3D Product Frame (Zero Blank White Flash, Zero Dark Matte Gap) */
 @keyframes modalSkeletonPulse {
   0%, 100% { background-color: #141418; }
   50% { background-color: #1f1f25; }
 }
 .modal-artwork-skeleton {
-  background-color: #141418;
-  animation: modalSkeletonPulse 1.6s ease-in-out infinite;
+  background-color: transparent;
+}
+.modal-artwork-skeleton img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
 }
