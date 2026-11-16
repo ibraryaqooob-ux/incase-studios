@@ -200,7 +200,7 @@ function generatePosterFallbackSvg(poster) {
     <text x="0" y="16"><tspan fill="#d4d4d8" font-weight="700">PRINT SPEC:</tspan> 200GSM GLOSSY PHOTO PAPER</text>
     <text x="0" y="38"><tspan fill="#d4d4d8" font-weight="700">FRAME PROFILE:</tspan> 9MM SLIM FACE • 17MM DEPTH</text>
     <text x="0" y="60"><tspan fill="#d4d4d8" font-weight="700">ORIGIN:</tspan> PRINTED &amp; PACKED IN MANCHESTER, UK</text>
-    <text x="672" y="38" text-anchor="end" fill="#52525b" font-weight="700">INCASE STUDIOS EST. 2026</text>
+    <text x="672" y="38" text-anchor="end" fill="#52525b" font-weight="700">INCASE STUDIOS EST. 2024</text>
   </g>
 </svg>
   `.trim();

@@ -31,11 +31,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=20261116-v90">
+  <link rel="stylesheet" href="css/styles.css?v=20261116-v91">
   
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="assets/emblem.svg">
-  <link rel="apple-touch-icon" href="assets/logo.png">
+  <link rel="icon" type="image/png" href="assets/logo-2024.png">
+  <link rel="apple-touch-icon" href="assets/logo-2024.png">
 </head>
 <body class="bg-[#E5E5E2] text-zinc-950 antialiased min-h-screen flex flex-col font-sans overflow-x-hidden">
 
@@ -138,13 +138,12 @@
       </div>
 
       <!-- Center: Official INCASE STUDIOS Logo -->
-      <a href="#" onclick="handleNavbarHomeClick(event)" class="flex items-center justify-center cursor-pointer px-2" title="INCASE STUDIOS">
+      <a href="#" onclick="handleNavbarHomeClick(event)" class="flex items-center justify-center cursor-pointer px-2 flex-shrink-0 h-[44px] sm:h-[48px] overflow-hidden" title="INCASE STUDIOS">
         <img
           id="brandLogoImg"
-          src="assets/emblem.svg"
-          onerror="this.src='assets/logo.png'"
-          alt="INCASE STUDIOS"
-          class="h-[36px] sm:h-[42px] w-auto object-contain block"
+          src="assets/logo-2024.png"
+          alt="INCASE STUDIOS EST 2024"
+          class="h-[40px] sm:h-[46px] max-h-[48px] max-w-[140px] sm:max-w-[180px] w-auto object-contain block"
         />
       </a>
 
@@ -198,12 +197,12 @@
         </div>
 
         <!-- Prominent Centered INCASE STUDIOS Brand Logo -->
-        <div class="hero-brand-logo-container mb-3 flex items-center justify-center w-full max-w-full overflow-visible">
+        <div class="hero-brand-logo-container mb-3 pt-1 flex items-center justify-center w-full max-w-full overflow-visible">
           <img 
-            src="assets/emblem-dark.svg?v=20261019-v69" 
-            alt="INCASE STUDIOS" 
-            class="hero-brand-logo-img h-12 sm:h-16 md:h-20 w-auto max-w-full object-contain block drop-shadow-sm transition-transform hover:scale-105 duration-300"
-            onerror="this.onerror=null; this.src='assets/logo.png';"
+            src="assets/logo-2024.png" 
+            alt="INCASE STUDIOS EST 2024" 
+            class="hero-brand-logo-img h-14 sm:h-16 md:h-20 w-auto max-w-full object-contain block drop-shadow-sm transition-transform hover:scale-105 duration-300"
+            style="filter: invert(1) contrast(1.25);"
           />
         </div>
 
@@ -1371,14 +1370,11 @@
         type="button" 
         id="modalNavbarHomeBtn"
         onclick="handleNavbarHomeClick(event)"
-        class="flex items-center gap-2 select-none cursor-pointer bg-transparent border-0 p-1.5 rounded hover:opacity-80 transition-opacity"
+        class="flex items-center justify-center select-none cursor-pointer bg-transparent border-0 px-2 py-0.5 h-[40px] sm:h-[44px] rounded hover:opacity-80 transition-opacity"
         title="Return to Shop Homepage"
         aria-label="INCASE STUDIOS Home"
       >
-        <img src="assets/logo.svg" alt="Incase Studios Logo" class="w-5 h-5 rounded-xs shadow-sm" />
-        <div class="flex flex-col items-start leading-none">
-          <span class="text-white font-extrabold text-[11px] sm:text-xs uppercase tracking-[0.18em]">INCASE STUDIOS</span>
-        </div>
+        <img src="assets/logo-2024.png" alt="INCASE STUDIOS EST 2024" class="h-[36px] sm:h-[42px] max-w-[140px] w-auto object-contain block" />
       </button>
 
       <div class="flex items-center">
@@ -2438,11 +2434,8 @@
   <footer class="bg-[#09090b] text-zinc-400 border-t border-zinc-800 py-12 text-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
       <div class="space-y-3">
-        <div class="flex items-center gap-2.5">
-          <div class="h-9 px-3 bg-black border border-zinc-800 flex items-center justify-center">
-            <img src="assets/emblem.svg" onerror="this.src='assets/logo.png'" alt="INCASE STUDIOS" class="h-6 w-auto object-contain" style="object-fit: contain;" />
-          </div>
-          <span class="font-[900] text-white uppercase tracking-tight text-sm">INCASE STUDIOS</span>
+        <div class="flex items-center pt-1">
+          <img src="assets/logo-2024.png" alt="INCASE STUDIOS EST 2024" class="h-[44px] sm:h-[50px] w-auto object-contain block" />
         </div>
         <p class="leading-relaxed text-[11px] text-zinc-400">
           Precision Print & Spec Studio. Handcrafted in Manchester, UK on 200gsm Heavyweight Glossy Photo Paper. A4 & A3 formats with sleek black frames and exclusive 3-piece Islamic gallery sets.
@@ -3037,9 +3030,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/catalog-data.js?v=20261116-v90"></script>
-  <script src="js/db.js?v=20261116-v90"></script>
-  <script src="js/mockup-studio.js?v=20261116-v90"></script>
-  <script src="js/app.js?v=20261116-v90"></script>
+  <script src="js/catalog-data.js?v=20261116-v91"></script>
+  <script src="js/db.js?v=20261116-v91"></script>
+  <script src="js/mockup-studio.js?v=20261116-v91"></script>
+  <script src="js/app.js?v=20261116-v91"></script>
 </body>
 </html>
