@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=20261116-v97">
+  <link rel="stylesheet" href="css/styles.css?v=20261116-v98">
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/logo-2024.png">
@@ -1369,9 +1369,9 @@
         <button 
           type="button" 
           id="productModalBackBtn"
-          onclick="closeProductModal()" 
+          onclick="handleModalBackClick()" 
           class="header-nav-btn"
-          title="Return to Shop Homepage (Esc)"
+          title="Back / Return to Shop Homepage (Esc)"
         >
           <i data-lucide="arrow-left" class="w-4 h-4 text-zinc-300"></i>
           <span>BACK</span>
@@ -1466,23 +1466,8 @@
               </div>
             </div>
 
-            <!-- Right: Zoom + Anchored Expand Button with Microcopy -->
+            <!-- Right: Anchored Expand Button with Microcopy (Zoom disabled to prevent glitching) -->
             <div class="flex items-center gap-1.5 pointer-events-auto flex-shrink-0 ml-1.5 z-40">
-              <div class="hidden sm:flex items-center bg-[#121214] border border-zinc-700 rounded-xs p-0.5 shadow-sm">
-                <button 
-                  type="button" 
-                  onclick="zoomModalOut()" 
-                  class="w-6 h-6 flex items-center justify-center text-zinc-300 hover:text-white hover:bg-zinc-800 rounded-xs transition text-xs font-bold cursor-pointer" 
-                  title="Zoom Out (−)"
-                >−</button>
-                <button 
-                  type="button" 
-                  onclick="zoomModalIn()" 
-                  class="w-6 h-6 flex items-center justify-center text-zinc-300 hover:text-white hover:bg-zinc-800 rounded-xs transition text-xs font-bold cursor-pointer" 
-                  title="Zoom In (+)"
-                >+</button>
-              </div>
-
               <div id="modalZoomIndicator" class="hidden items-center bg-[#121214] border border-zinc-700 rounded-xs text-white px-2 py-1 shadow-sm text-[9.5px] font-mono font-bold">
                 <span id="modalZoomVal">100%</span>
               </div>
@@ -3043,9 +3028,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/catalog-data.js?v=20261116-v97"></script>
-  <script src="js/db.js?v=20261116-v97"></script>
-  <script src="js/mockup-studio.js?v=20261116-v97"></script>
-  <script src="js/app.js?v=20261116-v97"></script>
+  <script src="js/catalog-data.js?v=20261116-v98"></script>
+  <script src="js/db.js?v=20261116-v98"></script>
+  <script src="js/mockup-studio.js?v=20261116-v98"></script>
+  <script src="js/app.js?v=20261116-v98"></script>
 </body>
 </html>

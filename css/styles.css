@@ -569,29 +569,58 @@ button[onclick*="openProductModal"] {
   --hero-a4-w: clamp(125px, 28vw, 175px);
 }
 
-/* Smooth Front-Facing Showcase Arc + Subtle Levitation (Never turns edge-on!) */
+/* Dynamic "Gallery Showcase Sweep" (2x faster, -28° to +28° opposite counter-tilt + levitation) */
 @keyframes heroShowcaseArcA3 {
   0% {
-    transform: translateY(0px) rotateY(-20deg) rotateX(2deg);
+    transform: translateY(0px) rotateY(-28deg) rotateX(3deg);
   }
   50% {
-    transform: translateY(-5px) rotateY(4deg) rotateX(1deg);
+    transform: translateY(-6px) rotateY(0deg) rotateX(1deg);
   }
   100% {
-    transform: translateY(0px) rotateY(22deg) rotateX(2deg);
+    transform: translateY(0px) rotateY(28deg) rotateX(3deg);
   }
 }
 
 @keyframes heroShowcaseArcA4 {
   0% {
-    transform: translateY(-2px) rotateY(-12deg) rotateX(3deg);
+    transform: translateY(-3px) rotateY(28deg) rotateX(3deg);
   }
   50% {
-    transform: translateY(-7px) rotateY(14deg) rotateX(1deg);
+    transform: translateY(-8px) rotateY(0deg) rotateX(1deg);
   }
   100% {
-    transform: translateY(-2px) rotateY(30deg) rotateX(3deg);
+    transform: translateY(-3px) rotateY(-28deg) rotateX(3deg);
   }
+}
+
+/* Moving Specular Acrylic Light Sheen across Hero Frames */
+@keyframes heroAcrylicGlint {
+  0% {
+    background-position: -140% 0;
+    opacity: 0.35;
+  }
+  50% {
+    background-position: 60% 0;
+    opacity: 0.75;
+  }
+  100% {
+    background-position: 240% 0;
+    opacity: 0.35;
+  }
+}
+
+.hero-prism-wrapper .prism-glazing-sheen {
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.06) 34%,
+    rgba(255, 255, 255, 0.34) 48%,
+    rgba(255, 255, 255, 0.08) 60%,
+    rgba(255, 255, 255, 0.01) 100%
+  ) !important;
+  background-size: 240% 100% !important;
+  animation: heroAcrylicGlint 4.2s ease-in-out infinite alternate !important;
 }
 
 .hero-stage-container {
@@ -645,15 +674,15 @@ button[onclick*="openProductModal"] {
   pointer-events: auto !important;
 }
 
-/* Offset Front-Facing Showcase Arc + Subtle Levitation */
+/* Lively Gallery Showcase Sweep (2x faster opposite counter-tilt) */
 .hero-auto-spin {
-  animation: heroShowcaseArcA3 8s ease-in-out infinite alternate !important;
+  animation: heroShowcaseArcA3 4.2s ease-in-out infinite alternate !important;
   transform-style: preserve-3d !important;
   will-change: transform;
 }
 
 .hero-auto-spin-offset {
-  animation: heroShowcaseArcA4 10s ease-in-out infinite alternate -3.5s !important;
+  animation: heroShowcaseArcA4 4.8s ease-in-out infinite alternate !important;
   transform-style: preserve-3d !important;
   will-change: transform;
 }
@@ -2497,20 +2526,90 @@ button[onclick*="openProductModal"] {
   font-weight: 900 !important;
 }
 
-.stage-expanded #modalExpandStageBtn.modal-expand-stage-btn {
-  animation: none !important;
-  background: #27272a !important;
-  border-color: rgba(255, 255, 255, 0.25) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
-  color: #ffffff !important;
+/* Hide redundant "TAP TO EXPAND" button while already expanded */
+.stage-expanded #modalExpandStageBtn.modal-expand-stage-btn,
+#productModal.stage-expanded #modalExpandStageBtn.modal-expand-stage-btn {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
-.stage-expanded #modalExpandStageBtn.modal-expand-stage-btn #modalExpandBtnText {
-  color: #e4e4e7 !important;
+/* ===================================================
+   ARCHITECTURAL DIMENSION LINES BESIDE 3D FRAME
+   =================================================== */
+.frame-dim-guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none !important;
+  transform: translateZ(1px);
+  z-index: 25;
+  transition: opacity 0.2s ease;
 }
 
-.stage-expanded #modalExpandStageBtn.modal-expand-stage-btn i {
-  color: #a1a1aa !important;
+.frame-dim-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -18px;
+  width: 10px;
+  border-top: 1px solid rgba(24, 24, 27, 0.45);
+  border-bottom: 1px solid rgba(24, 24, 27, 0.45);
+  border-right: 1px solid rgba(24, 24, 27, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.frame-dim-right-label {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: center;
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #27272a;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.frame-dim-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -16px;
+  height: 9px;
+  border-left: 1px solid rgba(24, 24, 27, 0.45);
+  border-right: 1px solid rgba(24, 24, 27, 0.45);
+  border-bottom: 1px solid rgba(24, 24, 27, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.frame-dim-bottom-label {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #27272a;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.modal-room-hanging-mode .frame-dim-guides {
+  display: none !important;
 }
 
 
@@ -2623,12 +2722,12 @@ button[onclick*="openProductModal"] {
   .stage-expanded #modalPreviewContainer .prism-3d-viewport,
   .modal-preview-stage-pane.stage-expanded #modalPreviewContainer .prism-3d-viewport,
   #productModal.stage-expanded #modalPreviewContainer .prism-3d-viewport {
-    aspect-ratio: 1 / 1.414 !important;
-    height: clamp(380px, 68vh, 560px) !important;
-    max-height: 82% !important;
-    width: auto !important;
-    max-width: 88% !important;
-    margin: 16px auto !important;
+    aspect-ratio: 1 / 1.4142 !important;
+    height: min(44vh, 390px) !important;
+    width: calc(min(44vh, 390px) / 1.4142) !important;
+    max-height: none !important;
+    max-width: none !important;
+    margin: 8px auto !important;
     flex-shrink: 0 !important;
     display: block !important;
     position: relative !important;

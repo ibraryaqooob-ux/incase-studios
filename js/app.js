@@ -1403,39 +1403,27 @@ function showModalZoomIndicator(zoom) {
 }
 
 function toggleModalDoubleTapZoom() {
-  if (isModalRoomMode) return;
-  const isMobile = window.innerWidth < 768;
-  const maxTarget = isMobile ? 1.85 : 2.2;
-  const target = (modalZoom > 1.1) ? 1.0 : maxTarget;
-  setModalZoom(target);
-  showModalZoomIndicator(target);
+  // Zoom disabled to keep camera fit locked and prevent hotspot/container glitches
+  modalZoom = 1.0;
 }
 
 function setModalZoom(val) {
-  // STRICT: Only allow scaling once inside expanded view or Live Room
-  if (!isModalStageExpanded && !isModalRoomMode) {
-    modalZoom = 1.0;
-    return;
-  }
-  if (isModalRoomMode) {
-    modalZoom = 1.0;
-    updateModalPrismTransform(true);
-    return;
-  }
-  const maxZoom = 2.5; // Full 2.5x high-DPI inspection capability on both mobile and desktop
-  modalZoom = Math.max(0.95, Math.min(maxZoom, Math.round(val * 100) / 100));
-  
+  // Zoom disabled: lock scale at 1.0 so users rotate smoothly without clipping or squishing
+  modalZoom = 1.0;
   const stagePane = document.querySelector(".modal-preview-stage-pane");
-  if (stagePane) {
-    stagePane.classList.toggle("stage-zoomed-active", modalZoom > 1.08);
-  }
-
-  const slider = document.getElementById("modalZoomSlider");
-  if (slider) slider.value = Math.round(modalZoom * 100);
-  const label = document.getElementById("modalZoomVal");
-  if (label) label.textContent = `${Math.round(modalZoom * 100)}%`;
+  if (stagePane) stagePane.classList.remove("stage-zoomed-active");
   updateModalPrismTransform(true);
-  updateModalRetinaCanvas();
+}
+
+function handleModalBackClick() {
+  if (isModalStageExpanded) {
+    toggleModalStageExpand();
+  } else {
+    closeProductModal();
+  }
+}
+if (typeof window !== "undefined") {
+  window.handleModalBackClick = handleModalBackClick;
 }
 
 function zoomModalIn() {
@@ -2170,15 +2158,10 @@ function initModalStageGestures() {
     dragMode = "rotate";
   });
 
-  // Desktop Mouse Wheel Zoom
+  // Wheel zoom disabled to keep camera fit locked
   stagePane.addEventListener("wheel", (e) => {
-    if (isModalRoomMode) return;
-    e.preventDefault();
-    const delta = e.deltaY < 0 ? 0.08 : -0.08;
-    const target = Math.max(0.95, Math.min(2.5, Math.round((modalZoom + delta) * 100) / 100));
-    setModalZoom(target);
-    showModalZoomIndicator(target);
-  }, { passive: false });
+    // Allow normal scroll
+  }, { passive: true });
 
   // Desktop Double Click to Zoom In / Out
   stagePane.addEventListener("dblclick", (e) => {
@@ -2266,21 +2249,8 @@ function initModalStageGestures() {
     dismissModalGestureHint();
 
     if (e.touches.length === 2) {
-      // STRICT: Pinch-to-zoom is strictly restricted to Expanded view or Live Room view only
-      if (!isModalStageExpanded && !isModalRoomMode) {
-        isPinching = false;
-        return; // In unexpanded view, disable pinch-to-zoom so native vertical page scroll works without container glitching
-      }
-      isPinching = true;
-      dragMode = "pinch";
-      gestureDecided = true;
-      startPinchDist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-      startPinchZoom = modalZoom;
-      if (stagePane) stagePane.classList.add("stage-zoomed-active");
-      if (e.cancelable) e.preventDefault();
+      // Zoom disabled in both compact and expanded modes to prevent container/hotspot glitching
+      isPinching = false;
       return;
     }
 
@@ -2394,11 +2364,10 @@ function updateModalPrismTransform(smooth = true) {
   const a4LiveScale = 0.72;
   const a3LiveScale = a4LiveScale * ISO_A3_TO_A4_RATIO;
 
-  // In Studio mode: A4 is compact and refined (0.74 on mobile, 0.76 on desktop).
-  // A3 mathematically doubles the surface area (2x area) via linear sqrt(2) multiplier:
-  // 0.74 * 1.41421356 = 1.0465. This creates an authentic, obvious visual contrast between sizes.
-  const a4StudioScale = isMobile ? 0.74 : 0.76;
-  const a3StudioScale = a4StudioScale * ISO_A3_TO_A4_RATIO;
+  // True 1 : 1.4142 proportional ISO scaling in both compact and expanded Studio modes:
+  // A3 = 1.000, A4 = 1 / 1.4142 = 0.7071 so A3 fits comfortably with dimension guides and zero clipping!
+  const a3StudioScale = 1.0;
+  const a4StudioScale = a3StudioScale / ISO_A3_TO_A4_RATIO; // 0.7071
 
   // In Islamic 3-piece Set: calibrated so all 3 panels fit comfortably side-by-side with exact 1.4142 ratio
   const a4IslamicScale = isMobile ? 0.62 : 0.68;
@@ -2412,9 +2381,8 @@ function updateModalPrismTransform(smooth = true) {
         ? ((selectedSize === "a4") ? a4LiveScale : a3LiveScale)
         : ((selectedSize === "a4") ? a4StudioScale : a3StudioScale));
 
-  // In expanded mode: apply a uniform scale multiplier (+6%) in Studio mode so the true 2x area ratio is strictly preserved.
-  // In Live Room mode, keep multiplier at 1.0 to preserve tasteful room proportions relative to furniture.
-  const expandedMultiplier = (isModalStageExpanded && !isModalRoomMode) ? 1.06 : 1.0;
+  // Keep camera fit locked at 1.0 in expanded mode so the entire frame + dimension lines fit with generous breathing room
+  const expandedMultiplier = 1.0;
 
   const scale = baseScale * modalZoom * roomScale * wallScale * sizeScale * frontViewScale * expandedMultiplier;
 
@@ -2491,6 +2459,18 @@ function updateModalPrismTransform(smooth = true) {
     backHotspots.forEach(h => {
       h.style.visibility = showBack ? "visible" : "hidden";
       h.style.opacity = showBack ? "1" : "0";
+    });
+
+    // Update architectural dimension lines beside the 3D frame dynamically for A4 vs A3
+    const dimGuides = stage.querySelectorAll(".frame-dim-guides");
+    const showDims = !isModalRoomMode && Math.abs(modalRotY) < 60;
+    dimGuides.forEach(g => {
+      g.style.opacity = showDims ? "1" : "0";
+      g.style.visibility = showDims ? "visible" : "hidden";
+      const rLabel = g.querySelector(".frame-dim-right-label");
+      const bLabel = g.querySelector(".frame-dim-bottom-label");
+      if (rLabel) rLabel.textContent = selectedSize === "a4" ? "29.7 cm" : "42 cm";
+      if (bLabel) bLabel.textContent = selectedSize === "a4" ? "21 cm" : "29.7 cm";
     });
   }
 
@@ -2868,7 +2848,17 @@ function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSlic
         <div class="prism-wall-bottom ${frameType === 'aluminium' ? 'prism-wall-aluminium' : 'prism-wall-plastic'}"></div>
 
         ${includeStageId ? `
-          <!-- 4. 3D Spatial Annotations (Hotspots) -->
+          <!-- 4. Architectural Dimension Lines Beside Frame -->
+          <div class="frame-dim-guides" aria-hidden="true">
+            <div class="frame-dim-right">
+              <span class="frame-dim-right-label">${size === 'a4' ? '29.7 cm' : '42 cm'}</span>
+            </div>
+            <div class="frame-dim-bottom">
+              <span class="frame-dim-bottom-label">${size === 'a4' ? '21 cm' : '29.7 cm'}</span>
+            </div>
+          </div>
+
+          <!-- 5. 3D Spatial Annotations (Hotspots) -->
           ${renderHotspotHtml("hotspot-edge", "hotspot-edge", "Premium Frame", "Sleek aluminum or plastic edges for a gallery finish.")}
           ${renderHotspotHtml("hotspot-back", "hotspot-back", "Ready to Hang", "Shipped flat with easy rear-loading.")}
         ` : ''}
