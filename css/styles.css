@@ -303,9 +303,12 @@ button:active, [role="button"]:active {
 .modal-frame-preview .frame-black-plastic,
 .studio-framed-wall-art.frame-black-plastic,
 .studio-framed-wall-art .frame-black-plastic,
-.prism-face-front.frame-black-plastic {
-  border: 3.5px solid #111111 !important;
-  border-width: 3.5px !important;
+.prism-face-front.frame-black-plastic,
+.prism-face-front.frame-black-aluminium {
+  border: none !important;
+  border-width: 0 !important;
+  padding: var(--frame-bezel-pct, 3.6%) !important;
+  background: #111111 !important;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 20px 45px -10px rgba(0, 0, 0, 0.38), 0 4px 12px rgba(0, 0, 0, 0.2) !important;
 }
 
@@ -318,10 +321,8 @@ button:active, [role="button"]:active {
 .modal-frame-preview .frame-black-aluminium,
 .studio-framed-wall-art.frame-black-aluminium,
 .studio-framed-wall-art .frame-black-aluminium,
-.prism-face-front.frame-black-aluminium {
-  border: 3.5px solid #111111 !important;
-  border-width: 3.5px !important;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22), 0 20px 45px -10px rgba(0, 0, 0, 0.38), 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+.prism-face-front.frame-black-aluminium-accent {
+  border: none !important;
 }
 
 /* 3-Piece Triptych Gallery Set Container (Strict 3 Equal Columns, 1:1.414 Aspect Ratio) */
@@ -2866,70 +2867,34 @@ button[onclick*="openProductModal"] {
   }
 
   /* Universal Architectural Frame Bezel: Single, sleek 3.5px width (matching real 10mm frame) locked permanently across all view states */
-  #productModal .frame-black-plastic,
-  #productModal .frame-plastic,
-  #productModal .frame-black-aluminium,
-  #productModal .frame-aluminium,
   #productModal .prism-face-front,
   #productModal .poster-frame-container,
-  #roomStudioModal .frame-black-plastic,
-  #roomStudioModal .frame-plastic,
-  #roomStudioModal .frame-black-aluminium,
-  #roomStudioModal .frame-aluminium,
-  #studioFrameWrapper .frame-black-plastic,
-  #studioFrameWrapper .frame-plastic,
-  #studioFrameWrapper .frame-black-aluminium,
-  #studioFrameWrapper .frame-aluminium,
-  .modal-frame-preview .frame-black-plastic,
-  .modal-frame-preview .frame-black-aluminium,
   .prism-face-front.frame-black-plastic,
   .prism-face-front.frame-black-aluminium,
-  .poster-frame-container.frame-black-plastic,
-  .poster-frame-container.frame-black-aluminium,
-  .modal-room-hanging-mode .frame-black-plastic,
-  .modal-room-hanging-mode .frame-plastic,
-  .modal-room-hanging-mode .frame-black-aluminium,
-  .modal-room-hanging-mode .frame-aluminium,
   .modal-room-hanging-mode .prism-face-front,
   .modal-room-hanging-mode .poster-frame-container,
-  #productModal.modal-room-hanging-mode .frame-black-plastic,
-  #productModal.modal-room-hanging-mode .frame-black-aluminium,
   #productModal.modal-room-hanging-mode .prism-face-front,
   #productModal.modal-room-hanging-mode .poster-frame-container,
-  .stage-expanded .frame-black-plastic,
-  .stage-expanded .frame-plastic,
-  .stage-expanded .frame-black-aluminium,
-  .stage-expanded .frame-aluminium,
   .stage-expanded .prism-face-front,
   .stage-expanded .poster-frame-container,
-  #productModal.stage-expanded .frame-black-plastic,
-  #productModal.stage-expanded .frame-plastic,
-  #productModal.stage-expanded .frame-black-aluminium,
-  #productModal.stage-expanded .frame-aluminium,
   #productModal.stage-expanded .prism-face-front,
   #productModal.stage-expanded .poster-frame-container,
-  .stage-expanded #productModal .frame-black-plastic,
-  .stage-expanded #productModal .frame-black-aluminium,
-  .stage-expanded #productModal .prism-face-front,
-  .modal-preview-stage-pane.stage-expanded .frame-black-plastic,
-  .modal-preview-stage-pane.stage-expanded .frame-black-aluminium,
-  .modal-preview-stage-pane.stage-expanded .prism-face-front,
-  .stage-expanded.modal-room-hanging-mode .frame-black-plastic,
-  .stage-expanded.modal-room-hanging-mode .frame-black-aluminium,
   .stage-expanded.modal-room-hanging-mode .prism-face-front,
   .stage-expanded.modal-room-hanging-mode .poster-frame-container,
-  #productModal.stage-expanded.modal-room-hanging-mode .frame-black-plastic,
-  #productModal.stage-expanded.modal-room-hanging-mode .frame-black-aluminium,
   #productModal.stage-expanded.modal-room-hanging-mode .prism-face-front,
-  #productModal.stage-expanded.modal-room-hanging-mode .poster-frame-container,
-  .modal-preview-stage-pane.stage-expanded.modal-room-hanging-mode .frame-black-plastic,
-  .modal-preview-stage-pane.stage-expanded.modal-room-hanging-mode .frame-black-aluminium,
-  .modal-preview-stage-pane.stage-expanded.modal-room-hanging-mode .prism-face-front {
-    border: 3.5px solid #111111 !important;
-    border-width: 3.5px !important;
-    border-style: solid !important;
-    border-color: #111111 !important;
+  #productModal.stage-expanded.modal-room-hanging-mode .poster-frame-container {
+    border: none !important;
+    border-width: 0 !important;
+    padding: var(--frame-bezel-pct, 3.6%) !important;
+    background: #111111 !important;
     box-sizing: border-box !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14), 0 18px 38px -10px rgba(0, 0, 0, 0.42), 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  #productModal .prism-face-paper-front {
+    border: none !important;
+    padding: 0 !important;
+    background: transparent !important;
   }
 
   /* Hide oversized dashed A3 box completely on mobile */

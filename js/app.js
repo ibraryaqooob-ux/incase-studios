@@ -2461,6 +2461,12 @@ function updateModalPrismTransform(smooth = true) {
       h.style.opacity = showBack ? "1" : "0";
     });
 
+    // Constant real-world bezel thickness across Compact, Expanded, Live Room, A4, and A3 (~12-15mm proportional)
+    const FRAME_BEZEL_PCT_A3 = 3.6;
+    const FRAME_BEZEL_PCT_A4 = +(FRAME_BEZEL_PCT_A3 * ISO_A3_TO_A4_RATIO).toFixed(2); // 5.09% so after 0.7071x scale it matches A3 mm thickness!
+    const bezelPct = (selectedSize === "a4") ? FRAME_BEZEL_PCT_A4 : FRAME_BEZEL_PCT_A3;
+    stage.style.setProperty("--frame-bezel-pct", `${bezelPct}%`);
+
     // Update architectural dimension lines beside the 3D frame dynamically for A4 vs A3
     const dimGuides = stage.querySelectorAll(".frame-dim-guides");
     const showDims = !isModalRoomMode && Math.abs(modalRotY) < 60;
