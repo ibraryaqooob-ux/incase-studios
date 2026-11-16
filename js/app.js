@@ -13,36 +13,36 @@ let isTriptychMode = false;       // exclusively for Islamic prints
 let isModalProfileZoomActive = false; // 3D Side-Profile Zoom
 let cart = [];
 
-// Hero Showcase 4 Curated Shelf Pairs (Verified Catalog URLs, Zero Transparency)
+// Hero Showcase 4 Curated Shelf Pairs (Full-Res Studio Assets, Zero Stock Photos)
 const HERO_POSTERS_DATA = [
   {
     id: "porsche-gt3rs",
     leftId: "porsche-gt3rs",
     leftTitle: "Porsche 911 GT3 RS (992)",
-    leftImage: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1000&auto=format&fit=crop",
+    leftImage: "assets/Porsche GT 3RS (Minimalistic).png",
     rightId: "bmw-m3-g80",
     rightTitle: "BMW M3 Competition (G80)",
-    rightImage: "https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1000&auto=format&fit=crop",
+    rightImage: "assets/Bmw M3 (Minimalistic).png",
     caption: "Porsche GT3 RS (A3) & BMW M3 Comp (A4)"
   },
   {
     id: "ferrari-pista",
     leftId: "ferrari-pista",
     leftTitle: "Ferrari 488 Pista",
-    leftImage: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1000&auto=format&fit=crop",
+    leftImage: "assets/Ferrari 296 (Minimalistic).png",
     rightId: "bmw-m2-g87",
     rightTitle: "BMW M2 Coupe (G87)",
-    rightImage: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=1000&auto=format&fit=crop",
+    rightImage: "assets/M2 g87 face copy.PNG",
     caption: "Ferrari 488 Pista (A3) & BMW M2 Coupe (A4)"
   },
   {
     id: "custom-car-poster",
     leftId: "custom-car-poster",
     leftTitle: "Custom Your Car Poster",
-    leftImage: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1000&auto=format&fit=crop",
+    leftImage: "assets/m4 comp face_ copy.PNG",
     rightId: "audi-rs-q8",
     rightTitle: "Audi RS Q8 Quattro",
-    rightImage: "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1000&auto=format&fit=crop",
+    rightImage: "assets/Audi Rsq8 (Minimalistic).png",
     caption: "Custom Your Car Spec Poster — From £7.69"
   },
   {
@@ -62,6 +62,11 @@ function switchHeroPoster(idx, shouldScroll = false) {
   currentHeroIndex = idx;
   const item = HERO_POSTERS_DATA[idx];
   if (!item) return;
+
+  const leftFrame = document.getElementById("heroLeftFrame");
+  if (leftFrame) leftFrame.setAttribute("data-hero-poster-id", item.leftId);
+  const rightFrame = document.getElementById("heroRightFrame");
+  if (rightFrame) rightFrame.setAttribute("data-hero-poster-id", item.rightId);
 
   const updateImgSafe = (elId, src, alt, posterId) => {
     const el = document.getElementById(elId);
@@ -138,13 +143,11 @@ window.switchHeroPoster = switchHeroPoster;
 
 function openHeroPosterModal(side) {
   const item = HERO_POSTERS_DATA[currentHeroIndex] || HERO_POSTERS_DATA[0];
-  const targetId = (side === "right" && item.rightId) ? item.rightId : (item.leftId || item.id);
+  const frameEl = document.getElementById(side === "right" ? "heroRightFrame" : "heroLeftFrame");
+  const attrId = frameEl ? frameEl.getAttribute("data-hero-poster-id") : null;
+  const targetId = attrId || ((side === "right" && item.rightId) ? item.rightId : (item.leftId || item.id));
   selectedSize = (side === "right") ? "a4" : "a3";
-  const savedAngle = (typeof modalRotY === "number" && !isNaN(modalRotY)) ? modalRotY : 0;
   openProductModal(targetId);
-  if (typeof setModalRotation === "function") {
-    setModalRotation(savedAngle, false);
-  }
 }
 
 // Fallback generator: creates an authentic, high-res dark architectural poster SVG for any product

@@ -5084,3 +5084,19 @@ img.triptych-slice-2 {
 .modal-room-hanging-mode .hotspot-3d-wrapper {
   display: none !important;
 }
+
+/* Hero Showcase Full-Bleed Portrait Artwork (Zero White Letterboxing) */
+.hero-prism-wrapper {
+  touch-action: manipulation !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.hero-prism-wrapper .poster-frame-container img,
+#heroMainPosterImg,
+#heroAngledPosterImg {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+}

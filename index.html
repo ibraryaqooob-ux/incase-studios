@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=20261116-v93">
+  <link rel="stylesheet" href="css/styles.css?v=20261116-v94">
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/logo-2024.png">
@@ -249,6 +249,8 @@
             
             <!-- Left 3D Prism (A3 Black Aluminium Edition — Mathematically 1.414x larger) -->
             <div 
+              id="heroLeftFrame"
+              data-hero-poster-id="porsche-gt3rs"
               class="hero-prism-wrapper hero-prism-a3 hero-frame-a3 cursor-pointer group"
               onclick="openHeroPosterModal('left')"
               title="Click to configure A3 Flagship Edition"
@@ -260,10 +262,12 @@
                   <div class="prism-face-front poster-frame-container frame-black-aluminium portrait-spec overflow-hidden absolute inset-0" style="aspect-ratio: 1 / 1.414; width: 100%; height: 100%; margin: 0; padding: 0; box-sizing: border-box; border: 4px solid #111111 !important;">
                     <img 
                       id="heroMainPosterImg" 
-                      src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=1000&auto=format&fit=crop" 
+                      src="assets/Porsche GT 3RS (Minimalistic).png" 
                       alt="Porsche 911 GT3 RS (992)" 
-                      class="w-full h-full object-contain block portrait-spec"
+                      class="w-full h-full object-cover block portrait-spec"
                       loading="eager"
+                      decoding="sync"
+                      fetchpriority="high"
                       onerror="handlePosterImageError(this, 'porsche-gt3rs')"
                     />
                     <div class="prism-glazing-sheen"></div>
@@ -301,6 +305,8 @@
 
             <!-- Right 3D Prism (A4 Black Matte Plastic Frame — Popped Kickstand Strut) -->
             <div 
+              id="heroRightFrame"
+              data-hero-poster-id="bmw-m3-g80"
               class="hero-prism-wrapper hero-prism-a4 hero-frame-a4 cursor-pointer group"
               onclick="openHeroPosterModal('right')"
               title="Click to configure A4 Companion Edition"
@@ -312,10 +318,12 @@
                   <div class="prism-face-front poster-frame-container frame-black-plastic portrait-spec overflow-hidden absolute inset-0" style="aspect-ratio: 1 / 1.414; width: 100%; height: 100%; margin: 0; padding: 0; box-sizing: border-box; border: 4px solid #111111 !important;">
                     <img 
                       id="heroAngledPosterImg" 
-                      src="https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1000&auto=format&fit=crop" 
+                      src="assets/Bmw M3 (Minimalistic).png" 
                       alt="BMW M3 Competition (G80)" 
-                      class="w-full h-full object-contain block portrait-spec"
+                      class="w-full h-full object-cover block portrait-spec"
                       loading="eager"
+                      decoding="sync"
+                      fetchpriority="high"
                       onerror="handlePosterImageError(this, 'bmw-m3-g80')"
                     />
                     <div class="prism-glazing-sheen"></div>
@@ -361,7 +369,7 @@
             <button 
               type="button" 
               id="heroTab0" 
-              onclick="switchHeroPoster(0, true)" 
+              onclick="switchHeroPoster(0, false)" 
               class="py-2 px-2 text-[10px] font-black uppercase tracking-wider bg-zinc-950 text-white border border-zinc-700 truncate cursor-pointer text-center"
             >
               1. GT3 RS &amp; M3
@@ -369,7 +377,7 @@
             <button 
               type="button" 
               id="heroTab1" 
-              onclick="switchHeroPoster(1, true)" 
+              onclick="switchHeroPoster(1, false)" 
               class="py-2 px-2 text-[10px] font-bold uppercase tracking-wider bg-white text-zinc-800 border border-zinc-300 truncate cursor-pointer text-center"
             >
               2. 488 Pista &amp; M2
@@ -377,7 +385,7 @@
             <button 
               type="button" 
               id="heroTab2" 
-              onclick="switchHeroPoster(2, true)" 
+              onclick="switchHeroPoster(2, false)" 
               class="py-2 px-2 text-[10px] font-bold uppercase tracking-wider bg-white text-zinc-800 border border-zinc-300 truncate cursor-pointer text-center"
             >
               3. Custom Car
@@ -385,7 +393,7 @@
             <button 
               type="button" 
               id="heroTab3" 
-              onclick="switchHeroPoster(3, true)" 
+              onclick="switchHeroPoster(3, false)" 
               class="py-2 px-2 text-[10px] font-bold uppercase tracking-wider bg-white text-zinc-800 border border-zinc-300 truncate cursor-pointer text-center"
             >
               4. Islamic Sets
@@ -3030,9 +3038,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/catalog-data.js?v=20261116-v93"></script>
-  <script src="js/db.js?v=20261116-v93"></script>
-  <script src="js/mockup-studio.js?v=20261116-v93"></script>
-  <script src="js/app.js?v=20261116-v93"></script>
+  <script src="js/catalog-data.js?v=20261116-v94"></script>
+  <script src="js/db.js?v=20261116-v94"></script>
+  <script src="js/mockup-studio.js?v=20261116-v94"></script>
+  <script src="js/app.js?v=20261116-v94"></script>
 </body>
 </html>
