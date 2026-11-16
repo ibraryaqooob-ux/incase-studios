@@ -626,7 +626,7 @@ button[onclick*="openProductModal"] {
 }
 
 .hero-auto-spin-offset {
-  animation: autoSpin360 16s linear infinite -2.5s !important;
+  animation: autoSpin360 16s linear infinite -0.8s !important;
   transform-style: preserve-3d !important;
   will-change: transform;
 }
@@ -4972,14 +4972,14 @@ img.triptych-slice-2 {
 
 .hotspot-3d-wrapper.hotspot-edge {
   top: 32%;
-  right: 2px;
-  transform: translateZ(2.5px);
+  right: 4px;
+  transform: translateZ(10px);
 }
 
 .hotspot-3d-wrapper.hotspot-back {
   top: 36%;
   left: 50%;
-  transform: rotateY(180deg) translateZ(7.5px);
+  transform: rotateY(180deg) translateZ(8px);
 }
 
 .hotspot-button {

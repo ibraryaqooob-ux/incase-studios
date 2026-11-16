@@ -13,46 +13,46 @@ let isTriptychMode = false;       // exclusively for Islamic prints
 let isModalProfileZoomActive = false; // 3D Side-Profile Zoom
 let cart = [];
 
-// Hero Showcase 4 Curated Shelf Pairs (Full-Res Studio Assets, Zero Stock Photos)
+// Hero Showcase 4 Curated Shelf Pairs (Instant-Load Studio Thumbnails, Zero Stock Photos)
 const HERO_POSTERS_DATA = [
   {
     id: "porsche-gt3rs",
     leftId: "porsche-gt3rs",
     leftTitle: "Porsche 911 GT3 RS (992)",
-    leftImage: "assets/Porsche GT 3RS (Minimalistic).png",
+    leftImage: "assets/thumbs/Porsche GT 3RS (Minimalistic).jpg",
     rightId: "bmw-m3-g80",
     rightTitle: "BMW M3 Competition (G80)",
-    rightImage: "assets/Bmw M3 (Minimalistic).png",
+    rightImage: "assets/thumbs/Bmw M3 (Minimalistic).jpg",
     caption: "Porsche GT3 RS (A3) & BMW M3 Comp (A4)"
   },
   {
     id: "ferrari-pista",
     leftId: "ferrari-pista",
     leftTitle: "Ferrari 488 Pista",
-    leftImage: "assets/Ferrari 296 (Minimalistic).png",
+    leftImage: "assets/thumbs/Ferrari 296 (Minimalistic).jpg",
     rightId: "bmw-m2-g87",
     rightTitle: "BMW M2 Coupe (G87)",
-    rightImage: "assets/M2 g87 face copy.PNG",
+    rightImage: "assets/thumbs/M2 g87 face copy.jpg",
     caption: "Ferrari 488 Pista (A3) & BMW M2 Coupe (A4)"
   },
   {
     id: "custom-car-poster",
     leftId: "custom-car-poster",
     leftTitle: "Custom Your Car Poster",
-    leftImage: "assets/m4 comp face_ copy.PNG",
+    leftImage: "assets/thumbs/m4 comp face_ copy.jpg",
     rightId: "audi-rs-q8",
     rightTitle: "Audi RS Q8 Quattro",
-    rightImage: "assets/Audi Rsq8 (Minimalistic).png",
+    rightImage: "assets/thumbs/Audi Rsq8 (Minimalistic).jpg",
     caption: "Custom Your Car Spec Poster — From £7.69"
   },
   {
     id: "isl-01",
     leftId: "isl-01",
     leftTitle: "Ayatul Kursi & Throne Verses",
-    leftImage: "assets/islamic-panel-2.jpg",
+    leftImage: "assets/thumbs/islamic-panel-2.jpg",
     rightId: "isl-03",
     rightTitle: "The Holy Kaaba & Makkah Blueprint",
-    rightImage: "assets/islamic-panel-3.jpg",
+    rightImage: "assets/thumbs/islamic-panel-3.jpg",
     caption: "Islamic 3-Piece Gallery Sets — From £14.63"
   }
 ];
