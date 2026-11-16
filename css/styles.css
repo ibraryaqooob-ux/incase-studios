@@ -4981,47 +4981,64 @@ img.triptych-slice-2 {
 }
 
 .hotspot-button {
-  width: 30px; height: 30px; border-radius: 50%; background-color: #ffffff; color: #000000;
-  border: none; display: flex; align-items: center; justify-content: center; font-size: 20px;
-  cursor: pointer; transform: translate(-50%, -50%); animation: pulse-ring 2s infinite;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  animation: pulse-ring 2.2s infinite;
   pointer-events: auto !important;
   touch-action: manipulation !important;
   -webkit-tap-highlight-color: transparent !important;
-  font-weight: 700;
-  line-height: 1;
   position: relative;
   z-index: 2;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, color 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hotspot-button:hover {
+    background: rgba(28, 28, 32, 0.95);
+    border-color: rgba(255, 255, 255, 0.65);
+  }
 }
 
 .hotspot-button.is-expanded {
-  background-color: #18181b;
+  background: rgba(18, 18, 18, 0.95);
   color: #ffffff;
-  border: 1.5px solid #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.6);
   animation: none;
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
 @keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8); }
-  70% { box-shadow: 0 0 0 12px rgba(255, 255, 255, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.45); }
+  70% { box-shadow: 0 0 0 5px rgba(255, 255, 255, 0); }
   100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
 }
 
 .hotspot-card {
   position: absolute;
-  top: 14px;
-  right: 12px;
-  width: 195px;
+  top: 12px;
+  right: 10px;
+  width: 190px;
   max-width: 65vw;
-  background: rgba(15, 15, 18, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(18, 18, 18, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 8px;
-  padding: 10px 12px;
+  padding: 9px 11px;
   color: #ffffff;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55);
   pointer-events: auto !important;
   text-align: left;
   z-index: 65;
@@ -5048,10 +5065,10 @@ img.triptych-slice-2 {
 }
 
 .hotspot-card-title {
-  font-size: 11px;
-  font-weight: 900;
+  font-size: 10px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   color: #fbbf24;
   margin-bottom: 3px;
 }
@@ -5059,7 +5076,7 @@ img.triptych-slice-2 {
 .hotspot-card-desc {
   font-size: 11px;
   line-height: 1.4;
-  color: #e4e4e7;
+  color: #a1a1aa;
   font-weight: 500;
 }
 

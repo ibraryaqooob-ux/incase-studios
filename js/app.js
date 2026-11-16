@@ -2681,7 +2681,7 @@ function renderHotspotHtml(id, positionClass, title, description) {
         aria-label="${title}"
         aria-expanded="false"
         onclick="toggleHotspotAnnotation('${id}', event)"
-      >+</button>
+      ><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 1.5v9M1.5 6h9"/></svg></button>
       <div class="hotspot-card" role="dialog" aria-label="${title}" onclick="event.stopPropagation()">
         <div class="hotspot-card-title">${title}</div>
         <div class="hotspot-card-desc">${description}</div>
