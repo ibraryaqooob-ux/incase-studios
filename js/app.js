@@ -2479,14 +2479,18 @@ function updateModalPrismTransform(smooth = true) {
       f.style.visibility = isPast90 ? "hidden" : "visible";
     });
 
-    // Show edge hotspot on front/side angles and back hotspot when rotated to rear
+    // Strict occlusion: edge hotspot only on front/angled view (<82°), back hotspot only on rear (>105°)
     const edgeHotspots = stage.querySelectorAll(".hotspot-edge");
     const backHotspots = stage.querySelectorAll(".hotspot-back");
+    const showEdge = Math.abs(modalRotY) < 82;
+    const showBack = Math.abs(modalRotY) > 105;
     edgeHotspots.forEach(h => {
-      h.style.visibility = Math.abs(modalRotY) <= 105 ? "visible" : "hidden";
+      h.style.visibility = showEdge ? "visible" : "hidden";
+      h.style.opacity = showEdge ? "1" : "0";
     });
     backHotspots.forEach(h => {
-      h.style.visibility = Math.abs(modalRotY) > 95 ? "visible" : "hidden";
+      h.style.visibility = showBack ? "visible" : "hidden";
+      h.style.opacity = showBack ? "1" : "0";
     });
   }
 
