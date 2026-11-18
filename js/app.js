@@ -2735,6 +2735,29 @@ if (typeof window !== "undefined") {
   window.closeAllHotspots = closeAllHotspots;
 }
 
+function renderMdfBackboardHtml(size) {
+  return `
+    <div class="mdf-wood-grain"></div>
+    ${size === 'a4' ? `
+      <div class="a4-mdf-strut-assembly" title="A4 Integrated Folding Strut">
+        <div class="strut-metal-hinge"></div>
+        <div class="strut-mdf-body"></div>
+      </div>
+      <div class="mdf-silver-clip clip-pos-top" title="Silver Retention Clip"></div>
+      <div class="mdf-silver-clip clip-pos-bottom" title="Silver Retention Clip"></div>
+      <div class="mdf-silver-clip clip-pos-left" style="top: 50%; transform: translateY(-50%);" title="Silver Retention Clip"></div>
+      <div class="mdf-silver-clip clip-pos-right" style="top: 50%; transform: translateY(-50%);" title="Silver Retention Clip"></div>
+    ` : `
+      <div class="mdf-silver-clip clip-pos-top" title="Silver Retention Clip"></div>
+      <div class="mdf-silver-clip clip-pos-bottom" title="Silver Retention Clip"></div>
+      <div class="mdf-silver-clip clip-pos-left" style="top: 28%; transform: translateY(-50%);" title="Silver Retention Clip"></div>
+      <div class="mdf-silver-clip clip-pos-left" style="top: 72%; transform: translateY(-50%);" title="Silver Retention Clip"></div>
+      <div class="mdf-silver-clip clip-pos-right" style="top: 28%; transform: translateY(-50%);" title="Silver Retention Clip"></div>
+      <div class="mdf-silver-clip clip-pos-right" style="top: 72%; transform: translateY(-50%);" title="Silver Retention Clip"></div>
+    `}
+  `;
+}
+
 function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSliceIndex = null, includeStageId = true) {
   const isA4 = (size === "a4");
   const isMobile = window.innerWidth < 768;
@@ -2828,26 +2851,8 @@ function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSlic
         <!-- Rear Face (180deg): Clean Procedural E1 MDF Backboard with Brushed Silver Clips & Hardware -->
         <div class="prism-face-back rounded-xs absolute inset-0 real-mdf-back" style="width: 100%; height: 100%; overflow: hidden; box-sizing: border-box; background: #111111;">
           <div class="procedural-backboard-wrapper">
-            <div class="mdf-board-surface">
-              <div class="mdf-wood-grain"></div>
-
-              ${size === 'a4' ? `
-                <div class="a4-mdf-strut-assembly" title="A4 Integrated Folding Strut">
-                  <div class="strut-metal-hinge"></div>
-                  <div class="strut-mdf-body"></div>
-                </div>
-                <div class="mdf-silver-clip clip-pos-top" title="Silver Retention Clip"></div>
-                <div class="mdf-silver-clip clip-pos-bottom" title="Silver Retention Clip"></div>
-                <div class="mdf-silver-clip clip-pos-left" style="top: 50%; transform: translateY(-50%);" title="Silver Retention Clip"></div>
-                <div class="mdf-silver-clip clip-pos-right" style="top: 50%; transform: translateY(-50%);" title="Silver Retention Clip"></div>
-              ` : `
-                <div class="mdf-silver-clip clip-pos-top" title="Silver Retention Clip"></div>
-                <div class="mdf-silver-clip clip-pos-bottom" title="Silver Retention Clip"></div>
-                <div class="mdf-silver-clip clip-pos-left" style="top: 28%; transform: translateY(-50%);" title="Silver Retention Clip"></div>
-                <div class="mdf-silver-clip clip-pos-left" style="top: 72%; transform: translateY(-50%);" title="Silver Retention Clip"></div>
-                <div class="mdf-silver-clip clip-pos-right" style="top: 28%; transform: translateY(-50%);" title="Silver Retention Clip"></div>
-                <div class="mdf-silver-clip clip-pos-right" style="top: 72%; transform: translateY(-50%);" title="Silver Retention Clip"></div>
-              `}
+            <div class="mdf-board-surface" data-board-size="${size}">
+              ${renderMdfBackboardHtml(size)}
             </div>
           </div>
         </div>
@@ -2887,10 +2892,12 @@ function updateModalPreview() {
 
   const isIslamicSet = (isTriptychMode && currentCustomizingPoster.category === "islamic");
 
-  // PERSISTENT 3D VIEWER LAYOUT: Check if persistent 3D stage is already mounted
+  // PERSISTENT 3D VIEWER LAYOUT: Check if persistent 3D stage is already mounted with matching framed/unframed model
   const existingStage = document.getElementById("modalPrismStage");
   const existingTriptych = document.getElementById("modalTriptychStageWrapper");
-  const canUpdateInPlace = (isIslamicSet ? !!existingTriptych : (!!existingStage && !existingTriptych));
+  const isUnframedNow = (selectedFrame === "unframed" || selectedFrame === "none");
+  const wasUnframed = existingStage ? !!existingStage.querySelector(".prism-face-paper-front") : false;
+  const canUpdateInPlace = (isIslamicSet ? !!existingTriptych : (!!existingStage && !existingTriptych && isUnframedNow === wasUnframed));
 
   if (canUpdateInPlace) {
     // Dynamically update texture/image in place WITHOUT unmounting or rebuilding DOM/Canvas!
@@ -2921,6 +2928,13 @@ function updateModalPreview() {
       }
       existingStage.classList.toggle("prism-depth-aluminium", selectedFrame === "aluminium");
       existingStage.classList.toggle("prism-depth-plastic", selectedFrame !== "aluminium" && selectedFrame !== "unframed");
+
+      // Sync rear MDF backboard (A4 kickstand easel strut vs A3 wall-mount clips)
+      const mdfBoard = existingStage.querySelector(".mdf-board-surface");
+      if (mdfBoard && mdfBoard.getAttribute("data-board-size") !== selectedSize) {
+        mdfBoard.setAttribute("data-board-size", selectedSize);
+        mdfBoard.innerHTML = renderMdfBackboardHtml(selectedSize);
+      }
     }
   } else {
     // Initial mount or structure change
