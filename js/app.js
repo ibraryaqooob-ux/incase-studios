@@ -2635,15 +2635,20 @@ function updateModalRetinaCanvas(highResImgSrc) {
     let drawX = 0;
     let drawY = 0;
 
+    // Cover-fill math with 2px bleed so artwork fills 100% of inner frame opening with ZERO white gaps
     if (imgAspect > canvasAspect) {
-      drawH = canvas.width / imgAspect;
-      drawY = (canvas.height - drawH) / 2;
-    } else {
+      drawH = canvas.height;
       drawW = canvas.height * imgAspect;
       drawX = (canvas.width - drawW) / 2;
+      drawY = 0;
+    } else {
+      drawW = canvas.width;
+      drawH = canvas.width / imgAspect;
+      drawX = 0;
+      drawY = (canvas.height - drawH) / 2;
     }
 
-    ctx.drawImage(img, drawX, drawY, drawW, drawH);
+    ctx.drawImage(img, drawX - 1, drawY - 1, drawW + 2, drawH + 2);
     canvas.style.opacity = "1";
   };
 

@@ -5205,10 +5205,17 @@ img.triptych-slice-2 {
   50% { background-color: #1f1f25; }
 }
 .modal-artwork-skeleton {
-  background-color: transparent;
+  background-color: #e6e6e4;
 }
-.modal-artwork-skeleton img {
-  width: 100% !important;
-  height: 100% !important;
+.modal-artwork-skeleton img,
+#modalPreviewContainer .prism-face-front img,
+#modalPreviewContainer .modal-retina-canvas {
+  position: absolute !important;
+  inset: -1px !important;
+  width: calc(100% + 2px) !important;
+  height: calc(100% + 2px) !important;
+  min-width: calc(100% + 2px) !important;
+  min-height: calc(100% + 2px) !important;
   object-fit: cover !important;
+  object-position: center !important;
 }

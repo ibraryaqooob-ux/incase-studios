@@ -31,13 +31,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=20261116-v101">
+  <link rel="stylesheet" href="css/styles.css?v=20261118-v102">
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/logo-2024.png">
   <link rel="apple-touch-icon" href="assets/logo-2024.png">
 
-  <!-- Preload Hero Showcase Textures for Zero Blank Flash on Load -->
+  <!-- Preload Brand Logo & Hero Showcase Textures for Zero Blank Flash on First Paint -->
+  <link rel="preload" as="image" href="assets/logo-2024.png" fetchpriority="high">
   <link rel="preload" as="image" href="assets/thumbs/Porsche GT 3RS (Minimalistic).jpg" fetchpriority="high">
   <link rel="preload" as="image" href="assets/thumbs/Bmw M3 (Minimalistic).jpg" fetchpriority="high">
 </head>
@@ -141,13 +142,23 @@
         </nav>
       </div>
 
-      <!-- Center: Official INCASE STUDIOS Logo -->
-      <a href="#" onclick="handleNavbarHomeClick(event)" class="flex items-center justify-center cursor-pointer px-2 flex-shrink-0 h-[44px] sm:h-[48px] overflow-hidden" title="INCASE STUDIOS">
+      <!-- Center: Official INCASE STUDIOS Logo (Locked Dimensions + Instant HTML Fallback) -->
+      <a href="#" onclick="handleNavbarHomeClick(event)" class="relative flex items-center justify-center cursor-pointer px-2 flex-shrink-0 w-[104px] sm:w-[120px] h-[44px] sm:h-[48px] overflow-hidden" title="INCASE STUDIOS">
+        <span class="logo-fallback-text pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-white font-serif tracking-[0.14em] text-[10px] leading-tight uppercase select-none">
+          <span>INCASE STUDIOS</span>
+          <span class="text-[7px] text-zinc-400 tracking-[0.22em] font-sans font-bold">EST 2024</span>
+        </span>
         <img
           id="brandLogoImg"
           src="assets/logo-2024.png"
+          width="813"
+          height="391"
           alt="INCASE STUDIOS EST 2024"
-          class="h-[40px] sm:h-[46px] max-h-[48px] max-w-[140px] sm:max-w-[180px] w-auto object-contain block"
+          loading="eager"
+          decoding="sync"
+          fetchpriority="high"
+          onload="if(this.previousElementSibling)this.previousElementSibling.style.display='none';"
+          class="relative z-10 h-[40px] sm:h-[46px] max-h-[48px] max-w-[140px] sm:max-w-[180px] w-auto object-contain block"
         />
       </a>
 
@@ -200,12 +211,22 @@
           <span>MANCHESTER PRINT STUDIO • A4 &amp; A3 EDITIONS</span>
         </div>
 
-        <!-- Prominent Centered INCASE STUDIOS Brand Logo -->
-        <div class="hero-brand-logo-container mb-3 pt-1 flex items-center justify-center w-full max-w-full overflow-visible">
+        <!-- Prominent Centered INCASE STUDIOS Brand Logo (Locked Dimensions + Instant HTML Fallback) -->
+        <div class="hero-brand-logo-container relative mb-3 pt-1 flex items-center justify-center w-[132px] sm:w-[148px] md:w-[180px] h-14 sm:h-16 md:h-20 mx-auto overflow-visible">
+          <span class="logo-fallback-text pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-zinc-900 font-serif tracking-[0.14em] text-xs sm:text-sm leading-tight uppercase select-none">
+            <span>INCASE STUDIOS</span>
+            <span class="text-[8px] text-zinc-600 tracking-[0.22em] font-sans font-bold mt-0.5">EST 2024</span>
+          </span>
           <img 
             src="assets/logo-2024.png" 
+            width="813"
+            height="391"
             alt="INCASE STUDIOS EST 2024" 
-            class="hero-brand-logo-img h-14 sm:h-16 md:h-20 w-auto max-w-full object-contain block drop-shadow-sm transition-transform hover:scale-105 duration-300"
+            loading="eager"
+            decoding="sync"
+            fetchpriority="high"
+            onload="if(this.previousElementSibling)this.previousElementSibling.style.display='none';"
+            class="hero-brand-logo-img relative z-10 h-14 sm:h-16 md:h-20 w-auto max-w-full object-contain block drop-shadow-sm transition-transform hover:scale-105 duration-300"
             style="filter: invert(1) contrast(1.25);"
           />
         </div>
@@ -1383,11 +1404,11 @@
         type="button" 
         id="modalNavbarHomeBtn"
         onclick="handleNavbarHomeClick(event)"
-        class="flex items-center justify-center select-none cursor-pointer bg-transparent border-0 px-2 py-0.5 h-[40px] sm:h-[44px] rounded hover:opacity-80 transition-opacity"
+        class="relative flex items-center justify-center select-none cursor-pointer bg-transparent border-0 px-2 py-0.5 w-[104px] sm:w-[116px] h-[40px] sm:h-[44px] rounded hover:opacity-80 transition-opacity"
         title="Return to Shop Homepage"
         aria-label="INCASE STUDIOS Home"
       >
-        <img src="assets/logo-2024.png" alt="INCASE STUDIOS EST 2024" class="h-[36px] sm:h-[42px] max-w-[140px] w-auto object-contain block" />
+        <img src="assets/logo-2024.png" width="813" height="391" loading="eager" decoding="sync" fetchpriority="high" alt="INCASE STUDIOS EST 2024" class="h-[36px] sm:h-[42px] max-w-[140px] w-auto object-contain block" />
       </button>
 
       <div class="flex items-center">
@@ -3028,9 +3049,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/catalog-data.js?v=20261116-v101"></script>
-  <script src="js/db.js?v=20261116-v101"></script>
-  <script src="js/mockup-studio.js?v=20261116-v101"></script>
-  <script src="js/app.js?v=20261116-v101"></script>
+  <script src="js/catalog-data.js?v=20261118-v102"></script>
+  <script src="js/db.js?v=20261118-v102"></script>
+  <script src="js/mockup-studio.js?v=20261118-v102"></script>
+  <script src="js/app.js?v=20261118-v102"></script>
 </body>
 </html>
