@@ -173,20 +173,20 @@ button:active, [role="button"]:active {
   display: none !important;
 }
 
-/* 2. Black Plastic Frame — Sleek 3.5px architectural bezel matching real 9mm-10mm frame */
+/* 2. Black Plastic Frame — Uniform 3.5% architectural bezel across all views */
 .frame-black-plastic, .frame-plastic {
-  border: 3.5px solid #111111 !important;
-  border-width: 3.5px !important;
+  border: var(--frame-bezel-px, 4.5px) solid #111111 !important;
+  border-width: var(--frame-bezel-px, 4.5px) !important;
   border-radius: 0px !important;
   outline: none !important;
   overflow: hidden !important;
   box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* 3. Black Aluminium Frame — Sleek 3.5px architectural bezel matching real 9mm-10mm frame */
+/* 3. Black Aluminium Frame — Uniform 3.5% architectural bezel across all views */
 .frame-black-aluminium, .frame-aluminium {
-  border: 3.5px solid #111111 !important;
-  border-width: 3.5px !important;
+  border: var(--frame-bezel-px, 4.5px) solid #111111 !important;
+  border-width: var(--frame-bezel-px, 4.5px) !important;
   border-radius: 0px !important;
   outline: none !important;
   overflow: hidden !important;
@@ -195,8 +195,8 @@ button:active, [role="button"]:active {
 
 /* Fallback for black class */
 .frame-black {
-  border: 3.5px solid #111111 !important;
-  border-width: 3.5px !important;
+  border: var(--frame-bezel-px, 4.5px) solid #111111 !important;
+  border-width: var(--frame-bezel-px, 4.5px) !important;
   border-radius: 0px !important;
   outline: none !important;
   overflow: hidden !important;

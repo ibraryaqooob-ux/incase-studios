@@ -13,6 +13,28 @@ let isTriptychMode = false;       // exclusively for Islamic prints
 let isModalProfileZoomActive = false; // 3D Side-Profile Zoom
 let cart = [];
 
+// Shared architectural frame border proportion: 3.5% of frame width (~15mm real-world bezel on A3/A4 prints)
+const FRAME_BEZEL_RATIO = 0.035;
+
+function syncUniformFrameBezels(root = document) {
+  if (!root || !root.querySelectorAll) return;
+  const frames = root.querySelectorAll('.poster-frame-container:not(.frame-unframed):not(.frame-none), .prism-face-front:not(.frame-unframed):not(.frame-none)');
+  frames.forEach(el => {
+    const w = el.offsetWidth;
+    if (w > 0) {
+      const bezelPx = Math.max(2.5, Math.min(12, +(w * FRAME_BEZEL_RATIO).toFixed(2)));
+      el.style.setProperty('--frame-bezel-px', `${bezelPx}px`);
+    }
+  });
+}
+
+window.addEventListener('resize', () => {
+  requestAnimationFrame(() => syncUniformFrameBezels(document));
+}, { passive: true });
+document.addEventListener('DOMContentLoaded', () => {
+  requestAnimationFrame(() => syncUniformFrameBezels(document));
+});
+
 // Hero Showcase 4 Curated Shelf Pairs (Instant-Load Studio Thumbnails, Zero Stock Photos)
 const HERO_POSTERS_DATA = [
   {
@@ -365,9 +387,9 @@ function renderMarqueeCarousel() {
         onclick="openProductModal('${poster.id}')"
         title="View ${poster.title}"
       >
-        <!-- Studio Framed Preview Stage on Deep Dark Gallery Wall with Sleek 4px Black Border & Realistic Drop Shadow -->
+        <!-- Studio Framed Preview Stage on Deep Dark Gallery Wall with Uniform 3.5% Black Border & Realistic Drop Shadow -->
         <div class="product-card-stage p-1 sm:p-1.5 bg-transparent border-0 flex items-center justify-center">
-          <div class="poster-frame-container frame-black-aluminium portrait-spec w-full relative overflow-hidden" style="border: 4px solid #111111 !important;">
+          <div class="poster-frame-container frame-black-aluminium portrait-spec w-full relative overflow-hidden" style="aspect-ratio: 1 / 1.414;">
             <img 
               src="${typeof getPosterThumb === 'function' ? getPosterThumb(poster.image) : poster.image}" 
               alt="${poster.title}" 
@@ -798,12 +820,11 @@ function renderCatalog() {
               <!-- 3-Piece Islamic Triptych Grid: 3 Strictly Identical 1:1.414 Portrait Frames -->
               <div class="w-full max-w-[270px] mx-auto" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; align-items: center;">
                 ${panels.map((panelSrc, idx) => `
-                  <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 210 / 297; width: 100%; border: 4px solid #111111 !important;">
+                  <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 1 / 1.414; width: 100%;">
                     <img 
                       src="${typeof getPosterThumb === 'function' ? getPosterThumb(panelSrc) : panelSrc}" 
                       alt="${poster.title} Panel ${idx + 1}" 
-                      class="w-full h-full object-contain block portrait-spec"
-                      style="width: 100% !important; height: 100% !important; object-fit: contain !important; display: block !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;"
+                      class="w-full h-full object-cover block portrait-spec"
                       loading="eager"
                       decoding="sync"
                       fetchpriority="high"
@@ -815,12 +836,11 @@ function renderCatalog() {
             ` : `
               <!-- Single Framed Print (Locked 1:1.414 Portrait Aspect Ratio) -->
               <div class="w-full max-w-[260px] mx-auto transition-transform duration-300 group-hover:scale-[1.02]">
-                <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 210 / 297; width: 100%; border: 4px solid #111111 !important;">
+                <div class="poster-frame-container frame-black-plastic portrait-spec w-full overflow-hidden" style="aspect-ratio: 1 / 1.414; width: 100%;">
                   <img 
                     src="${typeof getPosterThumb === 'function' ? getPosterThumb(poster.image) : poster.image}" 
                     alt="${poster.title}" 
-                    class="w-full h-full object-contain block portrait-spec" 
-                    style="width: 100% !important; height: 100% !important; object-fit: contain !important; display: block !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;" 
+                    class="w-full h-full object-cover block portrait-spec" 
                     loading="eager"
                     decoding="sync"
                     fetchpriority="high"
@@ -881,6 +901,7 @@ let isGlobalCardListenerAttached = false;
 
 function attachProductCardListeners(container = document) {
   if (!container) return;
+  requestAnimationFrame(() => syncUniformFrameBezels(container));
 
   // 1. All Product Cards & Marquee Items (EXCLUDING buttons so buttons don't get card click listeners)
   const cards = container.querySelectorAll('.product-card, .group[onclick*="openProductModal"], .marquee-item, [data-poster-id]:not(button)');
@@ -2462,10 +2483,9 @@ function updateModalPrismTransform(smooth = true) {
       h.style.opacity = showBack ? "1" : "0";
     });
 
-    // Constant real-world equal-width 4-bar bezel thickness across Compact, Expanded, Live Room, A4, and A3
+    // Constant real-world 3.5% frame bezel thickness across Homepage, Catalog, Compact, Expanded, Live Room, A4, and A3
     const stageWidth = stage.offsetWidth || 180;
-    const bezelRatio = (selectedSize === "a4") ? (0.032 * ISO_A3_TO_A4_RATIO) : 0.032;
-    const bezelPx = Math.max(2.5, Math.min(10, +(stageWidth * bezelRatio).toFixed(2)));
+    const bezelPx = Math.max(2.5, Math.min(12, +(stageWidth * 0.035).toFixed(2)));
     stage.style.setProperty("--frame-bezel-px", `${bezelPx}px`);
 
     // Update architectural dimension lines beside the 3D frame dynamically for A4 vs A3
