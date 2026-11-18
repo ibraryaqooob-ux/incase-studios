@@ -13,18 +13,14 @@ let isTriptychMode = false;       // exclusively for Islamic prints
 let isModalProfileZoomActive = false; // 3D Side-Profile Zoom
 let cart = [];
 
-// Shared architectural frame border proportion: 3.5% of frame width (~15mm real-world bezel on A3/A4 prints)
-const FRAME_BEZEL_RATIO = 0.035;
+// Fixed architectural frame border width in pixels across A3, A4, Hero, Catalog, and 3D Viewer
+const FRAME_BEZEL_PX = 5;
 
 function syncUniformFrameBezels(root = document) {
   if (!root || !root.querySelectorAll) return;
   const frames = root.querySelectorAll('.poster-frame-container:not(.frame-unframed):not(.frame-none), .prism-face-front:not(.frame-unframed):not(.frame-none)');
   frames.forEach(el => {
-    const w = el.offsetWidth;
-    if (w > 0) {
-      const bezelPx = Math.max(2.5, Math.min(12, +(w * FRAME_BEZEL_RATIO).toFixed(2)));
-      el.style.setProperty('--frame-bezel-px', `${bezelPx}px`);
-    }
+    el.style.setProperty('--frame-bezel-px', `${FRAME_BEZEL_PX}px`);
   });
 }
 
@@ -2483,10 +2479,8 @@ function updateModalPrismTransform(smooth = true) {
       h.style.opacity = showBack ? "1" : "0";
     });
 
-    // Constant real-world 3.5% frame bezel thickness across Homepage, Catalog, Compact, Expanded, Live Room, A4, and A3
-    const stageWidth = stage.offsetWidth || 180;
-    const bezelPx = Math.max(2.5, Math.min(12, +(stageWidth * 0.035).toFixed(2)));
-    stage.style.setProperty("--frame-bezel-px", `${bezelPx}px`);
+    // Identical fixed pixel bezel thickness across Compact, Expanded, Live Room, A4, and A3
+    stage.style.setProperty("--frame-bezel-px", `${FRAME_BEZEL_PX}px`);
 
     // Update architectural dimension lines beside the 3D frame dynamically for A4 vs A3
     const dimGuides = stage.querySelectorAll(".frame-dim-guides");

@@ -173,20 +173,20 @@ button:active, [role="button"]:active {
   display: none !important;
 }
 
-/* 2. Black Plastic Frame — Uniform 3.5% architectural bezel across all views */
+/* 2. Black Plastic Frame — Fixed 5px architectural bezel across all views (A3, A4, Hero, Catalog, 3D Viewer) */
 .frame-black-plastic, .frame-plastic {
-  border: var(--frame-bezel-px, 4.5px) solid #111111 !important;
-  border-width: var(--frame-bezel-px, 4.5px) !important;
+  border: 5px solid #111111 !important;
+  border-width: 5px !important;
   border-radius: 0px !important;
   outline: none !important;
   overflow: hidden !important;
   box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* 3. Black Aluminium Frame — Uniform 3.5% architectural bezel across all views */
+/* 3. Black Aluminium Frame — Fixed 5px architectural bezel across all views */
 .frame-black-aluminium, .frame-aluminium {
-  border: var(--frame-bezel-px, 4.5px) solid #111111 !important;
-  border-width: var(--frame-bezel-px, 4.5px) !important;
+  border: 5px solid #111111 !important;
+  border-width: 5px !important;
   border-radius: 0px !important;
   outline: none !important;
   overflow: hidden !important;
@@ -195,8 +195,8 @@ button:active, [role="button"]:active {
 
 /* Fallback for black class */
 .frame-black {
-  border: var(--frame-bezel-px, 4.5px) solid #111111 !important;
-  border-width: var(--frame-bezel-px, 4.5px) !important;
+  border: 5px solid #111111 !important;
+  border-width: 5px !important;
   border-radius: 0px !important;
   outline: none !important;
   overflow: hidden !important;
@@ -256,8 +256,8 @@ button:active, [role="button"]:active {
 .product-card-stage .frame-black-aluminium,
 .product-card-mat .poster-frame-container,
 .product-card-frame {
-  border: var(--frame-bezel-px, 6px) solid #111111 !important;
-  border-width: var(--frame-bezel-px, 6px) !important;
+  border: 5px solid #111111 !important;
+  border-width: 5px !important;
   border-style: solid !important;
   border-color: #111111 !important;
   box-shadow: 
@@ -499,8 +499,8 @@ button[onclick*="openProductModal"] {
 }
 
 .marquee-item .poster-frame-container {
-  border: var(--frame-bezel-px, 5px) solid #111111 !important;
-  border-width: var(--frame-bezel-px, 5px) !important;
+  border: 5px solid #111111 !important;
+  border-width: 5px !important;
   border-color: #111111 !important;
   border-style: solid !important;
   box-shadow: 
@@ -1152,18 +1152,22 @@ button[onclick*="openProductModal"] {
   backface-visibility: visible !important;
 }
 
-/* Inner-Bleed Overscan for Framed Artwork: Tucks 4px beneath all 4 black bezel edges to eliminate any subpixel gap/sliver */
+/* Inner-Bleed Overscan for Framed Artwork: Symmetrically pinned -4px beneath all 4 black bezel edges to eliminate any gap/sliver */
+.poster-frame-container:not(.frame-unframed):not(.frame-none) {
+  position: relative;
+}
 .prism-face-front > img,
 .prism-face-front > canvas,
 .poster-frame-container:not(.frame-unframed):not(.frame-none) > img,
 .poster-frame-container:not(.frame-unframed):not(.frame-none) > canvas {
+  position: absolute !important;
+  inset: -4px !important;
   width: calc(100% + 8px) !important;
   height: calc(100% + 8px) !important;
   max-width: none !important;
-  margin: -4px !important;
+  margin: 0 !important;
   object-fit: cover !important;
   object-position: center !important;
-  position: relative;
   z-index: 1;
 }
 
@@ -1473,7 +1477,7 @@ button[onclick*="openProductModal"] {
   transform: rotateX(-90deg);
 }
 .prism-wall-plastic {
-  background: #141416 !important;
+  background: #111111 !important;
   border: none !important;
   box-shadow: none !important;
 }
@@ -1517,7 +1521,7 @@ button[onclick*="openProductModal"] {
   transform: rotateX(-90deg);
 }
 .prism-wall-aluminium {
-  background: linear-gradient(180deg, #24252a 0%, #3a3b44 25%, #1e1f24 55%, #32333b 80%, #202126 100%) !important;
+  background: #141416 !important;
   border: none !important;
   box-shadow: none !important;
 }
