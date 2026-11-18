@@ -5220,3 +5220,32 @@ img.triptych-slice-2 {
   object-fit: cover !important;
   object-position: center !important;
 }
+
+/* ===================================================
+   EDITORIAL PRODUCT PAGE UI: PILL BUTTONS & SOFT CARDS
+   =================================================== */
+.modal-option-card {
+  border-radius: 16px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+  border-width: 1.5px !important;
+}
+
+.modal-option-card.is-selected-option {
+  box-shadow: 0 8px 22px rgba(24, 24, 27, 0.12) !important;
+}
+
+#modalAngleDockContainer {
+  border-radius: 9999px !important;
+  padding: 4px !important;
+}
+
+#modalAngleDockContainer .dock-pill-btn {
+  border-radius: 9999px !important;
+  padding: 6px 12px !important;
+  font-size: 10px !important;
+  letter-spacing: 0.04em !important;
+}
+
+#modalAddToBagBtn {
+  border-radius: 9999px !important;
+}

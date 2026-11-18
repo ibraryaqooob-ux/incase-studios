@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=20261118-v103">
+  <link rel="stylesheet" href="css/styles.css?v=20261118-v104">
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/logo-2024.png">
@@ -1633,54 +1633,54 @@
         
         <div>
           <!-- Clean Compact Product Header -->
-          <div class="border-b border-zinc-200 pb-2.5 sm:pb-4 flex items-start justify-between gap-2">
+          <div class="border-b border-zinc-200/80 pb-3 sm:pb-4 flex items-start justify-between gap-3">
             <div class="min-w-0">
-              <span id="modalPosterCategory" class="text-[9.5px] font-black uppercase tracking-widest text-zinc-400 block"></span>
-              <h2 id="modalPosterTitle" class="text-base sm:text-2xl font-[900] uppercase tracking-tight text-zinc-950 leading-tight truncate"></h2>
+              <span id="modalPosterCategory" class="text-[11px] font-semibold tracking-wide text-zinc-500 block mb-0.5"></span>
+              <h2 id="modalPosterTitle" class="text-lg sm:text-2xl font-extrabold tracking-tight text-zinc-950 leading-snug truncate"></h2>
             </div>
             <div class="flex flex-col items-end flex-shrink-0">
               <div class="flex items-baseline gap-1.5">
-                <span id="modalWasPrice" class="text-xs sm:text-sm text-zinc-400 line-through font-bold">£19.20</span>
-                <span id="modalTotalPrice" class="text-xl sm:text-[26px] font-[900] text-zinc-950 leading-none">£14.78</span>
+                <span id="modalWasPrice" class="text-xs sm:text-sm text-zinc-400 line-through font-medium">£19.20</span>
+                <span id="modalTotalPrice" class="text-xl sm:text-[26px] font-extrabold tracking-tight text-zinc-950 leading-none">£14.78</span>
               </div>
-              <span class="mt-1 px-1.5 py-0.5 bg-red-600 text-white text-[8.5px] font-black uppercase tracking-wider">23% OFF</span>
+              <span class="mt-1.5 px-2.5 py-0.5 rounded-full bg-red-600 text-white text-[9.5px] font-bold tracking-wide">23% Off</span>
             </div>
           </div>
 
           <!-- 3-Piece Gallery Set Indicator (Exclusively for Islamic Prints) -->
-          <div id="modalTriptychToggleContainer" class="mt-2.5" style="display: none;">
-            <div class="p-2 bg-amber-500/10 border border-amber-500/30 flex items-center justify-between rounded-xs">
-              <div class="flex items-center gap-2">
+          <div id="modalTriptychToggleContainer" class="mt-3" style="display: none;">
+            <div class="p-3 bg-amber-50/80 border border-amber-200/80 flex items-center justify-between rounded-[14px] shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
+              <div class="flex items-center gap-2.5">
                 <span class="text-sm">🌙</span>
                 <div>
-                  <div class="text-[10.5px] font-black uppercase text-amber-950 tracking-wider">Exclusive 3-Piece Gallery Set</div>
-                  <div class="text-[9px] text-amber-900">Includes all 3 matching vertical portrait prints</div>
+                  <div class="text-xs font-bold text-amber-950">Exclusive 3-Piece Gallery Set</div>
+                  <div class="text-[11px] text-amber-800/90">Includes all 3 matching vertical portrait prints</div>
                 </div>
               </div>
-              <span class="px-1.5 py-0.5 bg-amber-500 text-black text-[8.5px] font-black uppercase">3-Piece Set</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-400 text-amber-950 text-[9.5px] font-bold">3-Piece Set</span>
             </div>
           </div>
 
-          <!-- 1. Select Size (Side-by-Side Architectural Cards) -->
-          <div class="mt-3">
-            <div class="flex items-center justify-between mb-1.5">
-              <label class="text-[11px] sm:text-xs font-black uppercase tracking-wider text-zinc-900 block">1. Select Size</label>
-              <span class="text-[9px] font-mono text-zinc-500 font-bold uppercase">1 : 1.414 ISO Scale</span>
+          <!-- 1. Select Size (Smooth Editorial Cards) -->
+          <div class="mt-4">
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-xs sm:text-[13px] font-bold text-zinc-900 block">1. Select Size</label>
+              <span class="text-[11px] text-zinc-500 font-medium">1 : 1.414 ISO scale</span>
             </div>
-            <div class="grid grid-cols-2 gap-2">
+            <div class="grid grid-cols-2 gap-2.5">
               <!-- A4 Card -->
               <button 
                 type="button"
                 data-size-btn="a4" 
                 onclick="selectModalSize('a4')"
-                class="size-card-btn p-3 border-2 border-zinc-950 bg-zinc-950 text-white text-left cursor-pointer rounded-xs flex flex-col justify-between transition shadow-xs"
+                class="size-card-btn modal-option-card p-3.5 border border-zinc-900 bg-[#18181b] text-white text-left cursor-pointer rounded-[16px] flex flex-col justify-between transition-all"
               >
-                <div class="flex items-center justify-between w-full gap-1">
-                  <span class="text-xs sm:text-sm font-black uppercase tracking-tight">A4 PRINT</span>
-                  <span class="size-pill-badge px-1.5 py-0.5 rounded text-[8.5px] font-mono font-bold tracking-tight bg-zinc-800 text-zinc-100 border border-zinc-700/60">21 × 29.7 cm</span>
+                <div class="flex items-center justify-between w-full gap-1.5">
+                  <span class="text-xs sm:text-sm font-bold tracking-tight">A4 Print</span>
+                  <span class="size-pill-badge px-2.5 py-0.5 rounded-full text-[9.5px] font-semibold bg-zinc-800 text-zinc-100 border border-zinc-700/70">21 × 29.7 cm</span>
                 </div>
-                <div class="flex items-center justify-between mt-1 text-[9.5px] sm:text-[10px] font-medium opacity-80">
-                  <span>Refined Desk &amp; Wall</span>
+                <div class="flex items-center justify-between mt-1.5 text-[10.5px] sm:text-[11px] font-normal opacity-80">
+                  <span>Refined desk &amp; wall</span>
                 </div>
               </button>
 
@@ -1689,49 +1689,49 @@
                 type="button"
                 data-size-btn="a3" 
                 onclick="selectModalSize('a3')"
-                class="size-card-btn p-3 border-2 border-zinc-300 bg-white text-zinc-900 text-left cursor-pointer rounded-xs flex flex-col justify-between transition"
+                class="size-card-btn modal-option-card p-3.5 border border-zinc-200 bg-white text-zinc-900 text-left cursor-pointer rounded-[16px] flex flex-col justify-between transition-all"
               >
-                <div class="flex items-center justify-between w-full gap-1">
-                  <span class="text-xs sm:text-sm font-black uppercase tracking-tight">A3 PRINT</span>
-                  <span class="size-pill-badge px-1.5 py-0.5 rounded text-[8.5px] font-mono font-bold tracking-tight bg-zinc-100 text-zinc-800 border border-zinc-200">29.7 × 42 cm</span>
+                <div class="flex items-center justify-between w-full gap-1.5">
+                  <span class="text-xs sm:text-sm font-bold tracking-tight">A3 Print</span>
+                  <span class="size-pill-badge px-2.5 py-0.5 rounded-full text-[9.5px] font-semibold bg-zinc-100 text-zinc-700 border border-zinc-200">29.7 × 42 cm</span>
                 </div>
-                <div class="flex items-center justify-between mt-1 text-[9.5px] sm:text-[10px] font-medium opacity-80">
-                  <span>Statement Gallery Piece</span>
-                  <span class="text-[8px] font-mono font-black text-emerald-600 bg-emerald-50 px-1 py-0.2 rounded-xs border border-emerald-200/60">2× AREA</span>
+                <div class="flex items-center justify-between mt-1.5 text-[10.5px] sm:text-[11px] font-normal opacity-80">
+                  <span>Statement gallery piece</span>
+                  <span class="text-[9px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/70">2× Area</span>
                 </div>
               </button>
             </div>
           </div>
 
-          <!-- 2. Select Frame Format (Clean, Text-Only Architectural Cards — Zero Thumbnails/Icons) -->
-          <div class="mt-3.5">
-            <div class="flex items-center justify-between mb-1.5">
-              <label class="text-[11px] sm:text-xs font-black uppercase tracking-wider text-zinc-900 block">2. Select Frame Format</label>
-              <span class="text-[9px] font-mono text-zinc-500 font-bold uppercase">Tap to preview on 3D frame</span>
+          <!-- 2. Select Frame Format (Smooth Editorial Cards) -->
+          <div class="mt-4">
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-xs sm:text-[13px] font-bold text-zinc-900 block">2. Select Frame Format</label>
+              <span class="text-[11px] text-zinc-500 font-medium">Tap to preview in 3D</span>
             </div>
             
-            <div class="space-y-2">
+            <div class="space-y-2.5">
               
               <!-- 1. UNFRAMED PRINT -->
               <button 
                 type="button"
                 data-frame-btn="unframed" 
                 onclick="selectModalFrame('unframed')"
-                class="w-full p-3 border-2 border-zinc-300 bg-white text-left transition cursor-pointer flex items-center justify-between rounded-xs gap-3"
+                class="modal-option-card w-full p-3.5 border border-zinc-200 bg-white text-left transition-all cursor-pointer flex items-center justify-between rounded-[16px] gap-3"
               >
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center gap-2 flex-wrap">
-                    <span class="text-xs sm:text-sm font-black uppercase text-zinc-950">UNFRAMED PRINT</span>
-                    <span class="px-1.5 py-0.5 bg-zinc-100 border border-zinc-300 text-zinc-800 text-[8.5px] font-mono font-black uppercase tracking-wider">200GSM GLOSS</span>
+                    <span class="text-xs sm:text-sm font-bold text-zinc-950">Unframed Print</span>
+                    <span class="px-2.5 py-0.5 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-700 text-[9.5px] font-semibold">200gsm Gloss</span>
                     <span class="hidden" id="modalCardPriceUnframed"></span>
                   </div>
-                  <div class="text-[10px] sm:text-[11px] text-zinc-600 font-medium mt-1 leading-snug">
-                    200gsm Glossy Photo Paper • Shipped Flat in Hardback Envelope
+                  <div class="text-[11px] text-zinc-500 font-normal mt-1 leading-relaxed">
+                    200gsm glossy photo paper • Shipped flat in hardback envelope
                   </div>
                 </div>
                 <div class="flex flex-col items-end flex-shrink-0">
-                  <span id="optWasUnframed" class="text-[10px] text-zinc-400 line-through font-mono font-semibold">£7.00</span>
-                  <span id="optPriceUnframed" class="font-black text-sm sm:text-base text-zinc-950 font-mono">£5.39</span>
+                  <span id="optWasUnframed" class="text-[10.5px] text-zinc-400 line-through font-medium">£7.00</span>
+                  <span id="optPriceUnframed" class="font-extrabold text-sm sm:text-base text-zinc-950">£5.39</span>
                 </div>
               </button>
 
@@ -1740,21 +1740,21 @@
                 type="button"
                 data-frame-btn="plastic" 
                 onclick="selectModalFrame('plastic')"
-                class="w-full p-3 border-2 border-zinc-950 ring-1 ring-zinc-950 bg-zinc-50 text-left transition cursor-pointer flex items-center justify-between rounded-xs gap-3"
+                class="modal-option-card w-full p-3.5 border border-zinc-900 bg-[#faf9f6] text-left transition-all cursor-pointer flex items-center justify-between rounded-[16px] gap-3"
               >
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center gap-2 flex-wrap">
-                    <span class="text-xs sm:text-sm font-black uppercase text-zinc-950">BLACK PLASTIC FRAME</span>
-                    <span class="px-1.5 py-0.5 bg-zinc-900 text-white text-[8.5px] font-mono font-black uppercase tracking-wider">10MM × 17MM</span>
+                    <span class="text-xs sm:text-sm font-bold text-zinc-950">Black Plastic Frame</span>
+                    <span class="px-2.5 py-0.5 rounded-full bg-[#18181b] text-white text-[9.5px] font-semibold">10mm × 17mm</span>
                     <span class="hidden" id="modalCardPricePlastic"></span>
                   </div>
-                  <div class="text-[10px] sm:text-[11px] text-zinc-600 font-medium mt-1 leading-snug">
-                    Sleek Black Plastic (10mm Wide × 17mm Deep) • Clear Acrylic Front • Easy Rear-Loading Backboard
+                  <div class="text-[11px] text-zinc-500 font-normal mt-1 leading-relaxed">
+                    Sleek black frame • Clear acrylic front • Easy rear-loading
                   </div>
                 </div>
                 <div class="flex flex-col items-end flex-shrink-0">
-                  <span id="optWasPlastic" class="text-[10px] text-zinc-400 line-through font-mono font-semibold">£19.20</span>
-                  <span id="optPricePlastic" class="font-black text-sm sm:text-base text-zinc-950 font-mono">£14.78</span>
+                  <span id="optWasPlastic" class="text-[10.5px] text-zinc-400 line-through font-medium">£19.20</span>
+                  <span id="optPricePlastic" class="font-extrabold text-sm sm:text-base text-zinc-950">£14.78</span>
                 </div>
               </button>
 
@@ -1763,21 +1763,21 @@
                 type="button"
                 data-frame-btn="aluminium" 
                 onclick="selectModalFrame('aluminium')"
-                class="w-full p-3 border-2 border-zinc-300 bg-white text-left transition cursor-pointer flex items-center justify-between rounded-xs gap-3"
+                class="modal-option-card w-full p-3.5 border border-zinc-200 bg-white text-left transition-all cursor-pointer flex items-center justify-between rounded-[16px] gap-3"
               >
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center gap-2 flex-wrap">
-                    <span class="text-xs sm:text-sm font-black uppercase text-zinc-950">BLACK ALUMINIUM FRAME</span>
-                    <span class="px-1.5 py-0.5 bg-emerald-700 text-white text-[8.5px] font-mono font-black uppercase tracking-wider">9MM × 20MM</span>
+                    <span class="text-xs sm:text-sm font-bold text-zinc-950">Black Aluminium Frame</span>
+                    <span class="px-2.5 py-0.5 rounded-full bg-emerald-700 text-white text-[9.5px] font-semibold">9mm × 20mm</span>
                     <span class="hidden" id="modalCardPriceAlum"></span>
                   </div>
-                  <div class="text-[10px] sm:text-[11px] text-zinc-600 font-medium mt-1 leading-snug">
-                    Black Aluminium Metal (9mm Wide × 20mm Deep) • Clear Acrylic Front • Easy Rear-Loading MDF Backboard
+                  <div class="text-[11px] text-zinc-500 font-normal mt-1 leading-relaxed">
+                    Anodised metal profile • Clear acrylic front • Gallery MDF back
                   </div>
                 </div>
                 <div class="flex flex-col items-end flex-shrink-0">
-                  <span id="optWasAlum" class="text-[10px] text-zinc-400 line-through font-mono font-semibold">£22.70</span>
-                  <span id="optPriceAlum" class="font-black text-sm sm:text-base text-zinc-950 font-mono">£17.48</span>
+                  <span id="optWasAlum" class="text-[10.5px] text-zinc-400 line-through font-medium">£22.70</span>
+                  <span id="optPriceAlum" class="font-extrabold text-sm sm:text-base text-zinc-950">£17.48</span>
                 </div>
               </button>
 
@@ -1793,33 +1793,33 @@
         </div>
 
         <!-- Mobile Sticky Bottom Checkout Bar (z-index: 100) & Desktop Checkout Bar -->
-        <div class="modal-sticky-checkout-bar w-full bg-white border-t border-zinc-200 pt-3 pb-2 sm:py-4 mt-4 sm:mt-6 z-[100]">
+        <div class="modal-sticky-checkout-bar w-full bg-white border-t border-zinc-200/80 pt-3 pb-2 sm:py-4 mt-4 sm:mt-6 z-[100]">
           <div class="flex items-center justify-between gap-3">
             <div class="flex flex-col flex-shrink-0">
               <div class="flex items-baseline gap-1.5">
-                <span id="modalStickyWasPrice" class="text-[11px] sm:text-xs text-zinc-400 line-through font-bold">£19.20</span>
-                <span id="modalStickyPrice" class="text-xl sm:text-2xl font-[900] text-zinc-950 leading-none">£14.78</span>
+                <span id="modalStickyWasPrice" class="text-[11px] sm:text-xs text-zinc-400 line-through font-medium">£19.20</span>
+                <span id="modalStickyPrice" class="text-xl sm:text-2xl font-extrabold tracking-tight text-zinc-950 leading-none">£14.78</span>
               </div>
-              <span class="inline-block mt-0.5 px-1.5 py-0.5 bg-red-600 text-white text-[8.5px] font-black uppercase tracking-wider w-max">23% OFF SALE</span>
+              <span class="inline-block mt-1 px-2.5 py-0.5 rounded-full bg-red-600 text-white text-[9px] font-bold tracking-wide w-max">23% Off Sale</span>
             </div>
 
             <button 
               type="button"
               id="modalAddToBagBtn"
               onclick="addToCartFromModal()"
-              class="flex-1 h-12 sm:h-14 bg-black hover:bg-zinc-800 text-white font-black text-xs sm:text-sm uppercase tracking-widest transition flex items-center justify-center gap-2 shadow-lg cursor-pointer rounded-none"
+              class="flex-1 h-12 sm:h-[52px] bg-[#18181b] hover:bg-zinc-800 text-white font-bold text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-[0_6px_20px_rgba(0,0,0,0.16)] cursor-pointer rounded-full px-6"
             >
-              <i data-lucide="shopping-bag" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-              <span>ADD TO BAG</span>
+              <i data-lucide="shopping-bag" class="w-4 h-4 sm:w-[18px] sm:h-[18px]"></i>
+              <span>Add to Bag</span>
             </button>
           </div>
 
           <button 
             type="button"
             onclick="closeProductModal()"
-            class="w-full text-center text-xs font-bold text-zinc-600 hover:text-zinc-950 pt-2 pb-0.5 transition cursor-pointer block"
+            class="w-full text-center text-xs font-medium text-zinc-500 hover:text-zinc-950 pt-2.5 pb-0.5 transition cursor-pointer block"
           >
-            ← Continue Browsing Gallery
+            ← Continue browsing gallery
           </button>
         </div>
 
@@ -3049,9 +3049,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/catalog-data.js?v=20261118-v103"></script>
-  <script src="js/db.js?v=20261118-v103"></script>
-  <script src="js/mockup-studio.js?v=20261118-v103"></script>
-  <script src="js/app.js?v=20261118-v103"></script>
+  <script src="js/catalog-data.js?v=20261118-v104"></script>
+  <script src="js/db.js?v=20261118-v104"></script>
+  <script src="js/mockup-studio.js?v=20261118-v104"></script>
+  <script src="js/app.js?v=20261118-v104"></script>
 </body>
 </html>

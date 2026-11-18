@@ -2981,36 +2981,36 @@ function updateModalPreview() {
   updateModalRotationControls();
   updateModalRetinaCanvas();
 
-  // Size buttons (A4 vs A3) with sleek dimension badges
+  // Size buttons (A4 vs A3) with sleek pill dimension badges
   document.querySelectorAll("[data-size-btn]").forEach(btn => {
     const isSelected = btn.getAttribute("data-size-btn") === selectedSize;
     btn.classList.toggle("is-selected-option", isSelected);
     const badge = btn.querySelector(".size-pill-badge");
     if (isSelected) {
-      btn.classList.add("border-zinc-950", "bg-zinc-950", "text-white");
-      btn.classList.remove("border-zinc-300", "bg-white", "text-zinc-900");
+      btn.classList.add("border-zinc-900", "bg-[#18181b]", "text-white");
+      btn.classList.remove("border-zinc-200", "bg-white", "text-zinc-900");
       if (badge) {
-        badge.className = "size-pill-badge px-1.5 py-0.5 rounded text-[8.5px] font-mono font-bold tracking-tight bg-zinc-800 text-zinc-100 border border-zinc-700/60";
+        badge.className = "size-pill-badge px-2.5 py-0.5 rounded-full text-[9.5px] font-semibold bg-zinc-800 text-zinc-100 border border-zinc-700/70";
       }
     } else {
-      btn.classList.remove("border-zinc-950", "bg-zinc-950", "text-white");
-      btn.classList.add("border-zinc-300", "bg-white", "text-zinc-900");
+      btn.classList.remove("border-zinc-900", "bg-[#18181b]", "text-white");
+      btn.classList.add("border-zinc-200", "bg-white", "text-zinc-900");
       if (badge) {
-        badge.className = "size-pill-badge px-1.5 py-0.5 rounded text-[8.5px] font-mono font-bold tracking-tight bg-zinc-100 text-zinc-800 border border-zinc-200";
+        badge.className = "size-pill-badge px-2.5 py-0.5 rounded-full text-[9.5px] font-semibold bg-zinc-100 text-zinc-700 border border-zinc-200";
       }
     }
   });
 
-  // Frame buttons (Unframed, Black Plastic, Black Aluminium)
+  // Frame buttons (Unframed, Black Plastic, Black Aluminium) — clean editorial highlight
   document.querySelectorAll("[data-frame-btn]").forEach(btn => {
     const isSelected = btn.getAttribute("data-frame-btn") === selectedFrame;
     btn.classList.toggle("is-selected-option", isSelected);
     if (isSelected) {
-      btn.classList.add("border-zinc-950", "ring-1", "ring-zinc-950", "bg-zinc-50");
-      btn.classList.remove("border-zinc-300", "bg-white");
+      btn.classList.add("border-zinc-900", "bg-[#faf9f6]");
+      btn.classList.remove("border-zinc-200", "bg-white");
     } else {
-      btn.classList.remove("border-zinc-950", "ring-1", "ring-zinc-950", "bg-zinc-50");
-      btn.classList.add("border-zinc-300", "bg-white");
+      btn.classList.remove("border-zinc-900", "bg-[#faf9f6]");
+      btn.classList.add("border-zinc-200", "bg-white");
     }
   });
 
