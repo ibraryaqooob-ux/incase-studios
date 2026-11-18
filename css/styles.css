@@ -256,8 +256,8 @@ button:active, [role="button"]:active {
 .product-card-stage .frame-black-aluminium,
 .product-card-mat .poster-frame-container,
 .product-card-frame {
-  border: 3.5px solid #111111 !important;
-  border-width: 3.5px !important;
+  border: var(--frame-bezel-px, 6px) solid #111111 !important;
+  border-width: var(--frame-bezel-px, 6px) !important;
   border-style: solid !important;
   border-color: #111111 !important;
   box-shadow: 
@@ -287,7 +287,7 @@ button:active, [role="button"]:active {
 #posterGrid img {
   filter: none !important;
   -webkit-filter: none !important;
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
   image-rendering: -webkit-optimize-contrast !important;
   image-rendering: high-quality !important;
@@ -499,8 +499,8 @@ button[onclick*="openProductModal"] {
 }
 
 .marquee-item .poster-frame-container {
-  border: 4px solid #111111 !important;
-  border-width: 4px !important;
+  border: var(--frame-bezel-px, 5px) solid #111111 !important;
+  border-width: var(--frame-bezel-px, 5px) !important;
   border-color: #111111 !important;
   border-style: solid !important;
   box-shadow: 
@@ -2082,7 +2082,7 @@ button[onclick*="openProductModal"] {
     padding: 10px !important;
   }
   .product-card-frame {
-    border-width: 6px !important;
+    border-width: var(--frame-bezel-px, 6px) !important;
   }
 
   /* 4. Full-Screen 100dvh Lock on Modals & Stabilized Split on Mobile */

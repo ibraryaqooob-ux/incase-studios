@@ -970,7 +970,7 @@ const DEFAULT_POSTERS = [
     "tags": ["Porsche", "Turbo S", "992", "Stuttgart", "AWD"],
     "paperSpec": "Premium 200gsm Heavyweight Glossy Photo Paper",
     "description": "640 HP all-wheel-drive icon with active aerodynamics, side air intakes, and technical chassis specification layout.",
-    "image": "assets/Porsche GT 3RS (Minimalistic).png"
+    "image": "assets/Porsche 911 Turbo S (Minimalistic).png"
   },
   {
     "id": "football-anfield",
