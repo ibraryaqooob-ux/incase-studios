@@ -505,8 +505,7 @@ button[onclick*="openProductModal"] {
   border-style: solid !important;
   box-shadow: 
     0 16px 32px -6px rgba(0, 0, 0, 0.8), 
-    0 4px 12px -2px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+    0 4px 12px -2px rgba(0, 0, 0, 0.55) !important;
   transition: box-shadow 0.28s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.28s ease;
   position: relative;
 }
@@ -1520,7 +1519,7 @@ button[onclick*="openProductModal"] {
 .prism-wall-aluminium {
   background: linear-gradient(180deg, #24252a 0%, #3a3b44 25%, #1e1f24 55%, #32333b 80%, #202126 100%) !important;
   border: none !important;
-  box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.22) !important;
+  box-shadow: none !important;
 }
 
 /* ===================================================
@@ -2961,11 +2960,11 @@ button[onclick*="openProductModal"] {
   }
 }
 
-/* Hero Frameless Posters: Slim 9mm Scale (6px solid #111111 with 1px inner highlight bevel) */
+/* Hero Frameless Posters: Slim 9mm Scale (6px solid #111111, zero inner bevel line) */
 .hero-frameless-poster {
   background-color: #111111 !important;
   border: 6px solid #111111 !important;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12) !important;
+  box-shadow: none !important;
   box-sizing: border-box !important;
 }
 
@@ -4199,8 +4198,7 @@ button[onclick*="openProductModal"] {
   border: 5px solid #111111;
   box-shadow:
     -6px -2px 18px rgba(0, 0, 0, 0.22),
-    0 2px 5px rgba(0, 0, 0, 0.45),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+    0 2px 5px rgba(0, 0, 0, 0.45);
   transform-origin: bottom center;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
   overflow: hidden;
@@ -4557,8 +4555,7 @@ a:active,
   border: 6px solid #111111 !important;
   box-shadow:
     -10px -4px 26px rgba(0, 0, 0, 0.32),
-    0 2px 6px rgba(0, 0, 0, 0.55),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.18) !important;
+    0 2px 6px rgba(0, 0, 0, 0.55) !important;
   overflow: hidden;
   box-sizing: border-box;
   transform-origin: bottom center;
@@ -5199,12 +5196,18 @@ img.triptych-slice-2 {
   -webkit-tap-highlight-color: transparent !important;
 }
 
+.hero-prism-wrapper .prism-face-front {
+  box-shadow: none !important;
+}
+
 .hero-prism-wrapper .poster-frame-container img,
 #heroMainPosterImg,
 #heroAngledPosterImg,
 .poster-frame-container img.flagship-cover-img {
-  width: 100% !important;
-  height: 100% !important;
+  width: calc(100% + 8px) !important;
+  height: calc(100% + 8px) !important;
+  max-width: none !important;
+  margin: -4px !important;
   object-fit: cover !important;
   object-position: center !important;
   display: block !important;
