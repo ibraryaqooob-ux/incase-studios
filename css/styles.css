@@ -317,15 +317,7 @@ button:active, [role="button"]:active {
   box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.38), 0 4px 12px rgba(0, 0, 0, 0.2) !important;
 }
 
-#productModal .frame-black-aluminium,
-#productModal .frame-aluminium,
-#roomStudioModal .frame-black-aluminium,
-#roomStudioModal .frame-aluminium,
-#studioFrameWrapper .frame-black-aluminium,
-#studioFrameWrapper .frame-aluminium,
-.modal-frame-preview .frame-black-aluminium,
-.studio-framed-wall-art.frame-black-aluminium,
-.studio-framed-wall-art .frame-black-aluminium,
+#productModal .frame-black-aluminium.frame-black-aluminium-accent,
 .prism-face-front.frame-black-aluminium-accent {
   border: none !important;
 }
@@ -5224,19 +5216,34 @@ img.triptych-slice-2 {
   50% { background-color: #1f1f25; }
 }
 .modal-artwork-skeleton {
-  background-color: #e6e6e4;
+  background-color: #111111;
+}
+.prism-face-paper-front .modal-artwork-skeleton {
+  background-color: #fafafa;
 }
 .modal-artwork-skeleton img,
+.modal-artwork-skeleton canvas,
 #modalPreviewContainer .prism-face-front img,
 #modalPreviewContainer .modal-retina-canvas {
   position: absolute !important;
-  inset: -1px !important;
-  width: calc(100% + 2px) !important;
-  height: calc(100% + 2px) !important;
-  min-width: calc(100% + 2px) !important;
-  min-height: calc(100% + 2px) !important;
+  inset: -4px !important;
+  width: calc(100% + 8px) !important;
+  height: calc(100% + 8px) !important;
+  min-width: calc(100% + 8px) !important;
+  min-height: calc(100% + 8px) !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
   object-fit: cover !important;
   object-position: center !important;
+}
+.prism-face-paper-front .modal-artwork-skeleton img,
+.prism-face-paper-front .modal-artwork-skeleton canvas {
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
 }
 
 /* ===================================================

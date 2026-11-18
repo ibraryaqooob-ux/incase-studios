@@ -1301,6 +1301,7 @@ function openProductModal(posterId) {
   lockBodyScroll();
   window.history.replaceState(null, '', window.location.pathname);
   initLucideIcons();
+  requestAnimationFrame(() => updateModalRetinaCanvas());
   setTimeout(() => initModalStageGestures(), 100);
 }
 
@@ -2579,6 +2580,39 @@ function setModalFrameFromZoom(frameId) {
  * Applies high-quality linear smoothing (THREE.LinearFilter equivalent) and draws directly
  * from the uncompressed 300 DPI master print asset with zero mipmap degradation.
  */
+// Module-level texture/image cache keyed by URL for instant 3D viewer opening & switching
+const posterTextureCache = new Map();
+
+function getCachedPosterImage(src, onReady) {
+  if (!src) return null;
+  let entry = posterTextureCache.get(src);
+  if (entry) {
+    if (entry.ready && entry.img.complete && entry.img.naturalWidth > 0) {
+      onReady(entry.img);
+    } else {
+      entry.callbacks.add(onReady);
+    }
+    return entry.img;
+  }
+  const img = new Image();
+  img.decoding = "sync";
+  entry = { img, ready: false, callbacks: new Set([onReady]) };
+  posterTextureCache.set(src, entry);
+  const flush = () => {
+    entry.ready = true;
+    entry.callbacks.forEach(cb => {
+      try { cb(img); } catch (e) {}
+    });
+    entry.callbacks.clear();
+  };
+  img.onload = flush;
+  img.src = src;
+  if (img.complete && img.naturalWidth > 0) {
+    flush();
+  }
+  return img;
+}
+
 function updateModalRetinaCanvas(highResImgSrc) {
   const canvas = document.getElementById("modalRetinaTextureCanvas");
   if (!canvas) return;
@@ -2617,46 +2651,37 @@ function updateModalRetinaCanvas(highResImgSrc) {
   const imgSrc = highResImgSrc || (currentCustomizingPoster ? currentCustomizingPoster.image : "");
   if (!imgSrc) return;
 
-  const img = new Image();
-  img.decoding = "sync";
-  img.src = imgSrc;
-
-  const renderToCanvas = () => {
-    if (!canvas || !ctx || canvas.width === 0 || canvas.height === 0) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  getCachedPosterImage(imgSrc, (img) => {
+    const activeCanvas = document.getElementById("modalRetinaTextureCanvas");
+    if (!activeCanvas || activeCanvas !== canvas || activeCanvas.width === 0 || activeCanvas.height === 0) return;
+    ctx.clearRect(0, 0, activeCanvas.width, activeCanvas.height);
 
     const imgW = img.naturalWidth || 2480;
     const imgH = img.naturalHeight || 3508;
     const imgAspect = imgW / imgH;
-    const canvasAspect = canvas.width / canvas.height;
+    const canvasAspect = activeCanvas.width / activeCanvas.height;
 
-    let drawW = canvas.width;
-    let drawH = canvas.height;
+    let drawW = activeCanvas.width;
+    let drawH = activeCanvas.height;
     let drawX = 0;
     let drawY = 0;
 
-    // Cover-fill math with 2px bleed so artwork fills 100% of inner frame opening with ZERO white gaps
+    // Cover-fill math with 4px bleed so artwork fills 100% of inner frame opening with ZERO white gaps
     if (imgAspect > canvasAspect) {
-      drawH = canvas.height;
-      drawW = canvas.height * imgAspect;
-      drawX = (canvas.width - drawW) / 2;
+      drawH = activeCanvas.height;
+      drawW = activeCanvas.height * imgAspect;
+      drawX = (activeCanvas.width - drawW) / 2;
       drawY = 0;
     } else {
-      drawW = canvas.width;
-      drawH = canvas.width / imgAspect;
+      drawW = activeCanvas.width;
+      drawH = activeCanvas.width / imgAspect;
       drawX = 0;
-      drawY = (canvas.height - drawH) / 2;
+      drawY = (activeCanvas.height - drawH) / 2;
     }
 
-    ctx.drawImage(img, drawX - 1, drawY - 1, drawW + 2, drawH + 2);
-    canvas.style.opacity = "1";
-  };
-
-  if (img.complete && img.naturalWidth > 0) {
-    renderToCanvas();
-  } else {
-    img.onload = renderToCanvas;
-  }
+    ctx.drawImage(img, drawX - 2, drawY - 2, drawW + 4, drawH + 4);
+    activeCanvas.style.opacity = "1";
+  });
 }
 
 // Window resize & orientation change listener for crisp Retina canvas re-rendering
@@ -2792,14 +2817,14 @@ function renderModalPrismHtml(posterImg, posterTitle, frameType, size, panelSlic
         <canvas 
           id="modalRetinaTextureCanvas" 
           class="modal-retina-canvas" 
-          style="width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center !important; display: block !important; margin: 0 !important; padding: 0 !important; z-index: 2; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;"
+          style="opacity: 0; z-index: 2; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;"
         ></canvas>
         <img 
           id="modalFrontArtworkImg"
           src="${typeof getPosterThumb === 'function' ? getPosterThumb(posterImg) : posterImg}" 
           alt="${posterTitle}" 
-          class="w-full h-full object-contain block pointer-events-none portrait-spec" 
-          style="width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center !important; display: block !important; margin: 0 !important; padding: 0 !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;" 
+          class="w-full h-full object-cover block pointer-events-none portrait-spec" 
+          style="z-index: 1; image-rendering: -webkit-optimize-contrast !important; image-rendering: high-quality !important;" 
           decoding="sync"
           fetchpriority="high"
           onerror="if(this.dataset.thumbFallback!=='1'){this.dataset.thumbFallback='1';this.src='${posterImg}';}else{handlePosterImageError(this, '${currentCustomizingPoster ? currentCustomizingPoster.id : ''}');}" 
