@@ -5204,10 +5204,12 @@ img.triptych-slice-2 {
 #heroMainPosterImg,
 #heroAngledPosterImg,
 .poster-frame-container img.flagship-cover-img {
+  position: absolute !important;
+  inset: -4px !important;
   width: calc(100% + 8px) !important;
   height: calc(100% + 8px) !important;
   max-width: none !important;
-  margin: -4px !important;
+  margin: 0 !important;
   object-fit: cover !important;
   object-position: center !important;
   display: block !important;
