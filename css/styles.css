@@ -1165,6 +1165,7 @@ button[onclick*="openProductModal"] {
   width: calc(100% + 8px) !important;
   height: calc(100% + 8px) !important;
   max-width: none !important;
+  max-height: none !important;
   margin: 0 !important;
   object-fit: cover !important;
   object-position: center !important;
@@ -3732,7 +3733,7 @@ button[onclick*="openProductModal"] {
   background-color: transparent !important;
 }
 
-/* Enforce edge-to-edge artwork fill with strict 1:1.414 aspect ratio & zero letterbox padding */
+/* Enforce edge-to-edge artwork fill with zero letterbox padding */
 #modalPreviewContainer .prism-face-front img,
 #modalPreviewContainer .prism-face-paper-front img,
 #modalPreviewContainer .poster-frame-container img,
@@ -3742,10 +3743,7 @@ button[onclick*="openProductModal"] {
   height: 100% !important;
   min-width: 100% !important;
   min-height: 100% !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  aspect-ratio: 1 / 1.414 !important;
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
   display: block !important;
   border-radius: 0px !important;
@@ -5007,7 +5005,7 @@ img.triptych-slice-2 {
   inset: 0 !important;
   width: 100% !important;
   height: 100% !important;
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
   display: block !important;
   margin: 0 !important;
@@ -5213,6 +5211,7 @@ img.triptych-slice-2 {
   width: calc(100% + 8px) !important;
   height: calc(100% + 8px) !important;
   max-width: none !important;
+  max-height: none !important;
   margin: 0 !important;
   object-fit: cover !important;
   object-position: center !important;
@@ -5241,6 +5240,7 @@ img.triptych-slice-2 {
   min-width: calc(100% + 8px) !important;
   min-height: calc(100% + 8px) !important;
   max-width: none !important;
+  max-height: none !important;
   margin: 0 !important;
   padding: 0 !important;
   object-fit: cover !important;
