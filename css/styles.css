@@ -3489,8 +3489,8 @@ button[onclick*="openProductModal"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 6px 12px;
+  gap: 5px;
+  padding: 8px 12px;
   background: #141416;
   border: 1px solid #3f3f46;
   border-radius: 3px;
@@ -3499,9 +3499,9 @@ button[onclick*="openProductModal"] {
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.08em;
+  line-height: 1;
   text-transform: uppercase;
-  height: 36px;
-  min-height: 36px;
+  min-height: 34px;
   min-width: 44px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   cursor: pointer;
@@ -3512,9 +3512,9 @@ button[onclick*="openProductModal"] {
 }
 @media (min-width: 640px) {
   .header-nav-btn {
-    height: 38px;
-    min-height: 38px;
-    padding: 6px 14px;
+    min-height: 36px;
+    padding: 8px 14px;
+    gap: 6px;
   }
 }
 @media (hover: hover) and (pointer: fine) {
